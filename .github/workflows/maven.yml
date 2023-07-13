@@ -28,7 +28,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build and Run Tests
-        run: mvn test --batch-mode --fail-at-end --file executor-service/pom.xml
+        run: mvn test --batch-mode --fail-at-end --file pom.xml
       - name: Publish Test Report
         if: ${{ always() }} #publish report even if the tests are failing
         uses: scacap/action-surefire-report@v1
