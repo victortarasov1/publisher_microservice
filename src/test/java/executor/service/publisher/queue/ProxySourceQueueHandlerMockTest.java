@@ -21,8 +21,8 @@ public class ProxySourceQueueHandlerMockTest {
     @BeforeEach
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
         proxies = mock(ConcurrentLinkedQueue.class);
-        queueHandler = new ProxySourceQueueHandlerImpl<>();
-        Field proxiesField = ProxySourceQueueHandlerImpl.class.getDeclaredField("proxies");
+        queueHandler = new ProxySourceQueueHandler<>();
+        Field proxiesField = ProxySourceQueueHandler.class.getDeclaredField("proxies");
         proxiesField.setAccessible(true);
         proxiesField.set(queueHandler, proxies);
     }

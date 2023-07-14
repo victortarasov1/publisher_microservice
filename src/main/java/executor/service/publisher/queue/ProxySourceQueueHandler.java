@@ -5,10 +5,10 @@ import executor.service.publisher.model.ProxyConfigHolderDto;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ProxySourceQueueHandlerImpl<T> implements QueueHandler<ProxyConfigHolderDto> {
+public class ProxySourceQueueHandler<T> implements QueueHandler<ProxyConfigHolderDto> {
     private final Queue<ProxyConfigHolderDto> proxies;
 
-    public ProxySourceQueueHandlerImpl() {
+    public ProxySourceQueueHandler() {
         proxies = new ConcurrentLinkedQueue<>();
     }
 
