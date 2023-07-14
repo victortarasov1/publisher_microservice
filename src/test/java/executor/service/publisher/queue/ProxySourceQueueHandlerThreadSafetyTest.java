@@ -21,7 +21,7 @@ class ProxySourceQueueHandlerThreadSafetyTest {
     private CountDownLatch latch;
     @BeforeEach
     public void setUp() {
-        queueHandler = new ProxySourceQueueHandler<>();
+        queueHandler = new ProxySourceQueueHandler();
         latch = new CountDownLatch(THREAD_COUNT);
     }
 
