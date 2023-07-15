@@ -76,5 +76,6 @@ class ProxySourceQueueHandlerThreadSafetyTest {
         IntStream.range(0, THREAD_COUNT).forEach(v -> executorService.submit(removeAllTask));
         latch.await();
         assertEquals(ELEMENT_COUNT, resultSize.get());
+        assertEquals(0, queueHandler.removeAll().size());
     }
 }
