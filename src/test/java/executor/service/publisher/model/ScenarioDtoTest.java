@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class ScenarioTest {
+public class ScenarioDtoTest {
     private static final String name = "name";
     private static final String actualName = "name2";
     private static final String site = "site";
