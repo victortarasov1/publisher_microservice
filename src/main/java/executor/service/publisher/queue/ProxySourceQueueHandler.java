@@ -5,13 +5,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
 @Component
 public class ProxySourceQueueHandler implements QueueHandler<ProxyConfigHolderDto> {
-    private final Queue<ProxyConfigHolderDto> proxies;
-
-    public ProxySourceQueueHandler() {
-        proxies = new ConcurrentLinkedQueue<>();
-    }
+    private final Queue<ProxyConfigHolderDto> proxies = new ConcurrentLinkedQueue<>();
 
     @Override
     public void add(ProxyConfigHolderDto element) {
