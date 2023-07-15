@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -19,12 +18,9 @@ public class ProxySourceQueueHandlerMockTest {
     private ConcurrentLinkedQueue<ProxyConfigHolderDto> proxies;
 
     @BeforeEach
-    public void setUp() throws NoSuchFieldException, IllegalAccessException {
+    public void setUp() {
         proxies = mock(ConcurrentLinkedQueue.class);
-        queueHandler = new ProxySourceQueueHandler();
-        Field proxiesField = ProxySourceQueueHandler.class.getDeclaredField("proxies");
-        proxiesField.setAccessible(true);
-        proxiesField.set(queueHandler, proxies);
+        queueHandler = new ProxySourceQueueHandler(proxies);
     }
 
     @Test

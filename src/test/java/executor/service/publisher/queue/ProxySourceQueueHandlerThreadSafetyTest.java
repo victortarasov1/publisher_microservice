@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,7 +22,7 @@ class ProxySourceQueueHandlerThreadSafetyTest {
     private CountDownLatch latch;
     @BeforeEach
     public void setUp() {
-        queueHandler = new ProxySourceQueueHandler();
+        queueHandler = new ProxySourceQueueHandler(new ConcurrentLinkedQueue<>());
         latch = new CountDownLatch(THREAD_COUNT);
     }
 

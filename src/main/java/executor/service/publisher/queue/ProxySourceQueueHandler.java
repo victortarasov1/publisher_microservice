@@ -1,14 +1,15 @@
 package executor.service.publisher.queue;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
-@Component
 public class ProxySourceQueueHandler implements QueueHandler<ProxyConfigHolderDto> {
-    private final Queue<ProxyConfigHolderDto> proxies = new ConcurrentLinkedQueue<>();
+    private final Queue<ProxyConfigHolderDto> proxies;
+
+    public ProxySourceQueueHandler(Queue<ProxyConfigHolderDto> proxies) {
+        this.proxies = proxies;
+    }
 
     @Override
     public void add(ProxyConfigHolderDto element) {
