@@ -20,15 +20,16 @@ class ProxySourceQueueHandlerThreadSafetyTest {
 
     private QueueHandler<ProxyConfigHolderDto> queueHandler;
     private CountDownLatch latch;
+    private ExecutorService executorService;
     @BeforeEach
     public void setUp() {
         queueHandler = new ProxySourceQueueHandler(new ConcurrentLinkedQueue<>());
         latch = new CountDownLatch(THREAD_COUNT);
+        executorService = Executors.newFixedThreadPool(THREAD_COUNT);
     }
 
     @Test
     public void testAddMethodThreadSafety() throws InterruptedException {
-        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
         Runnable addTask = () -> {
             queueHandler.add(new ProxyConfigHolderDto());
             latch.countDown();
@@ -41,7 +42,6 @@ class ProxySourceQueueHandlerThreadSafetyTest {
     @Test
     public void testAddAllMethodThreadSafety() throws InterruptedException {
         List<ProxyConfigHolderDto> elements = IntStream.range(0, ELEMENT_COUNT).boxed().map(v -> new ProxyConfigHolderDto()).toList();
-        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
         Runnable addAllTask = () -> {
             queueHandler.addAll(elements);
             latch.countDown();
@@ -54,7 +54,6 @@ class ProxySourceQueueHandlerThreadSafetyTest {
     @Test
     public void testPollMethodThreadSafety() throws InterruptedException {
         IntStream.range(0, ELEMENT_COUNT).forEach(i -> queueHandler.add(new ProxyConfigHolderDto()));
-        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
         Runnable pollTask = () -> {
             queueHandler.poll();
             latch.countDown();
@@ -67,7 +66,6 @@ class ProxySourceQueueHandlerThreadSafetyTest {
     @Test
     public void testRemoveAllMethodThreadSafety() throws InterruptedException {
         IntStream.range(0, ELEMENT_COUNT).forEach(i -> queueHandler.add(new ProxyConfigHolderDto()));
-        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
         AtomicInteger resultSize = new AtomicInteger(0);
         Runnable removeAllTask = () -> {
             resultSize.addAndGet(queueHandler.removeAll().size());
