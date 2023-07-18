@@ -11,11 +11,13 @@ import executor.service.publisher.exception.security.AuthorizationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
-public class BasicTokenAuthorizationService implements TokenBasedAuthorizationService {
+@Component
+public class BasicTokenAuthorization implements TokenBasedAuthorization {
     private final Algorithm algorithm;
 
-    public BasicTokenAuthorizationService(@Value("${jwt.secret.key}") String SECRET_KEY) {
+    public BasicTokenAuthorization(@Value("${jwt.secret.key}") String SECRET_KEY) {
         this.algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
     }
 
