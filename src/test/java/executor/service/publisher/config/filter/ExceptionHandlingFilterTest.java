@@ -25,7 +25,7 @@ class ExceptionHandlingFilterTest {
     @BeforeEach
     public void setup() {
         exceptionHandlingFilter = new ExceptionHandlingFilter();
-        request = new MockHttpServletRequest();
+        request = mock(HttpServletRequest.class);
         response = new MockHttpServletResponse();
         filterChain = mock(FilterChain.class);
     }
