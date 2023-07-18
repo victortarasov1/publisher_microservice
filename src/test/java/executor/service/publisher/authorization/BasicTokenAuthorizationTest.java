@@ -35,7 +35,7 @@ class BasicTokenAuthorizationTest {
     @Test
     public void authorizeIfTokenValid_ShouldSetAuthenticationContext_WhenTokenIsValid() {
         String jwtToken = "valid-jwt-token";
-        String username = "john.doe";
+        String username = "worker";
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, null);
         when(verifier.verify(jwtToken)).thenReturn(decodedJWT);
         when(decodedJWT.getSubject()).thenReturn(username);
