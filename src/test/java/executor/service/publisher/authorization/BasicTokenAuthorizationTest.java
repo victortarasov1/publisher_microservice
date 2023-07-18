@@ -9,13 +9,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import executor.service.publisher.enums.TokenClaim;
 import executor.service.publisher.exception.security.AuthorizationException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.Collections;
 import java.util.List;
 
 
