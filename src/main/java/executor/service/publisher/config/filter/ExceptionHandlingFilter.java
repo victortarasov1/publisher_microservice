@@ -12,6 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -23,11 +24,11 @@ public class ExceptionHandlingFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (SecurityAuthException ex) {
-            record SecurityExceptionResponse(String message, List<String> debugMessage) {
+            record SecurityExceptionResponse(String message, String debugMessage) {
             }
             response.setHeader(HttpHeaders.WWW_AUTHENTICATE, ex.getMessage());
             response.setStatus(FORBIDDEN.value());
-            SecurityExceptionResponse error = new SecurityExceptionResponse(ex.getMessage(), List.of(ex.getCause().getMessage()));
+            SecurityExceptionResponse error = new SecurityExceptionResponse(ex.getMessage(), ex.getCause().getMessage());
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), error);
         }
