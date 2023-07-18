@@ -10,11 +10,12 @@ import executor.service.publisher.exception.security.AuthorizationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+@Component
 public class BasicTokenAuthorization implements TokenBasedAuthorization {
 
     private final JWTVerifier verifier;
