@@ -38,9 +38,8 @@ public class ProxySourceControllerImpl implements ProxySourceController {
     }
 
     @Override
-    public ResponseEntity<ProxyConfigHolderDto> poll() {
-        Optional<ProxyConfigHolderDto> proxyOptional = proxyHandler.poll();
-        return proxyOptional.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Optional<ProxyConfigHolderDto>> poll() {
+        return new ResponseEntity<>(proxyHandler.poll(), HttpStatus.OK);
     }
 
     @Override
@@ -51,4 +50,5 @@ public class ProxySourceControllerImpl implements ProxySourceController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }}
+    }
+}

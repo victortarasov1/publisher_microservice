@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/publisher")
@@ -16,7 +17,7 @@ public interface ProxySourceController {
     ResponseEntity<List<ProxyConfigHolderDto>> addAll(@RequestBody List<ProxyConfigHolderDto> proxyConfigHolderDtos);
 
     @DeleteMapping("/proxy")
-    ResponseEntity<ProxyConfigHolderDto> poll();
+    ResponseEntity<Optional<ProxyConfigHolderDto>> poll();
 
     @DeleteMapping("/proxies")
     ResponseEntity<List<ProxyConfigHolderDto>> removeAll();

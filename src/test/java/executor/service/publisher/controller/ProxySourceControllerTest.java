@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,14 +48,13 @@ public class ProxySourceControllerTest {
     public void testPoll() {
         ProxyConfigHolderDto expectedProxy = new ProxyConfigHolderDto();
         when(mockProxyHandler.poll()).thenReturn(Optional.of(expectedProxy));
-        ResponseEntity<ProxyConfigHolderDto> responseEntity = proxySourceController.poll();
+        ResponseEntity<Optional<ProxyConfigHolderDto>> responseEntity = proxySourceController.poll();
 
         verify(mockProxyHandler, times(1)).poll();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
-        ProxyConfigHolderDto responseProxy = responseEntity.getBody();
-        assertNotNull(responseProxy, "Response body should not be null");
-        assertEquals(expectedProxy, responseProxy);
+        Optional<ProxyConfigHolderDto> responseProxyOptional = responseEntity.getBody();
+        assertEquals(Optional.of(expectedProxy), responseProxyOptional);
     }
 
     @Test
