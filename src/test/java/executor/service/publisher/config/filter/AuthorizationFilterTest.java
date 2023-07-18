@@ -1,14 +1,13 @@
 package executor.service.publisher.config.filter;
 
 import executor.service.publisher.authorization.TokenBasedAuthorization;
-import executor.service.publisher.config.filter.enums.AuthorizationType;
+import executor.service.publisher.enums.AuthorizationType;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
