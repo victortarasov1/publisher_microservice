@@ -9,15 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
-import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
 import java.io.IOException;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class ExceptionHandlingFilterTest {
@@ -37,7 +33,7 @@ class ExceptionHandlingFilterTest {
     @Test
     public void testDoFilterInternal_WhenNoException_ShouldPassThrough() throws ServletException, IOException {
         exceptionHandlingFilter.doFilterInternal(request, response, filterChain);
-        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+        assertThat(response.getStatus()).isEqualTo(HttpServletResponse.SC_OK);
     }
 
     @Test
@@ -45,15 +41,17 @@ class ExceptionHandlingFilterTest {
         SecurityAuthException exception = new AuthorizationException(new RuntimeException());
         doThrow(exception).when(filterChain).doFilter(request, response);
         exceptionHandlingFilter.doFilterInternal(request, response, filterChain);
-        assertEquals(HttpServletResponse.SC_FORBIDDEN, response.getStatus());
-        assertEquals(exception.getMessage(), response.getHeader(HttpHeaders.WWW_AUTHENTICATE));
+        assertThat(response.getStatus()).isEqualTo(HttpServletResponse.SC_FORBIDDEN);
+        assertThat(response.getHeader(HttpHeaders.WWW_AUTHENTICATE)).isEqualTo(exception.getMessage());
     }
 
     @Test
     public void testDoFilterInternal_WhenOtherException_ShouldNotHandleException() throws ServletException, IOException {
         RuntimeException exception = new RuntimeException();
         doThrow(exception).when(filterChain).doFilter(request, response);
-        assertThrows(RuntimeException.class, () -> exceptionHandlingFilter.doFilterInternal(request, response, filterChain));
-        assertEquals(HttpServletResponse.SC_OK, response.getStatus());
+        assertThatThrownBy(() -> exceptionHandlingFilter.doFilterInternal(request, response, filterChain))
+                .isInstanceOf(RuntimeException.class)
+                .isEqualTo(exception);
+        assertThat(response.getStatus()).isEqualTo(HttpServletResponse.SC_OK);
     }
 }
