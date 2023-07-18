@@ -22,8 +22,8 @@ import static org.mockito.Mockito.*;
 
 class ExceptionHandlingFilterTest {
     private ExceptionHandlingFilter exceptionHandlingFilter;
-    private MockHttpServletRequest request;
-    private MockHttpServletResponse response;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
     private FilterChain filterChain;
 
     @BeforeEach
@@ -43,7 +43,7 @@ class ExceptionHandlingFilterTest {
     @Test
     public void testDoFilterInternal_WhenSecurityAuthException_ShouldHandleException() throws ServletException, IOException {
         SecurityAuthException exception = new AuthorizationException(new RuntimeException());
-        doThrow(exception).when(filterChain).doFilter(any(HttpServletRequest.class), any(HttpServletResponse.class));
+        doThrow(exception).when(filterChain).doFilter(request, response);
         exceptionHandlingFilter.doFilterInternal(request, response, filterChain);
         assertEquals(HttpServletResponse.SC_FORBIDDEN, response.getStatus());
         assertEquals(exception.getMessage(), response.getHeader(HttpHeaders.WWW_AUTHENTICATE));
@@ -52,7 +52,7 @@ class ExceptionHandlingFilterTest {
     @Test
     public void testDoFilterInternal_WhenOtherException_ShouldNotHandleException() throws ServletException, IOException {
         RuntimeException exception = new RuntimeException();
-        doThrow(exception).when(filterChain).doFilter(any(HttpServletRequest.class), any(HttpServletResponse.class));
+        doThrow(exception).when(filterChain).doFilter(request, response);
         assertThrows(RuntimeException.class, () -> exceptionHandlingFilter.doFilterInternal(request, response, filterChain));
         assertEquals(HttpServletResponse.SC_OK, response.getStatus());
     }
