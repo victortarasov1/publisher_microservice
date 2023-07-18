@@ -18,7 +18,6 @@ import java.util.Optional;
 public class BasicTokenAuthorization implements TokenBasedAuthorization {
 
     private final JWTVerifier verifier;
-    private static final String ROLES = "roles";
 
     public BasicTokenAuthorization(JWTVerifier verifier) {
         this.verifier = verifier;
