@@ -5,7 +5,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import executor.service.publisher.enums.Claim;
+import executor.service.publisher.enums.TokenClaim;
 import executor.service.publisher.exception.security.AuthorizationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,9 +28,9 @@ public class BasicTokenAuthorization implements TokenBasedAuthorization {
         try {
             DecodedJWT decodedJWT = verifier.verify(jwtToken);
             String username = decodedJWT.getSubject();
-            List<String> roles = Optional.ofNullable(decodedJWT.getClaim(Claim.ROLES.getClaim()).asList(String.class)).orElse(Collections.emptyList());
+            List<String> roles = Optional.ofNullable(decodedJWT.getClaim(TokenClaim.ROLES.getClaim()).asList(String.class)).orElse(Collections.emptyList());
             List<SimpleGrantedAuthority> authorities = roles.stream().map(SimpleGrantedAuthority::new).toList();
-            String credentials = decodedJWT.getClaim(Claim.CREDENTIALS.getClaim()).asString();
+            String credentials = decodedJWT.getClaim(TokenClaim.CREDENTIALS.getClaim()).asString();
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, credentials, authorities);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         } catch (TokenExpiredException | JWTDecodeException | SignatureVerificationException ex) {

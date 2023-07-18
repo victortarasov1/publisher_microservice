@@ -1,11 +1,11 @@
 package executor.service.publisher.enums;
 
-public enum Claim {
+public enum TokenClaim {
     ROLES("roles"),
     CREDENTIALS("credentials");
     private final String claim;
 
-    Claim(String claim) {
+    TokenClaim(String claim) {
         this.claim = claim;
     }
     public String getClaim() {
