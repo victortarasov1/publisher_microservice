@@ -1,5 +1,10 @@
 package executor.service.publisher.config;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import executor.service.publisher.authorization.BasicTokenAuthorization;
+import executor.service.publisher.authorization.TokenBasedAuthorization;
 import executor.service.publisher.config.filter.AuthorizationFilter;
 import executor.service.publisher.config.filter.ExceptionHandlingFilter;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,17 +25,33 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final AuthorizationFilter authorizationFilter;
     private final ExceptionHandlingFilter exceptionHandlingFilter;
-    @Value("${token.authorization.key}")
-    private String key;
+    @Value("${inmemory.user.name}")
+    private String NAME;
 
-    public SecurityConfig(AuthorizationFilter authorizationFilter, ExceptionHandlingFilter exceptionHandlingFilter) {
-        this.authorizationFilter = authorizationFilter;
+    @Value("${jwt.secret.key}")
+    private String SECRET_KEY;
+
+    public SecurityConfig(ExceptionHandlingFilter exceptionHandlingFilter) {
         this.exceptionHandlingFilter = exceptionHandlingFilter;
     }
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public JWTVerifier verifier() {
+        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
+        return JWT.require(algorithm).build();
+    }
+
+    @Bean
+    public TokenBasedAuthorization tokenBasedAuthorization(JWTVerifier verifier) {
+        return new BasicTokenAuthorization(verifier);
+    }
+
+    @Bean
+    public AuthorizationFilter authorizationFilter(TokenBasedAuthorization tokenBasedAuthorization) {
+        return new AuthorizationFilter(tokenBasedAuthorization);
+    }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthorizationFilter authorizationFilter) throws Exception {
         http
                 .addFilterBefore(authorizationFilter, BasicAuthenticationFilter.class)
                 .addFilterBefore(exceptionHandlingFilter, AuthorizationFilter.class)
@@ -41,10 +62,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsServiceBean() {
         UserDetails user = User.builder()
-                .username(key)
+                .username(NAME)
                 .password("")
                 .roles()
                 .build();
         return new InMemoryUserDetailsManager(user);
     }
+
 }
