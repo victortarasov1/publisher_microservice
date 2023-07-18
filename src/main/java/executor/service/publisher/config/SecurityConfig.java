@@ -26,9 +26,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableMethodSecurity
 public class SecurityConfig {
     private final ExceptionHandlingFilter exceptionHandlingFilter;
-    @Value("${inmemory.user.name}")
-    private String NAME;
-
     @Value("${jwt.secret.key}")
     private String SECRET_KEY;
 
@@ -61,12 +58,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsServiceBean() {
-        UserDetails user = User.builder()
-                .username(NAME)
-                .password("")
-                .roles()
-                .build();
-        return new InMemoryUserDetailsManager(user);
+        return new InMemoryUserDetailsManager();
     }
 
 }
