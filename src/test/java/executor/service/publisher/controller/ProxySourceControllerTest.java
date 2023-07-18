@@ -1,12 +1,13 @@
-package executor.service.publisher.controllers;
+package executor.service.publisher.controller;
 
-import executor.service.publisher.controller.proxysource.ProxySourceControllerImpl;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.queue.QueueHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -15,19 +16,17 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class ProxySourceControllerTest {
 
     @Mock
     private QueueHandler<ProxyConfigHolderDto> mockProxyHandler;
-    private ProxySourceControllerImpl proxySourceController;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        proxySourceController = new ProxySourceControllerImpl(mockProxyHandler);
-    }
+    @InjectMocks
+    private ProxySourceControllerImpl proxySourceController;
 
     @Test
     public void testAddProxyConfigHolderDto() {
@@ -51,14 +50,13 @@ public class ProxySourceControllerTest {
     public void testPoll() {
         ProxyConfigHolderDto expectedProxy = new ProxyConfigHolderDto();
         when(mockProxyHandler.poll()).thenReturn(Optional.of(expectedProxy));
-        ResponseEntity<?> responseEntity = proxySourceController.poll();
+        ResponseEntity<ProxyConfigHolderDto> responseEntity = proxySourceController.poll();
 
         verify(mockProxyHandler, times(1)).poll();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
-        Optional<ProxyConfigHolderDto> responseProxyOptional = (Optional<ProxyConfigHolderDto>) responseEntity.getBody();
-        ProxyConfigHolderDto responseProxy = responseProxyOptional.orElse(null);
-
+        ProxyConfigHolderDto responseProxy = responseEntity.getBody();
+        assertNotNull(responseProxy, "Response body should not be null");
         assertEquals(expectedProxy, responseProxy);
     }
 

@@ -1,4 +1,4 @@
-package executor.service.publisher.controller.proxysource;
+package executor.service.publisher.controller;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.queue.QueueHandler;
@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.Optional;
+
 @Controller
 public class ProxySourceControllerImpl implements ProxySourceController {
     private final QueueHandler<ProxyConfigHolderDto> proxyHandler;
@@ -16,7 +18,7 @@ public class ProxySourceControllerImpl implements ProxySourceController {
     }
 
     @Override
-    public ResponseEntity<?> add(ProxyConfigHolderDto proxyConfigHolderDto) {
+    public ResponseEntity<ProxyConfigHolderDto> add(ProxyConfigHolderDto proxyConfigHolderDto) {
         if (proxyConfigHolderDto != null) {
             proxyHandler.add(proxyConfigHolderDto);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -26,7 +28,7 @@ public class ProxySourceControllerImpl implements ProxySourceController {
     }
 
     @Override
-    public ResponseEntity<?> addAll(List<ProxyConfigHolderDto> proxyConfigHolderDtos) {
+    public ResponseEntity<List<ProxyConfigHolderDto>> addAll(List<ProxyConfigHolderDto> proxyConfigHolderDtos) {
         if (proxyConfigHolderDtos != null) {
             proxyHandler.addAll(proxyConfigHolderDtos);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -36,12 +38,22 @@ public class ProxySourceControllerImpl implements ProxySourceController {
     }
 
     @Override
-    public ResponseEntity<?> poll() {
-        return new ResponseEntity<>(proxyHandler.poll(), HttpStatus.OK);
+    public ResponseEntity<ProxyConfigHolderDto> poll() {
+        Optional<ProxyConfigHolderDto> proxyOptional = proxyHandler.poll();
+        ProxyConfigHolderDto proxy = proxyOptional.orElse(null);
+        if (proxy != null) {
+            return new ResponseEntity<>(proxy, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override
-    public ResponseEntity<?> removeAll() {
-        return new ResponseEntity<>(proxyHandler.removeAll(), HttpStatus.OK);
-    }
-}
+    public ResponseEntity<List<ProxyConfigHolderDto>> removeAll() {
+        List<ProxyConfigHolderDto> removedProxies = proxyHandler.removeAll();
+        if (!removedProxies.isEmpty()) {
+            return new ResponseEntity<>(removedProxies, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }}
