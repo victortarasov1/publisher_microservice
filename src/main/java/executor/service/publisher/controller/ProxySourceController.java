@@ -14,12 +14,12 @@ public interface ProxySourceController {
     @PostMapping(value = "/proxy", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ProxyConfigHolderDto> add(@RequestBody ProxyConfigHolderDto proxyConfigHolderDto);
 
-    @PostMapping(value = "/proxies", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping( value ="/proxies", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ProxyConfigHolderDto>> addAll(@RequestBody List<ProxyConfigHolderDto> proxyConfigHolderDtos);
 
-    @DeleteMapping(value = "/proxy", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/proxy")
     ResponseEntity<Optional<ProxyConfigHolderDto>> poll();
 
-    @DeleteMapping(value = "/proxies", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping( "/proxies")
     ResponseEntity<List<ProxyConfigHolderDto>> removeAll();
 }

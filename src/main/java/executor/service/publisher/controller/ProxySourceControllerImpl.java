@@ -2,16 +2,19 @@ package executor.service.publisher.controller;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.queue.QueueHandler;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@RestController
 public class ProxySourceControllerImpl implements ProxySourceController {
     private final QueueHandler<ProxyConfigHolderDto> proxyHandler;
+    public ProxySourceControllerImpl(QueueHandler<ProxyConfigHolderDto> proxyHandler) {
+        this.proxyHandler = proxyHandler;
+    }
 
     @Override
     public ResponseEntity<ProxyConfigHolderDto> add(ProxyConfigHolderDto proxyConfigHolderDto) {
@@ -40,11 +43,6 @@ public class ProxySourceControllerImpl implements ProxySourceController {
 
     @Override
     public ResponseEntity<List<ProxyConfigHolderDto>> removeAll() {
-        List<ProxyConfigHolderDto> removedProxies = proxyHandler.removeAll();
-        if (!removedProxies.isEmpty()) {
-            return new ResponseEntity<>(removedProxies, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(proxyHandler.removeAll(), HttpStatus.OK);
     }
 }
