@@ -1,8 +1,7 @@
 package executor.service.publisher.enums;
 
 public enum TokenClaim {
-    ROLES("roles"),
-    CREDENTIALS("credentials");
+    ROLES("roles");
     private final String claim;
 
     TokenClaim(String claim) {

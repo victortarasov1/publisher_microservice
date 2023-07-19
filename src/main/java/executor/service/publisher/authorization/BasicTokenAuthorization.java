@@ -31,8 +31,7 @@ public class BasicTokenAuthorization implements TokenBasedAuthorization {
             String username = decodedJWT.getSubject();
             List<String> roles = Optional.ofNullable(decodedJWT.getClaim(TokenClaim.ROLES.getClaim()).asList(String.class)).orElse(Collections.emptyList());
             List<SimpleGrantedAuthority> authorities = roles.stream().map(SimpleGrantedAuthority::new).toList();
-            String credentials = decodedJWT.getClaim(TokenClaim.CREDENTIALS.getClaim()).asString();
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, credentials, authorities);
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         } catch (TokenExpiredException | JWTDecodeException | SignatureVerificationException ex) {
             throw new AuthorizationException(ex);

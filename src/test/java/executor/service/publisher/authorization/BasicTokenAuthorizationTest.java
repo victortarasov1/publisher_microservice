@@ -26,7 +26,6 @@ import static org.mockito.Mockito.when;
 class BasicTokenAuthorizationTest {
 
     public static final String USERNAME = "worker";
-    public static final String CREDENTIALS = "password";
     public static final String ROLE = "ROLE_USER";
     public static final String JWT_TOKEN = "some-jwt-token";
     private JWTVerifier verifier;
@@ -47,12 +46,10 @@ class BasicTokenAuthorizationTest {
     public void testAuthorizeIfTokenValid_ShouldSetAuthenticationContext_WhenTokenIsValid() {
         List<String> roles = List.of(ROLE);
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(ROLE));
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(USERNAME, CREDENTIALS, authorities);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(USERNAME, null, authorities);
         when(decodedJWT.getSubject()).thenReturn(USERNAME);
         when(decodedJWT.getClaim(TokenClaim.ROLES.getClaim())).thenReturn(claim);
-        when(decodedJWT.getClaim(TokenClaim.CREDENTIALS.getClaim())).thenReturn(claim);
         when(claim.asList(String.class)).thenReturn(roles);
-        when(claim.asString()).thenReturn(CREDENTIALS);
         tokenAuthorization.authorizeIfTokenValid(JWT_TOKEN);
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isEqualTo(authenticationToken);
     }
@@ -61,9 +58,7 @@ class BasicTokenAuthorizationTest {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(null, null, null);
         when(decodedJWT.getSubject()).thenReturn(null);
         when(decodedJWT.getClaim(TokenClaim.ROLES.getClaim())).thenReturn(claim);
-        when(decodedJWT.getClaim(TokenClaim.CREDENTIALS.getClaim())).thenReturn(claim);
         when(claim.asList(String.class)).thenReturn(null);
-        when(claim.asString()).thenReturn(null);
         tokenAuthorization.authorizeIfTokenValid(JWT_TOKEN);
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isEqualTo(authenticationToken);
     }
