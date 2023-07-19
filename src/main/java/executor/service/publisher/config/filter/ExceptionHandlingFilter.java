@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -28,7 +29,9 @@ public class ExceptionHandlingFilter extends OncePerRequestFilter {
             }
             response.setHeader(HttpHeaders.WWW_AUTHENTICATE, ex.getMessage());
             response.setStatus(FORBIDDEN.value());
-            SecurityExceptionResponse error = new SecurityExceptionResponse(ex.getMessage(), ex.getCause().getMessage());
+            Throwable cause = ex.getCause();
+            String debugMessage = cause != null ? ex.getCause().getMessage() : "";
+            SecurityExceptionResponse error = new SecurityExceptionResponse(ex.getMessage(), debugMessage);
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), error);
         }
