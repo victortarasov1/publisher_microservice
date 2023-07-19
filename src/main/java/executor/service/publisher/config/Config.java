@@ -1,5 +1,7 @@
 package executor.service.publisher.config;
 
+import executor.service.publisher.controller.ScenarioSourceController;
+import executor.service.publisher.controller.ScenarioSourceControllerImpl;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ScenarioDto;
 import executor.service.publisher.queue.ProxySourceQueueHandler;
@@ -20,5 +22,10 @@ public class Config {
     @Bean
     public QueueHandler<ScenarioDto> scenarioQueueHandler() {
         return new ScenarioSourceQueueHandler(new ConcurrentLinkedQueue<>());
+    }
+
+    @Bean
+    public ScenarioSourceController scenarioSourceController(QueueHandler<ScenarioDto> handler) {
+        return new ScenarioSourceControllerImpl(handler);
     }
 }
