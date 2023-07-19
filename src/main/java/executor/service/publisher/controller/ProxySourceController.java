@@ -1,6 +1,7 @@
 package executor.service.publisher.controller;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,15 +11,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/publisher")
 public interface ProxySourceController {
-    @PostMapping("/proxy")
+    @PostMapping(value = "/proxy", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ProxyConfigHolderDto> add(@RequestBody ProxyConfigHolderDto proxyConfigHolderDto);
 
-    @PostMapping("/proxies")
+    @PostMapping(value = "/proxies", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ProxyConfigHolderDto>> addAll(@RequestBody List<ProxyConfigHolderDto> proxyConfigHolderDtos);
 
-    @DeleteMapping("/proxy")
+    @DeleteMapping(value = "/proxy", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Optional<ProxyConfigHolderDto>> poll();
 
-    @DeleteMapping("/proxies")
+    @DeleteMapping(value = "/proxies", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ProxyConfigHolderDto>> removeAll();
 }
