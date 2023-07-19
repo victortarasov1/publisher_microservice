@@ -33,9 +33,8 @@ public class SecurityConfig {
         return JWT.require(algorithm).build();
     }
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthorizationFilter authorizationFilter) throws Exception {
-        http
-                .httpBasic(Customizer.withDefaults());
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
