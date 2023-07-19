@@ -2,19 +2,17 @@ package executor.service.publisher.controller;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.queue.QueueHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@RequiredArgsConstructor
 public class ProxySourceControllerImpl implements ProxySourceController {
+
     private final QueueHandler<ProxyConfigHolderDto> proxyHandler;
-    public ProxySourceControllerImpl(QueueHandler<ProxyConfigHolderDto> proxyHandler) {
-        this.proxyHandler = proxyHandler;
-    }
 
     @Override
     public ResponseEntity<ProxyConfigHolderDto> add(ProxyConfigHolderDto proxyConfigHolderDto) {
