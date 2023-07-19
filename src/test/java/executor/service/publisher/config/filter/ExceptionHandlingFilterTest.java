@@ -40,7 +40,7 @@ class ExceptionHandlingFilterTest {
         SecurityAuthException exception = new AuthorizationException(new RuntimeException());
         doThrow(exception).when(filterChain).doFilter(request, response);
         exceptionHandlingFilter.doFilterInternal(request, response, filterChain);
-        assertThat(response.getStatus()).isEqualTo(HttpServletResponse.SC_FORBIDDEN);
+        assertThat(response.getStatus()).isEqualTo(HttpServletResponse.SC_UNAUTHORIZED);
         assertThat(response.getHeader(HttpHeaders.WWW_AUTHENTICATE)).isEqualTo(exception.getMessage());
     }
 

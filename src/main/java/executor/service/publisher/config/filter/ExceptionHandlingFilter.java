@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @Component
@@ -28,7 +29,7 @@ public class ExceptionHandlingFilter extends OncePerRequestFilter {
             record SecurityExceptionResponse(String message, String debugMessage) {
             }
             response.setHeader(HttpHeaders.WWW_AUTHENTICATE, ex.getMessage());
-            response.setStatus(FORBIDDEN.value());
+            response.setStatus(UNAUTHORIZED.value());
             Throwable cause = ex.getCause();
             String debugMessage = cause != null ? ex.getCause().getMessage() : "";
             SecurityExceptionResponse error = new SecurityExceptionResponse(ex.getMessage(), debugMessage);
