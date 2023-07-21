@@ -52,7 +52,7 @@ public class ProxySourceServiceUrl {
                     .addHeader("Accept", "application/json")
                     .build();
 
-            processResponse(okHttpClient, request);
+            this.processResponse(okHttpClient, request);
 
         } catch (ProxyApiException e) {
             e.printStackTrace();
