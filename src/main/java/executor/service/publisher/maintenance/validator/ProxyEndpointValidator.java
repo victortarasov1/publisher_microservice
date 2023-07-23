@@ -13,7 +13,7 @@ public class ProxyEndpointValidator {
     private String baseUrl;
 
     public boolean validate(String apiEndpoint) {
-        if(!apiEndpoint.contains(this.baseUrl)) return false;
+        if(apiEndpoint == null || !apiEndpoint.contains(this.baseUrl)) return false;
 
         String endpointPattern = "(&\\w+=.+){0,10}(&code=\\d{15})";
 
