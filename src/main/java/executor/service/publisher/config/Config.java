@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.context.annotation.PropertySource;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Configuration
@@ -47,8 +46,8 @@ public class Config {
     @Bean
     public ProxySourceServiceFile proxySourceServiceFileImpl(QueueHandler<ProxyConfigHolderDto> queueHandler, ObjectMapper mapper, Environment environment) {
         return new ProxySourceServiceFileImpl(queueHandler, mapper, environment);
+    }
 
-    
     @Bean
     public OkHttpClient getOkHttpClient() {
         return new OkHttpClient();
