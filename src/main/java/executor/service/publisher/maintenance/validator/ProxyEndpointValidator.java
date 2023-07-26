@@ -13,7 +13,8 @@ public class ProxyEndpointValidator {
     private String baseUrl;
 
     public boolean validate(String apiEndpoint) {
-        if(apiEndpoint == null || !apiEndpoint.contains(this.baseUrl)) return false;
+        if (apiEndpoint == null || !apiEndpoint.contains(this.baseUrl)
+                || !this.isEndpointContainValidProxyType(apiEndpoint)) return false;
 
         String endpointPattern = "(&\\w+=.+){0,10}(&code=\\d{15})";
 
@@ -23,4 +24,12 @@ public class ProxyEndpointValidator {
         return matcher.find();
     }
 
+    private boolean isEndpointContainValidProxyType(String apiEndpoint) {
+        String proxyTypePattern = "&type=[hs]{1,2}";
+
+        Pattern pattern = Pattern.compile(proxyTypePattern);
+        Matcher matcher = pattern.matcher(apiEndpoint);
+
+        return matcher.find();
+    }
 }
