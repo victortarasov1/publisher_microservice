@@ -1,4 +1,4 @@
-package executor.service.publisher.proxy;
+package executor.service.publisher.maintenance;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.model.ProxyConfigHolderDto;

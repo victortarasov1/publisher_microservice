@@ -1,5 +1,6 @@
-package executor.service.publisher.proxy;
+package executor.service.publisher.maintenance;
 
+import executor.service.publisher.maintenance.ProxySourceServiceFile;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxyCredentialsDTO;
 import executor.service.publisher.model.ProxyNetworkConfigDTO;

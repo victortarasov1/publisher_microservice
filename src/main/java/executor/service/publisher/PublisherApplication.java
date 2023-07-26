@@ -2,7 +2,7 @@ package executor.service.publisher;
 
 
 import executor.service.publisher.maintenance.ProxySourceServiceUrl;
-import executor.service.publisher.proxy.ProxySourceServiceFile;
+import executor.service.publisher.maintenance.ProxySourceServiceFile;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
