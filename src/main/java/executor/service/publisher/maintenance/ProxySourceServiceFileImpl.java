@@ -14,7 +14,7 @@ import java.util.List;
 
 @PropertySource("classpath:application.properties")
 public class ProxySourceServiceFileImpl implements ProxySourceServiceFile {
-    private static final String PROPERTY_KEY_SOURCE_FILE_PATH = "executor.service.publisher.proxy";
+    private static final String PROPERTY_KEY_SOURCE_FILE_PATH = "executor.service.publisher.maintenance";
     private static final String DEFAULT_SOURCE_FILE_PATH = "proxy.json";
      private final QueueHandler<ProxyConfigHolderDto> queueHandler;
     private final ObjectMapper mapper;
