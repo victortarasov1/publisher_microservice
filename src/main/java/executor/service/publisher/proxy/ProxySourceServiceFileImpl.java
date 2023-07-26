@@ -21,7 +21,9 @@ public class ProxySourceServiceFileImpl implements ProxySourceServiceFile {
     private final Environment environment;
     private File file;
 
-    public ProxySourceServiceFileImpl(QueueHandler<ProxyConfigHolderDto> queueHandler, ObjectMapper mapper, Environment environment) {
+    public ProxySourceServiceFileImpl(QueueHandler<ProxyConfigHolderDto> queueHandler,
+                                      ObjectMapper mapper,
+                                      Environment environment) {
         this.queueHandler = queueHandler;
         this.mapper = mapper;
         this.environment = environment;
