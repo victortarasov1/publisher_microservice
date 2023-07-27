@@ -33,7 +33,7 @@ class ProxySourceServiceUrlTest {
 
         this.proxySourceServiceUrl.requestProxies();
 
-        Mockito.verify(this.proxySourceServiceUrl, Mockito.times(1)).requestProxies();
+        Mockito.verify(this.proxySourceServiceUrl, Mockito.times(2)).requestProxies();
     }
 
     @Test

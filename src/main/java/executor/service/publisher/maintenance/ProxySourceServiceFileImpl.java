@@ -1,4 +1,4 @@
-package executor.service.publisher.proxy;
+package executor.service.publisher.maintenance;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.model.ProxyConfigHolderDto;
@@ -14,14 +14,16 @@ import java.util.List;
 
 @PropertySource("classpath:application.properties")
 public class ProxySourceServiceFileImpl implements ProxySourceServiceFile {
-    private static final String PROPERTY_KEY_SOURCE_FILE_PATH = "executor.service.publisher.proxy";
+    private static final String PROPERTY_KEY_SOURCE_FILE_PATH = "executor.service.publisher.maintenance";
     private static final String DEFAULT_SOURCE_FILE_PATH = "proxy.json";
      private final QueueHandler<ProxyConfigHolderDto> queueHandler;
     private final ObjectMapper mapper;
     private final Environment environment;
     private File file;
 
-    public ProxySourceServiceFileImpl(QueueHandler<ProxyConfigHolderDto> queueHandler, ObjectMapper mapper, Environment environment) {
+    public ProxySourceServiceFileImpl(QueueHandler<ProxyConfigHolderDto> queueHandler,
+                                      ObjectMapper mapper,
+                                      Environment environment) {
         this.queueHandler = queueHandler;
         this.mapper = mapper;
         this.environment = environment;

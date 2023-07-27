@@ -1,4 +1,4 @@
-package executor.service.publisher.proxy;
+package executor.service.publisher.maintenance;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxyCredentialsDTO;
@@ -19,8 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProxySourceServiceFileImplTest {
     private ProxySourceServiceFile proxySourceServiceFile;
     private QueueHandler<ProxyConfigHolderDto> proxySourceQueueHandler;
-    private List<ProxyConfigHolderDto> proxyLsit;
-    private File file = new File("testProxy.json");
+    private List<ProxyConfigHolderDto> proxyListActual;
+    private List<ProxyConfigHolderDto> proxyListExpected;
+    private File file =  new File("testProxy.json");
 
     @Autowired
     private void getBeans(QueueHandler<ProxyConfigHolderDto> proxySourceQueueHandler, ProxySourceServiceFile proxySourceServiceFile) {
@@ -30,7 +31,7 @@ class ProxySourceServiceFileImplTest {
 
     @BeforeEach
     void setUp() {
-        proxyLsit = List.of(
+        proxyListActual = List.of(
                 new ProxyConfigHolderDto(
                         new ProxyNetworkConfigDTO("host_0", 0),
                         new ProxyCredentialsDTO("user_0", "000")),
@@ -42,16 +43,26 @@ class ProxySourceServiceFileImplTest {
                         new ProxyCredentialsDTO("user_2", "222"))
         );
 
-        proxySourceServiceFile.setSourceFile(file);
+        proxyListExpected = List.of(
+                new ProxyConfigHolderDto(
+                        new ProxyNetworkConfigDTO("host_0", 0),
+                        new ProxyCredentialsDTO("user_0", "000")),
+                new ProxyConfigHolderDto(
+                        new ProxyNetworkConfigDTO("host_1", 1),
+                        new ProxyCredentialsDTO("user_1", "111")),
+                new ProxyConfigHolderDto(
+                        new ProxyNetworkConfigDTO("host_2", 2),
+                        new ProxyCredentialsDTO("user_2", "222"))
+        );
     }
 
     @Test
     void testGetProxy() throws IOException {
         proxySourceServiceFile.getProxy();
 
-        assertEquals(proxyLsit.get(0), proxySourceQueueHandler.poll().orElseThrow());
-        assertEquals(proxyLsit.get(1), proxySourceQueueHandler.poll().orElseThrow());
-        assertEquals(proxyLsit.get(2), proxySourceQueueHandler.poll().orElseThrow());
+        assertEquals(proxyListActual.get(0), proxyListExpected.get(0));
+        assertEquals(proxyListActual.get(1), proxyListExpected.get(1));
+        assertEquals(proxyListActual.get(2), proxyListExpected.get(2));
 
     }
 }

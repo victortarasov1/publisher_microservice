@@ -1,4 +1,4 @@
-package executor.service.publisher.proxy;
+package executor.service.publisher.maintenance;
 
 import org.springframework.stereotype.Service;
 
