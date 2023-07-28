@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/publisher")
-@PreAuthorize("isAuthenticated()")
 public interface ProxySourceController {
     @PostMapping(value = "/proxy", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ProxyConfigHolderDto> add(@RequestBody ProxyConfigHolderDto proxyConfigHolderDto);
@@ -19,9 +18,11 @@ public interface ProxySourceController {
     @PostMapping( value ="/proxies", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ProxyConfigHolderDto>> addAll(@RequestBody List<ProxyConfigHolderDto> proxyConfigHolderDtos);
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/proxy")
     ResponseEntity<Optional<ProxyConfigHolderDto>> poll();
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping( "/proxies")
     ResponseEntity<List<ProxyConfigHolderDto>> removeAll();
 }

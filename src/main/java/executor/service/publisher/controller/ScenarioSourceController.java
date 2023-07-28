@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/publisher")
-@PreAuthorize("isAuthenticated()")
 public interface ScenarioSourceController {
     @PostMapping(value = "scenario", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ScenarioDto> add(@RequestBody ScenarioDto scenario);
@@ -19,9 +18,11 @@ public interface ScenarioSourceController {
     @PostMapping(value = "scenarios", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ScenarioDto> addAll(@RequestBody List<ScenarioDto> scenarios);
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping(value = "scenario", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Optional<ScenarioDto>> poll();
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping(value = "scenarios", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ScenarioDto>> removeAll();
 
