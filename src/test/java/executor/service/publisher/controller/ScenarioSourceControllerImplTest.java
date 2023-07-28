@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-@WithMockUser
 class ScenarioSourceControllerImplTest {
 
     @Autowired
@@ -64,6 +63,7 @@ class ScenarioSourceControllerImplTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnElementFromQueue() throws Exception {
         when(handler.poll()).thenReturn(Optional.of(testScenario));
         this.mockMvc.perform(delete("/publisher/scenario")).andExpect(status().isOk())
@@ -71,6 +71,7 @@ class ScenarioSourceControllerImplTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnAllElementsFromQueue() throws Exception {
         when(handler.removeAll()).thenReturn(testScenarios);
         this.mockMvc.perform(delete("/publisher/scenarios")).andExpect(status().isOk())

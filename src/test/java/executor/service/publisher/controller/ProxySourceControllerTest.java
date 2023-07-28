@@ -36,7 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-@WithMockUser
 class ProxySourceControllerTest {
 
     @Autowired
@@ -85,6 +84,7 @@ class ProxySourceControllerTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnElementFromQueue() throws Exception {
         when(handler.poll()).thenReturn(Optional.of(testProxyConfig));
         this.mockMvc.perform(delete("/publisher/proxy")
@@ -97,6 +97,7 @@ class ProxySourceControllerTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnAllElementsFromQueue() throws Exception {
         when(handler.removeAll()).thenReturn(testProxies);
         this.mockMvc.perform(delete("/publisher/proxies")
