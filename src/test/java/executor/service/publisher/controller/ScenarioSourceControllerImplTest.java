@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -62,6 +63,7 @@ class ScenarioSourceControllerImplTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnElementFromQueue() throws Exception {
         when(handler.poll()).thenReturn(Optional.of(testScenario));
         this.mockMvc.perform(delete("/publisher/scenario")).andExpect(status().isOk())
@@ -69,6 +71,7 @@ class ScenarioSourceControllerImplTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnAllElementsFromQueue() throws Exception {
         when(handler.removeAll()).thenReturn(testScenarios);
         this.mockMvc.perform(delete("/publisher/scenarios")).andExpect(status().isOk())

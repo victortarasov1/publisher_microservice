@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -83,6 +84,7 @@ class ProxySourceControllerTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnElementFromQueue() throws Exception {
         when(handler.poll()).thenReturn(Optional.of(testProxyConfig));
         this.mockMvc.perform(delete("/publisher/proxy")
@@ -95,6 +97,7 @@ class ProxySourceControllerTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnAllElementsFromQueue() throws Exception {
         when(handler.removeAll()).thenReturn(testProxies);
         this.mockMvc.perform(delete("/publisher/proxies")

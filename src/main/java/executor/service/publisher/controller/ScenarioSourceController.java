@@ -3,6 +3,7 @@ package executor.service.publisher.controller;
 import executor.service.publisher.model.ScenarioDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +18,11 @@ public interface ScenarioSourceController {
     @PostMapping(value = "scenarios", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ScenarioDto> addAll(@RequestBody List<ScenarioDto> scenarios);
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping(value = "scenario", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Optional<ScenarioDto>> poll();
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping(value = "scenarios", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ScenarioDto>> removeAll();
 
