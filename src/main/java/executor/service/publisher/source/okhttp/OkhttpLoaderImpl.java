@@ -16,11 +16,11 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class OkhttpClientImpl implements OkhttpClient {
+public class OkhttpLoaderImpl implements OkhttpLoader {
     private final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
 
-    public OkhttpClientImpl(OkHttpClient okHttpClient, ObjectMapper objectMapper) {
+    public OkhttpLoaderImpl(OkHttpClient okHttpClient, ObjectMapper objectMapper) {
         this.okHttpClient = okHttpClient;
         this.objectMapper = objectMapper;
     }
