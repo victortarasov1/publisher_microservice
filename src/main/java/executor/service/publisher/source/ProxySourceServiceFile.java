@@ -14,12 +14,12 @@ public class ProxySourceServiceFile implements SourceService {
     private final FileReader reader;
     private final QueueHandler<ProxyConfigHolderDto> queueHandler;
 
-    @Value("${source.proxy.file}")
-    private String path;
+    private final String path;
 
-    public ProxySourceServiceFile(FileReader reader, QueueHandler<ProxyConfigHolderDto> queueHandler) {
+    public ProxySourceServiceFile(FileReader reader, QueueHandler<ProxyConfigHolderDto> queueHandler, @Value("${source.proxy.file}") String path) {
         this.reader = reader;
         this.queueHandler = queueHandler;
+        this.path = path;
     }
 
     @Override

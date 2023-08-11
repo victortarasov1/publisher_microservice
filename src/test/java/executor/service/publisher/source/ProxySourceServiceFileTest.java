@@ -18,12 +18,12 @@ class ProxySourceServiceFileTest {
     void setUp() {
         reader = mock(FileReader.class);
         handler = mock(QueueHandler.class);
-        service = new ProxySourceServiceFile(reader, handler);
+        service = new ProxySourceServiceFile(reader, handler, "/some/path");
     }
     @Test
     void testLoadData() {
         service.loadData();
         verify(handler, times(1)).addAll(anyList());
-        verify(reader, times(1)).readData(any(), eq(ProxyConfigHolderDto.class));
+        verify(reader, times(1)).readData(anyString(), eq(ProxyConfigHolderDto.class));
     }
 }
