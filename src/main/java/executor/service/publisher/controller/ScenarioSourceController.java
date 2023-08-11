@@ -1,29 +1,41 @@
 package executor.service.publisher.controller;
 
 import executor.service.publisher.model.ScenarioDto;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import executor.service.publisher.queue.QueueHandler;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/publisher")
-public interface ScenarioSourceController {
-    @PostMapping(value = "scenario", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<ScenarioDto> add(@RequestBody ScenarioDto scenario);
 
-    @PostMapping(value = "scenarios", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<ScenarioDto> addAll(@RequestBody List<ScenarioDto> scenarios);
+@Component
+@RequestMapping("/publisher/scenario")
+public class ScenarioSourceController implements SourceController<ScenarioDto> {
 
-    @PreAuthorize("isAuthenticated()")
-    @DeleteMapping(value = "scenario", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<Optional<ScenarioDto>> poll();
+    private final QueueHandler<ScenarioDto> handler;
 
-    @PreAuthorize("isAuthenticated()")
-    @DeleteMapping(value = "scenarios", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<List<ScenarioDto>> removeAll();
+    public ScenarioSourceController(QueueHandler<ScenarioDto> handler) {
+        this.handler = handler;
+    }
 
+    @Override
+    public void add(ScenarioDto scenarioDto) {
+        handler.add(scenarioDto);
+    }
+
+    @Override
+    public void addAll(List<ScenarioDto> scenarios) {
+        handler.addAll(scenarios);
+    }
+
+    @Override
+    public Optional<ScenarioDto> poll() {
+        return handler.poll();
+    }
+
+    @Override
+    public List<ScenarioDto> removeAll() {
+        return handler.removeAll();
+    }
 }

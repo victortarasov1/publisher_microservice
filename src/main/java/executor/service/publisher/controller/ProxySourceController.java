@@ -1,28 +1,40 @@
 package executor.service.publisher.controller;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import executor.service.publisher.queue.QueueHandler;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/publisher")
-public interface ProxySourceController {
-    @PostMapping(value = "/proxy", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<ProxyConfigHolderDto> add(@RequestBody ProxyConfigHolderDto proxyConfigHolderDto);
+@Component
+@RequestMapping("/publisher/proxy")
+public class ProxySourceController implements SourceController<ProxyConfigHolderDto> {
 
-    @PostMapping( value ="/proxies", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<List<ProxyConfigHolderDto>> addAll(@RequestBody List<ProxyConfigHolderDto> proxyConfigHolderDtos);
+    private final QueueHandler<ProxyConfigHolderDto> proxyHandler;
 
-    @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("/proxy")
-    ResponseEntity<Optional<ProxyConfigHolderDto>> poll();
+    public ProxySourceController(QueueHandler<ProxyConfigHolderDto> proxyHandler) {
+        this.proxyHandler = proxyHandler;
+    }
 
-    @PreAuthorize("isAuthenticated()")
-    @DeleteMapping( "/proxies")
-    ResponseEntity<List<ProxyConfigHolderDto>> removeAll();
+    @Override
+    public void add(ProxyConfigHolderDto proxy) {
+        proxyHandler.add(proxy);
+    }
+
+    @Override
+    public void addAll(List<ProxyConfigHolderDto> proxyList) {
+        proxyHandler.addAll(proxyList);
+    }
+
+    @Override
+    public Optional<ProxyConfigHolderDto> poll() {
+        return proxyHandler.poll();
+    }
+
+    @Override
+    public List<ProxyConfigHolderDto> removeAll() {
+        return proxyHandler.removeAll();
+    }
 }
