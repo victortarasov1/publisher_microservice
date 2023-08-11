@@ -1,9 +1,9 @@
 package executor.service.publisher.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxyCredentialsDTO;
-import executor.service.publisher.model.ProxyNetworkConfigDTO;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import executor.service.publisher.model.*;
 import executor.service.publisher.queue.QueueHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,19 +20,18 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-class ProxySourceControllerTest {
+class ScenarioSourceControllerTest {
 
-    public static final String BASE_URL = "/publisher/proxy";
+    public static final String BASE_URL = "/publisher/scenario";
     @Autowired
     private MockMvc mockMvc;
 
@@ -40,20 +39,19 @@ class ProxySourceControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private QueueHandler<ProxyConfigHolderDto> handler;
-
+    private QueueHandler<ScenarioDto> handler;
     @Test
     void testAdd() throws Exception {
-        ProxyConfigHolderDto dto = new ProxyConfigHolderDto();
+        ScenarioDto dto = new ScenarioDto();
         mockMvc.perform(post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
     }
 
     @Test
     void testAddAll() throws Exception {
-        List<ProxyConfigHolderDto> dtoList = List.of(new ProxyConfigHolderDto());
+        List<ScenarioDto> dtoList = List.of(new ScenarioDto());
         mockMvc.perform(post(BASE_URL + "/all")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dtoList)))
@@ -63,24 +61,23 @@ class ProxySourceControllerTest {
     @Test
     @WithMockUser
     void testPoll() throws Exception {
-        ProxyConfigHolderDto dto = new ProxyConfigHolderDto(new ProxyNetworkConfigDTO("host", 1), new ProxyCredentialsDTO("username", "password"));
+        ScenarioDto dto = new ScenarioDto("some name", "some site`s url", List.of());
         when(handler.poll()).thenReturn(Optional.of(dto));
         mockMvc.perform(delete(BASE_URL))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("proxyNetworkConfig.hostname").value(dto.getProxyNetworkConfig().getHostname()))
-                .andExpect(jsonPath("proxyNetworkConfig.port").value(dto.getProxyNetworkConfig().getPort()))
-                .andExpect(jsonPath("proxyCredentials.username").value(dto.getProxyCredentials().getUsername()))
-                .andExpect(jsonPath("proxyCredentials.password").value(dto.getProxyCredentials().getPassword()));
+                .andExpect(jsonPath("name").value(dto.getName()))
+                .andExpect(jsonPath("site").value(dto.getSite()))
+                .andExpect(jsonPath("steps", hasSize(0)));
+
     }
 
     @Test
     @WithMockUser
     void testRemoveAll() throws Exception {
-        List<ProxyConfigHolderDto> dtoList = List.of(new ProxyConfigHolderDto(), new ProxyConfigHolderDto());
+        List<ScenarioDto> dtoList = List.of(new ScenarioDto(), new ScenarioDto());
         when(handler.removeAll()).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
-
 }
