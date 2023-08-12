@@ -1,11 +1,13 @@
 package executor.service.publisher.validation;
 
+import executor.service.publisher.exception.validator.UnknownProxyTypeException;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 
@@ -32,7 +34,7 @@ public class DefaultProxyValidator implements ProxyValidator {
             case "http", "https" -> Proxy.Type.HTTP;
             case "socks" -> Proxy.Type.SOCKS;
             case "direct" -> Proxy.Type.DIRECT;
-            default -> throw new RuntimeException();
+            default -> throw new UnknownProxyTypeException(proxyType);
         };
         return okHttpClient.newBuilder().proxy(new Proxy(type, inetSocketAddress)).build();
     }
@@ -47,7 +49,7 @@ public class DefaultProxyValidator implements ProxyValidator {
     private boolean validateProxy(OkHttpClient proxiedHttpClient, Request request) {
         try (Response response = proxiedHttpClient.newCall(request).execute()) {
             return response.isSuccessful();
-        } catch (Exception e) {
+        } catch (IOException ex) {
             return false;
         }
     }
