@@ -14,6 +14,10 @@ public interface SourceController<T> {
     void addAll(@RequestBody List<T> dtoList);
 
     @PreAuthorize("isAuthenticated()")
+    @DeleteMapping("/count/{size}")
+    List<T> removeByCount(@PathVariable Integer size);
+
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping
     Optional<T> poll();
 

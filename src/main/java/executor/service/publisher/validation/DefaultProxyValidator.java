@@ -6,14 +6,17 @@ import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.util.Arrays;
 
 
 import static org.springframework.http.HttpHeaders.PROXY_AUTHORIZATION;
 
+@Component
 public class DefaultProxyValidator implements ProxyValidator {
     private final OkHttpClient okHttpClient;
 
@@ -40,7 +43,7 @@ public class DefaultProxyValidator implements ProxyValidator {
     }
 
     private Request getRequest(String password, String username) {
-        Request.Builder builder = new Request.Builder().url("https://httpbin.org/ip");
+        Request.Builder builder = new Request.Builder().url("http://httpbin.org/ip");
         if (username != null && password != null)
             builder.header(PROXY_AUTHORIZATION, Credentials.basic(username, password));
         return builder.build();
