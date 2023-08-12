@@ -1,39 +1,33 @@
 package executor.service.publisher.source;
 
-import executor.service.publisher.exception.source.SourceException;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxyCredentialsDTO;
 import executor.service.publisher.model.ProxyNetworkConfigDTO;
-import executor.service.publisher.queue.QueueHandler;
+import executor.service.publisher.model.ProxySourceDto;
 import executor.service.publisher.source.okhttp.OkhttpLoader;
-import jakarta.annotation.PostConstruct;
 import okhttp3.Request;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProxySourceServiceUrl implements SourceService {
-    private final Request request;
-    private final QueueHandler<ProxyConfigHolderDto> handler;
+public class ProxySourceServiceUrl implements SourceService<ProxyConfigHolderDto> {
     private final OkhttpLoader loader;
 
-    public ProxySourceServiceUrl(@Value("${source.proxy.url}") String url,
-                                 OkhttpLoader loader, QueueHandler<ProxyConfigHolderDto> handler) {
-        this.request = new Request.Builder().url(url).get().build();
-        this.handler = handler;
+    public ProxySourceServiceUrl(OkhttpLoader loader) {
         this.loader = loader;
     }
 
+    
     @Override
-    @PostConstruct
-    public void loadData() {
-        try {
-            List<proxyDto> proxyDtoList = loader.loadData(request, proxyDto.class);
-            List<ProxyConfigHolderDto> proxies = proxyDtoList.stream().map(proxyDto::createProxyConfigHolder).toList();
-            handler.addAll(proxies);
-        } catch (SourceException ignored) {}
+    public List<ProxyConfigHolderDto> loadData(ProxySourceDto dto) {
+        Request request = new Request.Builder().url(dto.getProxySource()).delete().build();
+        return loader.loadData(request, proxyDto.class).stream().map(proxyDto::createProxyConfigHolder).toList();
+    }
+
+    @Override
+    public String getType() {
+        return "url";
     }
 
     private record proxyDto(String username, String password, String host, Integer port) {
