@@ -21,7 +21,7 @@ public class ProxySourceServiceUrl implements SourceService<ProxyConfigHolderDto
     
     @Override
     public List<ProxyConfigHolderDto> loadData(ProxySourceDto dto) {
-        Request request = new Request.Builder().url(dto.getProxySource()).delete().build();
+        Request request = new Request.Builder().url(dto.getProxySource()).get().build();
         return loader.loadData(request, proxyDto.class).stream().map(proxyDto::createProxyConfigHolder).toList();
     }
 
@@ -30,9 +30,9 @@ public class ProxySourceServiceUrl implements SourceService<ProxyConfigHolderDto
         return "url";
     }
 
-    private record proxyDto(String username, String password, String host, Integer port) {
+    private record proxyDto(String username, String password, String ip, Integer port) {
         ProxyConfigHolderDto createProxyConfigHolder() {
-            return new ProxyConfigHolderDto(new ProxyNetworkConfigDTO(host, port), new ProxyCredentialsDTO(username, password));
+            return new ProxyConfigHolderDto(new ProxyNetworkConfigDTO(ip.strip(), port), new ProxyCredentialsDTO(username, password));
         }
     }
 }

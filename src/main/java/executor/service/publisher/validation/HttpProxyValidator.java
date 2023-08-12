@@ -11,35 +11,33 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.util.Arrays;
 
 
 import static org.springframework.http.HttpHeaders.PROXY_AUTHORIZATION;
 
 @Component
-public class DefaultProxyValidator implements ProxyValidator {
+public class HttpProxyValidator implements ProxyValidator {
     private final OkHttpClient okHttpClient;
 
-    public DefaultProxyValidator(OkHttpClient okHttpClient) {
+    public HttpProxyValidator(OkHttpClient okHttpClient) {
         this.okHttpClient = okHttpClient;
     }
 
     @Override
-    public boolean isValid(ProxyConfigHolderDto dto, String proxyType) {
-        OkHttpClient proxiedHttpClient = createProxiedHttpClient(dto, proxyType);
+    public boolean isValid(ProxyConfigHolderDto dto) {
+        OkHttpClient proxiedHttpClient = createProxiedHttpClient(dto);
         Request request = getRequest(dto.getProxyCredentials().getPassword(), dto.getProxyCredentials().getUsername());
         return validateProxy(proxiedHttpClient, request);
     }
 
-    private OkHttpClient createProxiedHttpClient(ProxyConfigHolderDto dto, String proxyType) {
+    @Override
+    public String getType() {
+        return "http";
+    }
+
+    private OkHttpClient createProxiedHttpClient(ProxyConfigHolderDto dto) {
         InetSocketAddress inetSocketAddress = new InetSocketAddress(dto.getProxyNetworkConfig().getHostname(), dto.getProxyNetworkConfig().getPort());
-        Proxy.Type type = switch (proxyType) {
-            case "http", "https" -> Proxy.Type.HTTP;
-            case "socks" -> Proxy.Type.SOCKS;
-            case "direct" -> Proxy.Type.DIRECT;
-            default -> throw new UnknownProxyTypeException(proxyType);
-        };
-        return okHttpClient.newBuilder().proxy(new Proxy(type, inetSocketAddress)).build();
+        return okHttpClient.newBuilder().proxy(new Proxy(Proxy.Type.HTTP, inetSocketAddress)).build();
     }
 
     private Request getRequest(String password, String username) {
