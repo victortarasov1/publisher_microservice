@@ -39,13 +39,14 @@ public class ProxyRemoteProcessingService implements RemoteProcessingService<Pro
 
     @Override
     public void loadFromCustomRemoteSource(ProxySourceDto dto) {
+        SourceService<ProxyConfigHolderDto> service = Optional.ofNullable(sourceServices.get(dto.getProxySourceType()))
+                .orElseThrow(RuntimeException::new);
         ProxyValidator validator = Optional.ofNullable(validators.get(dto.getProxyType()))
                 .orElseThrow(() -> new UnknownProxyTypeException(dto.getProxyType()));
-        List<ProxyConfigHolderDto> dtoList = Optional.ofNullable(sourceServices.get(dto.getProxySourceType()))
-                .orElseThrow(RuntimeException::new).loadData(dto);
         Consumer<ProxyConfigHolderDto> asyncValidate = v -> CompletableFuture.runAsync(() -> {
             if (validator.isValid(v)) queueHandler.add(v);
         });
-        CompletableFuture.runAsync(() -> dtoList.forEach(asyncValidate));
+        CompletableFuture<List<ProxyConfigHolderDto>> futureData = CompletableFuture.supplyAsync(() -> service.loadData(dto));
+        futureData.thenAcceptAsync(lst -> lst.forEach(asyncValidate));
     }
 }
