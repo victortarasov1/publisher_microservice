@@ -29,7 +29,9 @@ public class ScenarioProcessingService implements ProcessingService<ScenarioDto>
 
     @Override
     public List<ScenarioDto> removeByCount(int size) {
-        return Stream.generate(queueHandler::poll).flatMap(Optional::stream).limit(size).toList();
+        return Stream.generate(queueHandler::poll)
+                .takeWhile(Optional::isPresent).limit(size)
+                .flatMap(Optional::stream).toList();
     }
 
     @Override

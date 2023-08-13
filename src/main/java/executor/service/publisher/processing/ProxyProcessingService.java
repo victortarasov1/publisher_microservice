@@ -46,9 +46,8 @@ public class ProxyProcessingService implements ProcessingService<ProxyConfigHold
     @Override
     public List<ProxyConfigHolderDto> removeByCount(int size) {
         return Stream.generate(queueHandler::poll)
-                .takeWhile(Optional::isPresent)
-                .flatMap(Optional::stream)
-                .limit(size).toList();
+                .takeWhile(Optional::isPresent).limit(size)
+                .flatMap(Optional::stream).toList();
     }
 
     @Override
