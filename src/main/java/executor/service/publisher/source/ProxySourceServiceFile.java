@@ -1,30 +1,29 @@
 package executor.service.publisher.source;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.queue.QueueHandler;
+import executor.service.publisher.model.ProxySourceDto;
 import executor.service.publisher.source.reader.FileReader;
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
-public class ProxySourceServiceFile implements SourceService {
+public class ProxySourceServiceFile implements SourceService<ProxyConfigHolderDto> {
 
     private final FileReader reader;
-    private final QueueHandler<ProxyConfigHolderDto> queueHandler;
 
-    private final String path;
-
-    public ProxySourceServiceFile(FileReader reader, QueueHandler<ProxyConfigHolderDto> queueHandler, @Value("${source.proxy.file}") String path) {
+    public ProxySourceServiceFile(FileReader reader) {
         this.reader = reader;
-        this.queueHandler = queueHandler;
-        this.path = path;
     }
 
     @Override
-    @PostConstruct
-    public void loadData() {
-        queueHandler.addAll(reader.readData(path, ProxyConfigHolderDto.class));
+    public List<ProxyConfigHolderDto> loadData(ProxySourceDto dto) {
+        return reader.readData(dto.getProxySource(), ProxyConfigHolderDto.class);
+    }
+
+    @Override
+    public String getType() {
+        return "file";
     }
 }
