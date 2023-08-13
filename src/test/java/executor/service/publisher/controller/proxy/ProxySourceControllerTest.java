@@ -1,10 +1,10 @@
-package executor.service.publisher.controller;
+package executor.service.publisher.controller.proxy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxyCredentialsDTO;
 import executor.service.publisher.model.ProxyNetworkConfigDTO;
-import executor.service.publisher.queue.QueueHandler;
+import executor.service.publisher.processing.ProcessingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,7 +41,7 @@ class ProxySourceControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private QueueHandler<ProxyConfigHolderDto> handler;
+    private ProcessingService<ProxyConfigHolderDto> service;
 
     @Test
     void testAdd() throws Exception {
@@ -64,7 +65,7 @@ class ProxySourceControllerTest {
     @WithMockUser
     void testPoll() throws Exception {
         ProxyConfigHolderDto dto = new ProxyConfigHolderDto(new ProxyNetworkConfigDTO("host", 1), new ProxyCredentialsDTO("username", "password"));
-        when(handler.poll()).thenReturn(Optional.of(dto));
+        when(service.poll()).thenReturn(Optional.of(dto));
         mockMvc.perform(delete(BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("proxyNetworkConfig.hostname").value(dto.getProxyNetworkConfig().getHostname()))
@@ -77,10 +78,21 @@ class ProxySourceControllerTest {
     @WithMockUser
     void testRemoveAll() throws Exception {
         List<ProxyConfigHolderDto> dtoList = List.of(new ProxyConfigHolderDto(), new ProxyConfigHolderDto());
-        when(handler.removeAll()).thenReturn(dtoList);
+        when(service.removeAll()).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    @WithMockUser
+    void testRemoveByCount() throws Exception {
+        List<ProxyConfigHolderDto> dtoList = List.of(new ProxyConfigHolderDto(), new ProxyConfigHolderDto());
+        when(service.removeByCount(anyInt())).thenReturn(dtoList);
+        mockMvc.perform(delete(BASE_URL + "/count/3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
+
     }
 
 }
