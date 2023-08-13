@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -28,7 +29,7 @@ public class ExceptionHandlingFilter extends OncePerRequestFilter {
         } catch (SecurityAuthException ex) {
             response.setHeader(HttpHeaders.WWW_AUTHENTICATE, ex.getMessage());
             response.setStatus(UNAUTHORIZED.value());
-            List<String> debugMessages = ex.getCause() != null ? List.of(ex.getCause().getMessage()) : List.of();
+            List<String> debugMessages = Optional.ofNullable(ex.getCause()).map(Throwable::getMessage).stream().toList();
             ApiError error = new ApiError(ex.getMessage(), debugMessages);
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), error);
