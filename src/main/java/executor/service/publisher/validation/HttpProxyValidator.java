@@ -1,6 +1,5 @@
 package executor.service.publisher.validation;
 
-import executor.service.publisher.exception.validator.UnknownProxyTypeException;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
@@ -17,6 +16,7 @@ import static org.springframework.http.HttpHeaders.PROXY_AUTHORIZATION;
 
 @Component
 public class HttpProxyValidator implements ProxyValidator {
+    public static final String PROXY_CHECKER_URL = "http://httpbin.org/ip";
     private final OkHttpClient okHttpClient;
 
     public HttpProxyValidator(OkHttpClient okHttpClient) {
@@ -41,7 +41,7 @@ public class HttpProxyValidator implements ProxyValidator {
     }
 
     private Request getRequest(String password, String username) {
-        Request.Builder builder = new Request.Builder().url("http://httpbin.org/ip");
+        Request.Builder builder = new Request.Builder().url(PROXY_CHECKER_URL);
         if (username != null && password != null)
             builder.header(PROXY_AUTHORIZATION, Credentials.basic(username, password));
         return builder.build();
