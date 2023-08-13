@@ -1,5 +1,6 @@
 package executor.service.publisher.processing;
 
+import executor.service.publisher.exception.source.UnknownSourceServiceException;
 import executor.service.publisher.exception.validator.UnknownProxyTypeException;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxySourceDto;
@@ -40,7 +41,7 @@ public class ProxyRemoteProcessingService implements RemoteProcessingService<Pro
     @Override
     public void loadFromCustomRemoteSource(ProxySourceDto dto) {
         SourceService<ProxyConfigHolderDto> service = Optional.ofNullable(sourceServices.get(dto.getProxySourceType()))
-                .orElseThrow(() -> new UnknownProxyTypeException(dto.getProxySourceType()));
+                .orElseThrow(() -> new UnknownSourceServiceException(dto.getProxySourceType()));
         ProxyValidator validator = Optional.ofNullable(validators.get(dto.getProxyType()))
                 .orElseThrow(() -> new UnknownProxyTypeException(dto.getProxyType()));
         Consumer<ProxyConfigHolderDto> asyncValidate = v -> CompletableFuture.runAsync(() -> {
