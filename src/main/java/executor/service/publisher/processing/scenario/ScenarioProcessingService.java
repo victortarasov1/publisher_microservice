@@ -1,6 +1,7 @@
-package executor.service.publisher.processing;
+package executor.service.publisher.processing.scenario;
 
 import executor.service.publisher.model.ScenarioDto;
+import executor.service.publisher.processing.ProcessingService;
 import executor.service.publisher.queue.QueueHandler;
 import org.springframework.stereotype.Component;
 

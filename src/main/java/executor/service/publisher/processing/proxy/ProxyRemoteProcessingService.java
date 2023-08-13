@@ -1,9 +1,10 @@
-package executor.service.publisher.processing;
+package executor.service.publisher.processing.proxy;
 
 import executor.service.publisher.exception.source.UnknownSourceServiceException;
 import executor.service.publisher.exception.validator.UnknownProxyTypeException;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.processing.RemoteProcessingService;
 import executor.service.publisher.queue.QueueHandler;
 import executor.service.publisher.source.SourceService;
 import executor.service.publisher.validation.ProxyValidator;

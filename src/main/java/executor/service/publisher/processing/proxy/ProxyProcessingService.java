@@ -1,8 +1,9 @@
-package executor.service.publisher.processing;
+package executor.service.publisher.processing.proxy;
 
 import executor.service.publisher.exception.validator.UnknownProxyTypeException;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.processing.ProcessingService;
 import executor.service.publisher.queue.QueueHandler;
 import executor.service.publisher.validation.ProxyValidator;
 import org.springframework.stereotype.Component;
