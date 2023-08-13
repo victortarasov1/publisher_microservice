@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 @Component
-public class ProxyRemoteProcessingService<T> implements RemoteProcessingService<ProxySourceDto> {
+public class ProxyRemoteProcessingService implements RemoteProcessingService<ProxySourceDto> {
     private final Map<String,ProxyValidator> validators;
     private final ProxySourceDto defaultSource;
     private final QueueHandler<ProxyConfigHolderDto> queueHandler;
