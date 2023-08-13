@@ -48,7 +48,6 @@ public class ProxyRemoteProcessingService implements RemoteProcessingService<Pro
         Consumer<ProxyConfigHolderDto> asyncValidate = v -> CompletableFuture.runAsync(() -> {
             if (validator.isValid(v)) queueHandler.add(v);
         });
-        CompletableFuture<List<ProxyConfigHolderDto>> futureData = CompletableFuture.supplyAsync(() -> service.loadData(dto));
-        futureData.thenAcceptAsync(lst -> lst.forEach(asyncValidate));
+        CompletableFuture.supplyAsync(() -> service.loadData(dto)).thenAcceptAsync(lst -> lst.forEach(asyncValidate));
     }
 }
