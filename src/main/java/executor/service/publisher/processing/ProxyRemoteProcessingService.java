@@ -40,7 +40,7 @@ public class ProxyRemoteProcessingService implements RemoteProcessingService<Pro
     @Override
     public void loadFromCustomRemoteSource(ProxySourceDto dto) {
         SourceService<ProxyConfigHolderDto> service = Optional.ofNullable(sourceServices.get(dto.getProxySourceType()))
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new UnknownProxyTypeException(dto.getProxySourceType()));
         ProxyValidator validator = Optional.ofNullable(validators.get(dto.getProxyType()))
                 .orElseThrow(() -> new UnknownProxyTypeException(dto.getProxyType()));
         Consumer<ProxyConfigHolderDto> asyncValidate = v -> CompletableFuture.runAsync(() -> {
