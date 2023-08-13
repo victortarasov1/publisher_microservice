@@ -1,5 +1,6 @@
-package executor.service.publisher.controller;
+package executor.service.publisher.controller.proxy;
 
+import executor.service.publisher.controller.RemoteSourceController;
 import executor.service.publisher.model.ProxySourceDto;
 import executor.service.publisher.processing.RemoteProcessingService;
 import org.springframework.stereotype.Component;

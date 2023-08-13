@@ -1,5 +1,6 @@
-package executor.service.publisher.controller;
+package executor.service.publisher.controller.scenario;
 
+import executor.service.publisher.controller.SourceController;
 import executor.service.publisher.model.ScenarioDto;
 import executor.service.publisher.processing.ProcessingService;
 import org.springframework.stereotype.Component;
