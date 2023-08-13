@@ -8,11 +8,11 @@ import java.util.Objects;
 @Component
 public class ProxySourceDto {
 
-    @Value("${controllerservice.common.proxySource}")
+    @Value("${remote.proxy.source}")
     private String proxySource;
-    @Value("${serviceone.common.proxySourceType}")
+    @Value("${remote.proxy.storage}")
     private String proxySourceType;
-    @Value("${serviceone.common.proxyType}")
+    @Value("${remote.proxy.type}")
     private String proxyType;
 
     public ProxySourceDto() {
