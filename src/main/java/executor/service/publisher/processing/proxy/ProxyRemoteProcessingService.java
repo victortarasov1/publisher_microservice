@@ -24,10 +24,10 @@ public class ProxyRemoteProcessingService implements RemoteProcessingService<Pro
     private final ProxySourceDto defaultSource;
     private final QueueHandler<ProxyConfigHolderDto> queueHandler;
 
-    private final Map<String, SourceService<ProxyConfigHolderDto>> sourceServices;
+    private final Map<String, SourceService<ProxyConfigHolderDto, ProxySourceDto>> sourceServices;
 
-    public ProxyRemoteProcessingService(List<ProxyValidator> validators, ProxySourceDto defaultSource,
-                                        QueueHandler<ProxyConfigHolderDto> queueHandler, List<SourceService<ProxyConfigHolderDto>> services) {
+    public ProxyRemoteProcessingService(List<ProxyValidator> validators, ProxySourceDto defaultSource, QueueHandler<ProxyConfigHolderDto> queueHandler,
+                                        List<SourceService<ProxyConfigHolderDto, ProxySourceDto>> services) {
         this.validators = new ConcurrentHashMap<>(validators.stream().collect(Collectors.toMap(ProxyValidator::getType, Function.identity())));
         this.defaultSource = defaultSource;
         this.queueHandler = queueHandler;
@@ -41,7 +41,7 @@ public class ProxyRemoteProcessingService implements RemoteProcessingService<Pro
 
     @Override
     public void loadFromCustomRemoteSource(ProxySourceDto dto) {
-        SourceService<ProxyConfigHolderDto> service = Optional.ofNullable(sourceServices.get(dto.getProxySourceType()))
+        SourceService<ProxyConfigHolderDto, ProxySourceDto> service = Optional.ofNullable(sourceServices.get(dto.getProxySourceType()))
                 .orElseThrow(() -> new UnknownSourceServiceException(dto.getProxySourceType()));
         ProxyValidator validator = Optional.ofNullable(validators.get(dto.getProxyType()))
                 .orElseThrow(() -> new UnknownProxyTypeException(dto.getProxyType()));

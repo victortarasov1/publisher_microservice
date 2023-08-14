@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Service
-public class ProxySourceServiceFile implements SourceService<ProxyConfigHolderDto> {
+public class ProxySourceServiceFile implements SourceService<ProxyConfigHolderDto, ProxySourceDto> {
 
     private final FileReader reader;
 

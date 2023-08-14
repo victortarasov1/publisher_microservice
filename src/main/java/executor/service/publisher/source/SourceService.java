@@ -1,11 +1,9 @@
 package executor.service.publisher.source;
 
-import executor.service.publisher.model.ProxySourceDto;
-
 import java.util.List;
 
-public interface SourceService <T>{
-    List<T> loadData(ProxySourceDto dto);
+public interface SourceService <T, D>{
+    List<T> loadData(D dto);
 
     String getType();
 }

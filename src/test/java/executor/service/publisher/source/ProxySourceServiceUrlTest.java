@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 
 class ProxySourceServiceUrlTest {
     private OkhttpLoader loader;
-    private SourceService<ProxyConfigHolderDto> service;
+    private SourceService<ProxyConfigHolderDto, ProxySourceDto> service;
     private ProxySourceDto dto;
 
     @BeforeEach

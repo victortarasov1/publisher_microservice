@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
+import java.lang.reflect.Proxy;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
 class ProxySourceServiceFileTest {
 
     private FileReader reader;
-    private SourceService<ProxyConfigHolderDto> service;
+    private SourceService<ProxyConfigHolderDto, ProxySourceDto> service;
     private ProxySourceDto dto;
     private
     @BeforeEach
