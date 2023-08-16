@@ -11,4 +11,6 @@ public interface QueueHandler<T> {
     Optional<T> poll();
 
     List<T> removeAll();
+
+    List<T> removeByCount(int size);
 }

@@ -1,31 +1,28 @@
 package executor.service.publisher.queue;
 
 import executor.service.publisher.model.ScenarioDto;
-import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
-import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandlerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ScenarioSourceQueueHandlerImplThreadSafetyTest {
-    private ScenarioSourceQueueHandler scenarioSourceQueueHandler;
+class ThreadSafeQueueHandlerTest {
+    private ThreadSafeQueueHandler<ScenarioDto> handler;
     private static final int THREAD_COUNT = 8;
     private static final int ELEMENT_COUNT = 200;
     private CountDownLatch countDownLatch;
     private ExecutorService executorService;
 
     @BeforeEach
-    public void setUp(){
-        scenarioSourceQueueHandler = new ScenarioSourceQueueHandlerImpl(new ConcurrentLinkedQueue<>());
+    public void setUp() {
+        handler = new ThreadSafeQueueHandler<>();
         countDownLatch = new CountDownLatch(THREAD_COUNT);
         executorService = Executors.newFixedThreadPool(THREAD_COUNT);
     }
@@ -33,51 +30,66 @@ public class ScenarioSourceQueueHandlerImplThreadSafetyTest {
     @Test
     public void addTest() throws InterruptedException {
         Runnable addRunnableTask = () -> {
-            scenarioSourceQueueHandler.add(new ScenarioDto());
+            handler.add(new ScenarioDto());
             countDownLatch.countDown();
         };
-        IntStream.range(0, THREAD_COUNT).forEach(v -> executorService.submit(addRunnableTask));
+        for (int i = 0; i < THREAD_COUNT; i++) executorService.submit(addRunnableTask);
         countDownLatch.await();
-        assertEquals(THREAD_COUNT, scenarioSourceQueueHandler.removeAll().size());
+        assertEquals(THREAD_COUNT, handler.removeAll().size());
     }
 
     @Test
     public void addAllTest() throws InterruptedException {
         List<ScenarioDto> elements = IntStream.range(0, ELEMENT_COUNT).boxed().map(v -> new ScenarioDto()).toList();
         Runnable addAllRunnableTask = () -> {
-            scenarioSourceQueueHandler.addAll(elements);
+            handler.addAll(elements);
             countDownLatch.countDown();
         };
-        IntStream.range(0, THREAD_COUNT).forEach(v -> executorService.submit(addAllRunnableTask));
+        for (int i = 0; i < THREAD_COUNT; i++) executorService.submit(addAllRunnableTask);
         countDownLatch.await();
-        assertEquals(THREAD_COUNT * ELEMENT_COUNT, scenarioSourceQueueHandler.removeAll().size());
+        assertEquals(THREAD_COUNT * ELEMENT_COUNT, handler.removeAll().size());
     }
 
     @Test
     public void pollTest() throws InterruptedException {
         IntStream.range(0, ELEMENT_COUNT).forEach
-                (i -> scenarioSourceQueueHandler.add(new ScenarioDto()));
+                (i -> handler.add(new ScenarioDto()));
         Runnable pollRunnableTask = () -> {
-            scenarioSourceQueueHandler.poll();
+            handler.poll();
             countDownLatch.countDown();
         };
-        IntStream.range(0, THREAD_COUNT).forEach(v -> executorService.submit(pollRunnableTask));
+        for (int i = 0; i < THREAD_COUNT; i++) executorService.submit(pollRunnableTask);
         countDownLatch.await();
-        assertEquals(ELEMENT_COUNT - THREAD_COUNT, scenarioSourceQueueHandler.removeAll().size());
+        assertEquals(ELEMENT_COUNT - THREAD_COUNT, handler.removeAll().size());
     }
 
     @Test
     public void removeAllTest() throws InterruptedException {
         IntStream.range(0, ELEMENT_COUNT).forEach
-                (i -> scenarioSourceQueueHandler.add(new ScenarioDto()));
+                (i -> handler.add(new ScenarioDto()));
         AtomicInteger resultSize = new AtomicInteger(0);
         Runnable removeAllRunnableTask = () -> {
-            resultSize.addAndGet(scenarioSourceQueueHandler.removeAll().size());
+            resultSize.addAndGet(handler.removeAll().size());
             countDownLatch.countDown();
         };
-        IntStream.range(0, THREAD_COUNT).forEach(v -> executorService.submit(removeAllRunnableTask));
+        for (int i = 0; i < THREAD_COUNT; i++) executorService.submit(removeAllRunnableTask);
         countDownLatch.await();
         assertEquals(ELEMENT_COUNT, resultSize.get());
-        assertEquals(0, scenarioSourceQueueHandler.removeAll().size());
+        assertEquals(0, handler.removeAll().size());
+    }
+
+    @Test
+    public void removeByCount() throws InterruptedException {
+        IntStream.range(0, ELEMENT_COUNT).forEach
+                (i -> handler.add(new ScenarioDto()));
+        AtomicInteger resultSize = new AtomicInteger(0);
+        Runnable removeByCountTask = () -> {
+            resultSize.addAndGet(handler.removeByCount(10).size());
+            countDownLatch.countDown();
+        };
+        for (int i = 0; i < THREAD_COUNT; i++) executorService.submit(removeByCountTask);
+        countDownLatch.await();
+        assertEquals(THREAD_COUNT * 10, resultSize.get());
+        assertEquals(ELEMENT_COUNT - THREAD_COUNT * 10, handler.removeAll().size());
     }
 }
