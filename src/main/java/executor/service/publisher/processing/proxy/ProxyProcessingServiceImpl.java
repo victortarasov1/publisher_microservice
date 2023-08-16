@@ -14,7 +14,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class ProxyProcessingServiceImpl implements ProxyProcessingService {
@@ -42,20 +41,4 @@ public class ProxyProcessingServiceImpl implements ProxyProcessingService {
     public void addAll(List<ProxyConfigHolderDto> dtoList) {
         dtoList.forEach(this::add);
     }
-
-    @Override
-    public List<ProxyConfigHolderDto> removeByCount(int size) {
-        return queueHandler.removeByCount(size);
-    }
-
-    @Override
-    public Optional<ProxyConfigHolderDto> poll() {
-        return queueHandler.poll();
-    }
-
-    @Override
-    public List<ProxyConfigHolderDto> removeAll() {
-        return queueHandler.removeAll();
-    }
-
 }
