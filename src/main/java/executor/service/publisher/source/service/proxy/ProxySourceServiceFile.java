@@ -1,4 +1,4 @@
-package executor.service.publisher.source;
+package executor.service.publisher.source.service.proxy;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxySourceDto;
@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Service
-public class ProxySourceServiceFile implements SourceService<ProxyConfigHolderDto, ProxySourceDto> {
+public class ProxySourceServiceFile implements ProxySourceService {
 
     private final FileReader reader;
 
@@ -18,8 +18,8 @@ public class ProxySourceServiceFile implements SourceService<ProxyConfigHolderDt
     }
 
     @Override
-    public List<ProxyConfigHolderDto> loadData(ProxySourceDto dto) {
-        return reader.readData(dto.getProxySource(), ProxyConfigHolderDto.class);
+    public List<ProxyConfigHolderDto> loadData(ProxySourceDto sourceDto) {
+        return reader.readData(sourceDto.getProxySource(), ProxyConfigHolderDto.class);
     }
 
     @Override

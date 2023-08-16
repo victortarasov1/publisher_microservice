@@ -1,4 +1,4 @@
-package executor.service.publisher.queue;
+package executor.service.publisher.queue.scenario;
 
 import executor.service.publisher.model.ScenarioDto;
 
@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Queue;
 
-public class ScenarioSourceQueueHandler implements QueueHandler<ScenarioDto>{
+public class ScenarioSourceQueueHandlerImpl implements ScenarioSourceQueueHandler {
     private final Queue<ScenarioDto> scenarios;
 
-    public ScenarioSourceQueueHandler(Queue<ScenarioDto> scenarios) {
+    public ScenarioSourceQueueHandlerImpl(Queue<ScenarioDto> scenarios) {
         this.scenarios = scenarios;
     }
 

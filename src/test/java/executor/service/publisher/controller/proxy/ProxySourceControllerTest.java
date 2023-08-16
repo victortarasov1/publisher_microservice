@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxyCredentialsDTO;
 import executor.service.publisher.model.ProxyNetworkConfigDTO;
-import executor.service.publisher.processing.ProcessingService;
+import executor.service.publisher.processing.proxy.ProxyProcessingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ class ProxySourceControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private ProcessingService<ProxyConfigHolderDto> service;
+    private ProxyProcessingService service;
 
     @Test
     void testAdd() throws Exception {

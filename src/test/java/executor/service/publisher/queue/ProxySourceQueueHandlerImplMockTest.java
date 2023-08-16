@@ -1,6 +1,8 @@
 package executor.service.publisher.queue;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
+import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
+import executor.service.publisher.queue.proxy.ProxySourceQueueHandlerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,15 +14,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class ProxySourceQueueHandlerMockTest {
-    private QueueHandler<ProxyConfigHolderDto> queueHandler;
+public class ProxySourceQueueHandlerImplMockTest {
+    private ProxySourceQueueHandler queueHandler;
     @Mock
     private ConcurrentLinkedQueue<ProxyConfigHolderDto> proxies;
 
     @BeforeEach
     public void setUp() {
         proxies = mock(ConcurrentLinkedQueue.class);
-        queueHandler = new ProxySourceQueueHandler(proxies);
+        queueHandler = new ProxySourceQueueHandlerImpl(proxies);
     }
 
     @Test

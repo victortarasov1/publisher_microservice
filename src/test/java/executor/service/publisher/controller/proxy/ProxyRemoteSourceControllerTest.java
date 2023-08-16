@@ -2,7 +2,7 @@ package executor.service.publisher.controller.proxy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.model.ProxySourceDto;
-import executor.service.publisher.processing.RemoteProcessingService;
+import executor.service.publisher.processing.proxy.ProxyRemoteProcessingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ class ProxyRemoteSourceControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private RemoteProcessingService<ProxySourceDto> service;
+    private ProxyRemoteProcessingService service;
 
     @Test
     void testLoadFromDefaultRemoteSource() throws Exception {
