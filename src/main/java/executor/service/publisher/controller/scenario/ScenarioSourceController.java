@@ -2,7 +2,7 @@ package executor.service.publisher.controller.scenario;
 
 import executor.service.publisher.controller.SourceController;
 import executor.service.publisher.model.ScenarioDto;
-import executor.service.publisher.processing.ProcessingService;
+import executor.service.publisher.processing.scenario.ScenarioProcessingService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,9 +14,9 @@ import java.util.Optional;
 @RequestMapping("/publisher/scenario")
 public class ScenarioSourceController implements SourceController<ScenarioDto> {
 
-    private final ProcessingService<ScenarioDto> service;
+    private final ScenarioProcessingService service;
 
-    public ScenarioSourceController(ProcessingService<ScenarioDto> service) {
+    public ScenarioSourceController(ScenarioProcessingService service) {
         this.service = service;
     }
 

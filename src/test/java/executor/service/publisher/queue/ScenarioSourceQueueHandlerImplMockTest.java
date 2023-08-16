@@ -1,6 +1,8 @@
 package executor.service.publisher.queue;
 
 import executor.service.publisher.model.ScenarioDto;
+import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
+import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandlerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,14 +15,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ScenarioSourceQueueHandlerMockTest {
+public class ScenarioSourceQueueHandlerImplMockTest {
     private ConcurrentLinkedQueue<ScenarioDto> scenarios;
-    private QueueHandler<ScenarioDto> scenarioSourceQueueHandler;
+    private ScenarioSourceQueueHandler scenarioSourceQueueHandler;
 
     @BeforeEach
     public void setUp(){
         scenarios = Mockito.mock(ConcurrentLinkedQueue.class);
-        scenarioSourceQueueHandler = new ScenarioSourceQueueHandler(scenarios);
+        scenarioSourceQueueHandler = new ScenarioSourceQueueHandlerImpl(scenarios);
     }
 
     @Test

@@ -2,7 +2,7 @@ package executor.service.publisher.controller.scenario;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.model.*;
-import executor.service.publisher.processing.ProcessingService;
+import executor.service.publisher.processing.scenario.ScenarioProcessingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ class ScenarioSourceControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private ProcessingService<ScenarioDto> service;
+    private ScenarioProcessingService service;
     @Test
     void testAdd() throws Exception {
         ScenarioDto dto = new ScenarioDto();

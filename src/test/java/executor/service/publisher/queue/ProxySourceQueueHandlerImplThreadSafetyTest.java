@@ -1,6 +1,8 @@
 package executor.service.publisher.queue;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
+import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
+import executor.service.publisher.queue.proxy.ProxySourceQueueHandlerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,16 +16,16 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProxySourceQueueHandlerThreadSafetyTest {
+class ProxySourceQueueHandlerImplThreadSafetyTest {
     private static final int THREAD_COUNT = 8;
     private static final int ELEMENT_COUNT = 100;
 
-    private QueueHandler<ProxyConfigHolderDto> queueHandler;
+    private ProxySourceQueueHandler queueHandler;
     private CountDownLatch latch;
     private ExecutorService executorService;
     @BeforeEach
     public void setUp() {
-        queueHandler = new ProxySourceQueueHandler(new ConcurrentLinkedQueue<>());
+        queueHandler = new ProxySourceQueueHandlerImpl(new ConcurrentLinkedQueue<>());
         latch = new CountDownLatch(THREAD_COUNT);
         executorService = Executors.newFixedThreadPool(THREAD_COUNT);
     }

@@ -3,6 +3,8 @@ package executor.service.publisher.source;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxySourceDto;
 import executor.service.publisher.source.okhttp.OkhttpLoader;
+import executor.service.publisher.source.service.proxy.ProxySourceService;
+import executor.service.publisher.source.service.proxy.ProxySourceServiceUrl;
 import okhttp3.Request;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +17,7 @@ import static org.mockito.Mockito.*;
 
 class ProxySourceServiceUrlTest {
     private OkhttpLoader loader;
-    private SourceService<ProxyConfigHolderDto, ProxySourceDto> service;
+    private ProxySourceService service;
     private ProxySourceDto dto;
 
     @BeforeEach
