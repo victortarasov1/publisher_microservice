@@ -1,5 +1,6 @@
 package executor.service.publisher.config;
 
+import executor.service.publisher.queue.ThreadSafeQueueHandler;
 import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
 import executor.service.publisher.queue.proxy.ProxySourceQueueHandlerImpl;
 import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
@@ -8,18 +9,16 @@ import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 @Configuration
 public class Config {
     @Bean
     public ProxySourceQueueHandler proxyQueueHandler() {
-        return new ProxySourceQueueHandlerImpl(new ConcurrentLinkedQueue<>());
+        return new ProxySourceQueueHandlerImpl(new ThreadSafeQueueHandler<>());
     }
 
     @Bean
     public ScenarioSourceQueueHandler scenarioQueueHandler() {
-        return new ScenarioSourceQueueHandlerImpl(new ConcurrentLinkedQueue<>());
+        return new ScenarioSourceQueueHandlerImpl(new ThreadSafeQueueHandler<>());
     }
 
     @Bean
