@@ -1,13 +1,13 @@
-package executor.service.publisher.queue;
+package executor.service.publisher.queue.proxy;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
 
 import java.util.*;
 
-public class ProxySourceQueueHandler implements QueueHandler<ProxyConfigHolderDto> {
+public class ProxySourceQueueHandlerImpl implements ProxySourceQueueHandler {
     private final Queue<ProxyConfigHolderDto> proxies;
 
-    public ProxySourceQueueHandler(Queue<ProxyConfigHolderDto> proxies) {
+    public ProxySourceQueueHandlerImpl(Queue<ProxyConfigHolderDto> proxies) {
         this.proxies = proxies;
     }
 

@@ -2,7 +2,7 @@ package executor.service.publisher.controller.proxy;
 
 import executor.service.publisher.controller.SourceController;
 import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.processing.ProcessingService;
+import executor.service.publisher.processing.proxy.ProxyProcessingService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,9 +13,9 @@ import java.util.Optional;
 @RequestMapping("/publisher/proxy")
 public class ProxySourceController implements SourceController<ProxyConfigHolderDto> {
 
-    private final ProcessingService<ProxyConfigHolderDto> service;
+    private final ProxyProcessingService service;
 
-    public ProxySourceController(ProcessingService<ProxyConfigHolderDto> service) {
+    public ProxySourceController(ProxyProcessingService service) {
         this.service = service;
     }
 

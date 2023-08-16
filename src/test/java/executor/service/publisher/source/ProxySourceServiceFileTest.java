@@ -2,13 +2,13 @@ package executor.service.publisher.source;
 
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxySourceDto;
-import executor.service.publisher.queue.QueueHandler;
 import executor.service.publisher.source.reader.FileReader;
+import executor.service.publisher.source.service.proxy.ProxySourceService;
+import executor.service.publisher.source.service.proxy.ProxySourceServiceFile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-import java.lang.reflect.Proxy;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 class ProxySourceServiceFileTest {
 
     private FileReader reader;
-    private SourceService<ProxyConfigHolderDto, ProxySourceDto> service;
+    private ProxySourceService service;
     private ProxySourceDto dto;
     private
     @BeforeEach

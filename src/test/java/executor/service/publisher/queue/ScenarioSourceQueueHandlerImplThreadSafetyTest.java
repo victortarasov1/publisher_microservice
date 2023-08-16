@@ -1,6 +1,8 @@
 package executor.service.publisher.queue;
 
 import executor.service.publisher.model.ScenarioDto;
+import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
+import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandlerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +16,8 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ScenarioSourceQueueHandlerThreadSafetyTest {
-    private QueueHandler<ScenarioDto> scenarioSourceQueueHandler;
+public class ScenarioSourceQueueHandlerImplThreadSafetyTest {
+    private ScenarioSourceQueueHandler scenarioSourceQueueHandler;
     private static final int THREAD_COUNT = 8;
     private static final int ELEMENT_COUNT = 200;
     private CountDownLatch countDownLatch;
@@ -23,7 +25,7 @@ public class ScenarioSourceQueueHandlerThreadSafetyTest {
 
     @BeforeEach
     public void setUp(){
-        scenarioSourceQueueHandler = new ScenarioSourceQueueHandler(new ConcurrentLinkedQueue<>());
+        scenarioSourceQueueHandler = new ScenarioSourceQueueHandlerImpl(new ConcurrentLinkedQueue<>());
         countDownLatch = new CountDownLatch(THREAD_COUNT);
         executorService = Executors.newFixedThreadPool(THREAD_COUNT);
     }
