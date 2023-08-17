@@ -7,6 +7,12 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * A basic thread-safe implementation of the QueueHandler interface using a ConcurrentLinkedQueue.
+ * This class provides a foundational implementation of the queue handling functionality described in the interface.
+ *
+ * @param <T> the type of elements stored in the queue
+ */
 public class ThreadSafeQueueHandler<T> implements QueueHandler<T> {
     private final Queue<T> queue;
 
@@ -33,7 +39,7 @@ public class ThreadSafeQueueHandler<T> implements QueueHandler<T> {
     public List<T> removeAll() {
         List<T> elements = new ArrayList<>();
         T removed = queue.poll();
-        while (removed != null){
+        while (removed != null) {
             elements.add(removed);
             removed = queue.poll();
         }
@@ -46,7 +52,7 @@ public class ThreadSafeQueueHandler<T> implements QueueHandler<T> {
         T removed = queue.poll();
         while (removed != null) {
             elements.add(removed);
-            if(elements.size() < 10) removed = queue.poll();
+            if (elements.size() < 10) removed = queue.poll();
             else return elements;
         }
         return elements;
