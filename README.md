@@ -1,5 +1,6 @@
 # publisher
-This microservice provides an API for working with a queue of proxies and scenarios. The program makes it possible to add new proxies and scenarios to the queue or load them from a remote source (file or HTTP source). Additionally, it asynchronously validates proxies; currently, it can validate two types of proxies: direct and HTTP. It also makes it possible to fetch data from the queue (an authorization token is required for this).
+This microservice provides an API for working with a queue of proxies and scenarios. The program makes it possible to add new proxies and scenarios to the queue or load them from a remote source (file or HTTP source). Additionally, it asynchronously validates proxies; currently, it can validate two types of proxies: direct and HTTP. It also makes it possible to fetch data from the queue (an authorization token is required for this). 
+[You can also see a second microservice there, which requests data and processes it.](https://github.com/MorgothGorthaur/worker_microservice)
 ## Publisher's API
 
 - `POST: /publisher/{proxy/scenario}/all` – Adds a list of proxies/scenarios.
@@ -88,7 +89,7 @@ Note, that remote HTTP API must have such a format:
  ### Server build:
 - maven
 
-## Requirement
+## Requirements
 - java 17
 - maven
 
@@ -98,3 +99,4 @@ Note, that remote HTTP API must have such a format:
     mvn clean package
     java -jar target/publisher-0.0.1-SNAPSHOT.jar 
 ```
+You also need to generate a JWT token using a secret key from the property file to connect to the endpoints that require authorization.
