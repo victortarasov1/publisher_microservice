@@ -19,7 +19,7 @@ public class ProxySourceServiceFile implements ProxySourceService {
 
     @Override
     public List<ProxyConfigHolderDto> loadData(ProxySourceDto sourceDto) {
-        return reader.readData(sourceDto.getProxySource(), ProxyConfigHolderDto.class);
+        return reader.readData(sourceDto.getSource(), ProxyConfigHolderDto.class);
     }
 
     @Override

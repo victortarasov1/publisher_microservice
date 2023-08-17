@@ -21,7 +21,7 @@ public class ProxySourceServiceUrl implements ProxySourceService {
     
     @Override
     public List<ProxyConfigHolderDto> loadData(ProxySourceDto sourceDto) {
-        Request request = new Request.Builder().url(sourceDto.getProxySource()).get().build();
+        Request request = new Request.Builder().url(sourceDto.getSource()).get().build();
         return loader.loadData(request, proxyDto.class).stream().map(proxyDto::createProxyConfigHolder).toList();
     }
 

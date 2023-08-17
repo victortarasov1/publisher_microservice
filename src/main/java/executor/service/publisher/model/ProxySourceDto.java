@@ -9,66 +9,66 @@ import java.util.Objects;
 public class ProxySourceDto {
 
     @Value("${remote.proxy.source}")
-    private String proxySource;
+    private String source;
     @Value("${remote.proxy.storage}")
-    private String proxySourceType;
+    private String storage;
     @Value("${remote.proxy.type}")
-    private String proxyType;
+    private String type;
 
     public ProxySourceDto() {
 
     }
 
-    public ProxySourceDto(String proxySource, String proxySourceType, String proxyType) {
-        this.proxySource = proxySource;
-        this.proxySourceType = proxySourceType;
-        this.proxyType = proxyType;
+    public ProxySourceDto(String source, String storage, String type) {
+        this.source = source;
+        this.storage = storage;
+        this.type = type;
     }
 
     @Override
     public boolean equals(Object o) {
         if(this == o) return true;
         if(!(o instanceof ProxySourceDto proxySourceDto)) return false;
-        return Objects.equals(proxySource, proxySourceDto.proxySource) &&
-                Objects.equals(proxySourceType, proxySourceDto.proxySourceType) &&
-                Objects.equals(proxyType, proxySourceDto.proxyType);
+        return Objects.equals(source, proxySourceDto.source) &&
+                Objects.equals(storage, proxySourceDto.storage) &&
+                Objects.equals(type, proxySourceDto.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(proxySource, proxySourceType, proxyType);
+        return Objects.hash(source, storage, type);
     }
 
     @Override
     public String toString() {
         return "ProxySourceDto{" +
-                "proxySource='" + proxySource + '\'' +
-                ", proxySourceType='" + proxySourceType + '\'' +
-                ", proxyType='" + proxyType + '\'' +
+                "proxySource='" + source + '\'' +
+                ", proxySourceType='" + storage + '\'' +
+                ", proxyType='" + type + '\'' +
                 '}';
     }
 
-    public String getProxySource() {
-        return proxySource;
+    public String getSource() {
+        return source;
     }
 
-    public void setProxySource(String proxySource) {
-        this.proxySource = proxySource;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public String getProxySourceType() {
-        return proxySourceType;
+    public String getStorage() {
+        return storage;
     }
 
-    public void setProxySourceType(String proxySourceType) {
-        this.proxySourceType = proxySourceType;
+    public void setStorage(String storage) {
+        this.storage = storage;
     }
 
-    public String getProxyType() {
-        return proxyType;
+    public String getType() {
+        return type;
     }
 
-    public void setProxyType(String proxyType) {
-        this.proxyType = proxyType;
+    public void setType(String type) {
+        this.type = type;
     }
 }

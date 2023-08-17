@@ -41,10 +41,10 @@ public class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingSe
 
     @Override
     public void loadFromCustomRemoteSource(ProxySourceDto dto) {
-        ProxySourceService service = Optional.ofNullable(sourceServices.get(dto.getProxySourceType()))
-                .orElseThrow(() -> new UnknownSourceServiceException(dto.getProxySourceType()));
-        ProxyValidator validator = Optional.ofNullable(validators.get(dto.getProxyType()))
-                .orElseThrow(() -> new UnknownProxyTypeException(dto.getProxyType()));
+        ProxySourceService service = Optional.ofNullable(sourceServices.get(dto.getStorage()))
+                .orElseThrow(() -> new UnknownSourceServiceException(dto.getStorage()));
+        ProxyValidator validator = Optional.ofNullable(validators.get(dto.getType()))
+                .orElseThrow(() -> new UnknownProxyTypeException(dto.getType()));
         Consumer<ProxyConfigHolderDto> asyncValidate = v -> CompletableFuture.runAsync(() -> {
             if (validator.isValid(v)) queueHandler.add(v);
         });

@@ -14,7 +14,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class ProxyProcessingServiceImpl implements ProxyProcessingService {
@@ -31,8 +30,8 @@ public class ProxyProcessingServiceImpl implements ProxyProcessingService {
 
     @Override
     public void add(ProxyConfigHolderDto dto) {
-        ProxyValidator validator = Optional.ofNullable(validators.get(defaultSource.getProxyType()))
-                .orElseThrow(() -> new UnknownProxyTypeException(defaultSource.getProxyType()));
+        ProxyValidator validator = Optional.ofNullable(validators.get(defaultSource.getType()))
+                .orElseThrow(() -> new UnknownProxyTypeException(defaultSource.getType()));
         CompletableFuture.runAsync(() -> {
             if (validator.isValid(dto)) queueHandler.add(dto);
         });
