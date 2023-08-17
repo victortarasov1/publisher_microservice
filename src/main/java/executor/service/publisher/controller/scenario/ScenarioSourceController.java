@@ -2,7 +2,7 @@ package executor.service.publisher.controller.scenario;
 
 import executor.service.publisher.controller.SourceController;
 import executor.service.publisher.model.ScenarioDto;
-import executor.service.publisher.processing.scenario.ScenarioProcessingService;
+import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,34 +14,34 @@ import java.util.Optional;
 @RequestMapping("/publisher/scenario")
 public class ScenarioSourceController implements SourceController<ScenarioDto> {
 
-    private final ScenarioProcessingService service;
+    private final ScenarioSourceQueueHandler scenarios;
 
-    public ScenarioSourceController(ScenarioProcessingService service) {
-        this.service = service;
+    public ScenarioSourceController(ScenarioSourceQueueHandler scenarios) {
+        this.scenarios = scenarios;
     }
 
     @Override
     public void add(ScenarioDto scenarioDto) {
-        service.add(scenarioDto);
+        scenarios.add(scenarioDto);
     }
 
     @Override
     public void addAll(List<ScenarioDto> scenarios) {
-        service.addAll(scenarios);
+        this.scenarios.addAll(scenarios);
     }
 
     @Override
     public List<ScenarioDto> removeByCount(Integer size) {
-        return service.removeByCount(size);
+        return scenarios.removeByCount(size);
     }
 
     @Override
     public Optional<ScenarioDto> poll() {
-        return service.poll();
+        return scenarios.poll();
     }
 
     @Override
     public List<ScenarioDto> removeAll() {
-        return service.removeAll();
+        return scenarios.removeAll();
     }
 }

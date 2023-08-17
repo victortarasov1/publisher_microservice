@@ -2,7 +2,7 @@ package executor.service.publisher.controller.scenario;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.model.*;
-import executor.service.publisher.processing.scenario.ScenarioProcessingService;
+import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ class ScenarioSourceControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private ScenarioProcessingService service;
+    private ScenarioSourceQueueHandler scenarios;
     @Test
     void testAdd() throws Exception {
         ScenarioDto dto = new ScenarioDto();
@@ -60,7 +60,7 @@ class ScenarioSourceControllerTest {
     @WithMockUser
     void testPoll() throws Exception {
         ScenarioDto dto = new ScenarioDto("some name", "some site`s url", List.of());
-        when(service.poll()).thenReturn(Optional.of(dto));
+        when(scenarios.poll()).thenReturn(Optional.of(dto));
         mockMvc.perform(delete(BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value(dto.getName()))
@@ -73,7 +73,7 @@ class ScenarioSourceControllerTest {
     @WithMockUser
     void testRemoveAll() throws Exception {
         List<ScenarioDto> dtoList = List.of(new ScenarioDto(), new ScenarioDto());
-        when(service.removeAll()).thenReturn(dtoList);
+        when(scenarios.removeAll()).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -83,7 +83,7 @@ class ScenarioSourceControllerTest {
     @WithMockUser
     void testRemoveByCount() throws Exception {
         List<ScenarioDto> dtoList = List.of(new ScenarioDto(), new ScenarioDto());
-        when(service.removeByCount(anyInt())).thenReturn(dtoList);
+        when(scenarios.removeByCount(anyInt())).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/count/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));

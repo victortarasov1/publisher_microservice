@@ -5,6 +5,7 @@ import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.model.ProxyCredentialsDTO;
 import executor.service.publisher.model.ProxyNetworkConfigDTO;
 import executor.service.publisher.processing.proxy.ProxyProcessingService;
+import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,9 @@ class ProxySourceControllerTest {
     @MockBean
     private ProxyProcessingService service;
 
+    @MockBean
+    private ProxySourceQueueHandler proxies;
+
     @Test
     void testAdd() throws Exception {
         ProxyConfigHolderDto dto = new ProxyConfigHolderDto();
@@ -65,7 +69,7 @@ class ProxySourceControllerTest {
     @WithMockUser
     void testPoll() throws Exception {
         ProxyConfigHolderDto dto = new ProxyConfigHolderDto(new ProxyNetworkConfigDTO("host", 1), new ProxyCredentialsDTO("username", "password"));
-        when(service.poll()).thenReturn(Optional.of(dto));
+        when(proxies.poll()).thenReturn(Optional.of(dto));
         mockMvc.perform(delete(BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("proxyNetworkConfig.hostname").value(dto.getProxyNetworkConfig().getHostname()))
@@ -78,7 +82,7 @@ class ProxySourceControllerTest {
     @WithMockUser
     void testRemoveAll() throws Exception {
         List<ProxyConfigHolderDto> dtoList = List.of(new ProxyConfigHolderDto(), new ProxyConfigHolderDto());
-        when(service.removeAll()).thenReturn(dtoList);
+        when(proxies.removeAll()).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -88,7 +92,7 @@ class ProxySourceControllerTest {
     @WithMockUser
     void testRemoveByCount() throws Exception {
         List<ProxyConfigHolderDto> dtoList = List.of(new ProxyConfigHolderDto(), new ProxyConfigHolderDto());
-        when(service.removeByCount(anyInt())).thenReturn(dtoList);
+        when(proxies.removeByCount(anyInt())).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/count/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
