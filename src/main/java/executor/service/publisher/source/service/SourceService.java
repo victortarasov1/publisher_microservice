@@ -3,7 +3,7 @@ package executor.service.publisher.source.service;
 import java.util.List;
 
 /**
- * An interface for loading data of type {@code T} from remote sources using information provided by a {@code sourceDto} of type {@code D}.
+ * An interface for loading data of type {@code T} from remote sources using information provided by a data transfer object of type {@code D}.
  * This interface is designed to facilitate data extraction from external resources.
  *
  * @param <T> the type of data to be extracted
