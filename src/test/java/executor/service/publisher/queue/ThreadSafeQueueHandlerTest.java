@@ -52,8 +52,7 @@ class ThreadSafeQueueHandlerTest {
 
     @Test
     public void testPoll() throws InterruptedException {
-        IntStream.range(0, ELEMENT_COUNT).forEach
-                (i -> handler.add(new ScenarioDto()));
+        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new ScenarioDto());
         Runnable pollRunnableTask = () -> {
             handler.poll();
             countDownLatch.countDown();
@@ -65,8 +64,7 @@ class ThreadSafeQueueHandlerTest {
 
     @Test
     public void testRemoveAll() throws InterruptedException {
-        IntStream.range(0, ELEMENT_COUNT).forEach
-                (i -> handler.add(new ScenarioDto()));
+        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new ScenarioDto());
         AtomicInteger resultSize = new AtomicInteger(0);
         Runnable removeAllRunnableTask = () -> {
             resultSize.addAndGet(handler.removeAll().size());
@@ -80,8 +78,7 @@ class ThreadSafeQueueHandlerTest {
 
     @Test
     public void testRemoveByCount() throws InterruptedException {
-        IntStream.range(0, ELEMENT_COUNT).forEach
-                (i -> handler.add(new ScenarioDto()));
+        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new ScenarioDto());
         AtomicInteger resultSize = new AtomicInteger(0);
         Runnable removeByCountTask = () -> {
             resultSize.addAndGet(handler.removeByCount(10).size());
