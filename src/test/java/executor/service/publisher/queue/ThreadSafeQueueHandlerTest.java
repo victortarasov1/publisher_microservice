@@ -28,7 +28,7 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void addTest() throws InterruptedException {
+    public void testAadd() throws InterruptedException {
         Runnable addRunnableTask = () -> {
             handler.add(new ScenarioDto());
             countDownLatch.countDown();
@@ -39,7 +39,7 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void addAllTest() throws InterruptedException {
+    public void testAddAll() throws InterruptedException {
         List<ScenarioDto> elements = IntStream.range(0, ELEMENT_COUNT).boxed().map(v -> new ScenarioDto()).toList();
         Runnable addAllRunnableTask = () -> {
             handler.addAll(elements);
@@ -51,9 +51,8 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void pollTest() throws InterruptedException {
-        IntStream.range(0, ELEMENT_COUNT).forEach
-                (i -> handler.add(new ScenarioDto()));
+    public void testPoll() throws InterruptedException {
+        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new ScenarioDto());
         Runnable pollRunnableTask = () -> {
             handler.poll();
             countDownLatch.countDown();
@@ -64,9 +63,8 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void removeAllTest() throws InterruptedException {
-        IntStream.range(0, ELEMENT_COUNT).forEach
-                (i -> handler.add(new ScenarioDto()));
+    public void testRemoveAll() throws InterruptedException {
+        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new ScenarioDto());
         AtomicInteger resultSize = new AtomicInteger(0);
         Runnable removeAllRunnableTask = () -> {
             resultSize.addAndGet(handler.removeAll().size());
@@ -79,9 +77,8 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void removeByCount() throws InterruptedException {
-        IntStream.range(0, ELEMENT_COUNT).forEach
-                (i -> handler.add(new ScenarioDto()));
+    public void testRemoveByCount() throws InterruptedException {
+        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new ScenarioDto());
         AtomicInteger resultSize = new AtomicInteger(0);
         Runnable removeByCountTask = () -> {
             resultSize.addAndGet(handler.removeByCount(10).size());

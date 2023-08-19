@@ -52,7 +52,7 @@ public class ThreadSafeQueueHandler<T> implements QueueHandler<T> {
         T removed = queue.poll();
         while (removed != null) {
             elements.add(removed);
-            if (elements.size() < 10) removed = queue.poll();
+            if (elements.size() < size) removed = queue.poll();
             else return elements;
         }
         return elements;
