@@ -21,17 +21,17 @@ import java.util.stream.Collectors;
 @Component
 public class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingService {
     private final Map<String, ProxyValidator> validators;
+    private final Map<String, ProxySourceService> sourceServices;
     private final ProxySourceDto defaultSource;
     private final ProxySourceQueueHandler queueHandler;
 
-    private final Map<String, ProxySourceService> sourceServices;
 
-    public ProxyRemoteProcessingServiceImpl(List<ProxyValidator> validators, ProxySourceDto defaultSource, ProxySourceQueueHandler queueHandler,
-                                            List<ProxySourceService> services) {
+    public ProxyRemoteProcessingServiceImpl(List<ProxyValidator> validators, List<ProxySourceService> sourceServices, ProxySourceDto defaultSource,
+                                            ProxySourceQueueHandler queueHandler) {
         this.validators = new ConcurrentHashMap<>(validators.stream().collect(Collectors.toMap(ProxyValidator::getType, Function.identity())));
+        this.sourceServices = new ConcurrentHashMap<>(sourceServices.stream().collect(Collectors.toMap(ProxySourceService::getType, Function.identity())));
         this.defaultSource = defaultSource;
         this.queueHandler = queueHandler;
-        sourceServices = new ConcurrentHashMap<>(services.stream().collect(Collectors.toMap(ProxySourceService::getType, Function.identity())));
     }
 
     @Override
