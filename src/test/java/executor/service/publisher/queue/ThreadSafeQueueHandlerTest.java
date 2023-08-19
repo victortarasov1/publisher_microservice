@@ -28,7 +28,7 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void addTest() throws InterruptedException {
+    public void testAadd() throws InterruptedException {
         Runnable addRunnableTask = () -> {
             handler.add(new ScenarioDto());
             countDownLatch.countDown();
@@ -39,7 +39,7 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void addAllTest() throws InterruptedException {
+    public void testAddAll() throws InterruptedException {
         List<ScenarioDto> elements = IntStream.range(0, ELEMENT_COUNT).boxed().map(v -> new ScenarioDto()).toList();
         Runnable addAllRunnableTask = () -> {
             handler.addAll(elements);
@@ -51,7 +51,7 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void pollTest() throws InterruptedException {
+    public void testPoll() throws InterruptedException {
         IntStream.range(0, ELEMENT_COUNT).forEach
                 (i -> handler.add(new ScenarioDto()));
         Runnable pollRunnableTask = () -> {
@@ -64,7 +64,7 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void removeAllTest() throws InterruptedException {
+    public void testRemoveAll() throws InterruptedException {
         IntStream.range(0, ELEMENT_COUNT).forEach
                 (i -> handler.add(new ScenarioDto()));
         AtomicInteger resultSize = new AtomicInteger(0);
@@ -79,7 +79,7 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void removeByCount() throws InterruptedException {
+    public void testRemoveByCount() throws InterruptedException {
         IntStream.range(0, ELEMENT_COUNT).forEach
                 (i -> handler.add(new ScenarioDto()));
         AtomicInteger resultSize = new AtomicInteger(0);
