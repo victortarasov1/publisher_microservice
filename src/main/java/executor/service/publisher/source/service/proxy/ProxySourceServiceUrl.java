@@ -31,8 +31,13 @@ public class ProxySourceServiceUrl implements ProxySourceService {
     }
 
     private record proxyDto(String username, String password, String ip, Integer port) {
+        proxyDto {
+            ip = ip.strip();
+            if(username != null) username = username.strip();
+            if(password != null) password = password.strip();
+        }
         ProxyConfigHolderDto createProxyConfigHolder() {
-            return new ProxyConfigHolderDto(new ProxyNetworkConfigDTO(ip.strip(), port), new ProxyCredentialsDTO(username, password));
+            return new ProxyConfigHolderDto(new ProxyNetworkConfigDTO(ip, port), new ProxyCredentialsDTO(username, password));
         }
     }
 }
