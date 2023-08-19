@@ -1,4 +1,4 @@
-package executor.service.publisher.authorization;
+package executor.service.publisher.security.authorization;
 
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.exceptions.JWTDecodeException;

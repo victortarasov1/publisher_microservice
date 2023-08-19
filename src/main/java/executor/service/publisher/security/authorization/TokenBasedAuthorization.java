@@ -1,4 +1,4 @@
-package executor.service.publisher.authorization;
+package executor.service.publisher.security.authorization;
 
 import executor.service.publisher.exception.security.AuthorizationException;
 
