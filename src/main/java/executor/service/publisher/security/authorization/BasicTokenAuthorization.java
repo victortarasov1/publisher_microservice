@@ -1,11 +1,11 @@
-package executor.service.publisher.authorization;
+package executor.service.publisher.security.authorization;
 
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import executor.service.publisher.enums.TokenClaim;
+import executor.service.publisher.security.TokenClaim;
 import executor.service.publisher.exception.security.AuthorizationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
