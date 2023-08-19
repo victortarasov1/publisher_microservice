@@ -1,4 +1,4 @@
-package executor.service.publisher.enums;
+package executor.service.publisher.security;
 
 public enum TokenClaim {
     ROLES("roles");
