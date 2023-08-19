@@ -1,7 +1,6 @@
 package executor.service.publisher.config.filter;
 
 import executor.service.publisher.authorization.TokenBasedAuthorization;
-import executor.service.publisher.enums.AuthorizationType;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

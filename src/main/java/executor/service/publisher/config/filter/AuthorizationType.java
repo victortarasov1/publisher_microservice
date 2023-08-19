@@ -1,4 +1,4 @@
-package executor.service.publisher.enums;
+package executor.service.publisher.config.filter;
 
 public enum AuthorizationType {
     BEARER("Bearer ");
