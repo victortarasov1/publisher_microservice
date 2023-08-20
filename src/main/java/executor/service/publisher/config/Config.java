@@ -6,6 +6,8 @@ import executor.service.publisher.queue.proxy.ProxySourceQueueHandlerImpl;
 import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
 import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandlerImpl;
 import okhttp3.OkHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,5 +27,10 @@ public class Config {
     public OkHttpClient okHttpClient() {
         return new OkHttpClient();
 
+    }
+
+    @Bean
+    public Logger logger() {
+        return LoggerFactory.getLogger("QUEUE_LOGGER");
     }
 }
