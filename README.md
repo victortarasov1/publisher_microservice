@@ -11,11 +11,11 @@ This microservice provides an API for working with a queue of proxies and scenar
 - `DELETE: /publisher/{proxy/scenario}/` – Fetches a proxy/scenario from the queue.
 - `DELETE: /publisher/{proxy/scenario}/all` – Fetches all proxies/scenarios.
 
-
   To test the functionality of these API endpoints,
   you can use the following URL: 
-  https://publisher-microservice-a94942799a97.herokuapp.com. 
-  Please note that DELETE requests require authorization. 
+  https://publisher-microservice-a94942799a97.herokuapp.com.
+
+  Please note that the DELETE requests require authorization. 
   You need to generate a JWT token based on the key specified in the properties file
   and include it in your requests for successful authentication.
 ## JSON Examples
