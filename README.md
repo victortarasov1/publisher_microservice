@@ -90,6 +90,7 @@ Note, that remote HTTP API must have such a format:
 - Spring Web
 - Spring Security
 - java-jwt
+- AspectJ
 - okhttp
 - AssertJ
 - Mockito
