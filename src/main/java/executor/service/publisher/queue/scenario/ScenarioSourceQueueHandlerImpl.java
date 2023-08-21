@@ -1,11 +1,13 @@
 package executor.service.publisher.queue.scenario;
 
+import executor.service.publisher.annotation.Logged;
 import executor.service.publisher.model.ScenarioDto;
 import executor.service.publisher.queue.QueueHandler;
 
 import java.util.List;
 import java.util.Optional;
 
+@Logged
 public class ScenarioSourceQueueHandlerImpl implements ScenarioSourceQueueHandler {
     private final QueueHandler<ScenarioDto> handler;
 

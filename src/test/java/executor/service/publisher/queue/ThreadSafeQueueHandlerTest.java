@@ -28,7 +28,7 @@ class ThreadSafeQueueHandlerTest {
     }
 
     @Test
-    public void testAadd() throws InterruptedException {
+    public void testAdd() throws InterruptedException {
         Runnable addRunnableTask = () -> {
             handler.add(new ScenarioDto());
             countDownLatch.countDown();

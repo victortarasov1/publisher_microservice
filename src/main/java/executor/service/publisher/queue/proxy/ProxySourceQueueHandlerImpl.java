@@ -1,10 +1,11 @@
 package executor.service.publisher.queue.proxy;
 
+import executor.service.publisher.annotation.Logged;
 import executor.service.publisher.model.ProxyConfigHolderDto;
 import executor.service.publisher.queue.QueueHandler;
 
 import java.util.*;
-
+@Logged
 public class ProxySourceQueueHandlerImpl implements ProxySourceQueueHandler {
     private final QueueHandler<ProxyConfigHolderDto> handler;
 
