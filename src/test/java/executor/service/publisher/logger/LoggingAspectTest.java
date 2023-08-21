@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import static org.mockito.Mockito.*;
 
 class LoggingAspectTest {
-    public static final String METHOD_NAME = "testMethod";
-    public static final String CLASS_NAME = "TestClass";
+    private static final String METHOD_NAME = "testMethod";
+    private static final String CLASS_NAME = "TestClass";
     private Logger logger;
 
     private JoinPoint joinPoint;
