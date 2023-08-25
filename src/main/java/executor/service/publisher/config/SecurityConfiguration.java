@@ -3,7 +3,7 @@ package executor.service.publisher.config;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import executor.service.publisher.model.SecurityConfigDto;
+import executor.service.publisher.model.SecurityConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -24,17 +24,17 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig {
+public class SecurityConfiguration {
 
-    private final SecurityConfigDto securityConfigDto;
+    private final SecurityConfig securityConfig;
 
-    public SecurityConfig(SecurityConfigDto securityConfigDto) {
-        this.securityConfigDto = securityConfigDto;
+    public SecurityConfiguration(SecurityConfig securityConfig) {
+        this.securityConfig = securityConfig;
     }
 
     @Bean
     public JWTVerifier verifier() {
-        Algorithm algorithm = Algorithm.HMAC256(securityConfigDto.getSecretKey().getBytes());
+        Algorithm algorithm = Algorithm.HMAC256(securityConfig.getSecretKey().getBytes());
         return JWT.require(algorithm).build();
     }
     @Bean
