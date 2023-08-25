@@ -1,7 +1,7 @@
 package executor.service.publisher.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import executor.service.publisher.dto.ApiError;
+import executor.service.publisher.model.ApiError;
 import executor.service.publisher.exception.security.SecurityAuthException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
