@@ -81,12 +81,12 @@ class ThreadSafeQueueHandlerTest {
         for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new Scenario());
         AtomicInteger resultSize = new AtomicInteger(0);
         Runnable removeByCountTask = () -> {
-            resultSize.addAndGet(handler.removeByCount(10).size());
+            resultSize.addAndGet(handler.removeByCount(30).size());
             countDownLatch.countDown();
         };
         for (int i = 0; i < THREAD_COUNT; i++) executorService.submit(removeByCountTask);
         countDownLatch.await();
-        assertEquals(THREAD_COUNT * 10, resultSize.get());
-        assertEquals(ELEMENT_COUNT - THREAD_COUNT * 10, handler.removeAll().size());
+        assertEquals(ELEMENT_COUNT, resultSize.get());
+        assertEquals(0, handler.removeAll().size());
     }
 }

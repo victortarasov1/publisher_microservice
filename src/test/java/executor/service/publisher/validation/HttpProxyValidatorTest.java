@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class HttpProxyValidatorTest {
 
     private ProxyValidator validator;
+    private static final String TYPE = "http";
 
     @BeforeEach
     void setUp() {
@@ -31,6 +32,12 @@ class HttpProxyValidatorTest {
         ProxyConfigHolder dto = new ProxyConfigHolder(new ProxyNetworkConfig("20.201.114.32", 3030), new ProxyCredentials());
         boolean valid = validator.isValid(dto);
         assertThat(valid).isFalse();
+    }
+
+    @Test
+    void testGetType() {
+        String result = validator.getType();
+        assertThat(result).isEqualTo(TYPE);
     }
 
 }
