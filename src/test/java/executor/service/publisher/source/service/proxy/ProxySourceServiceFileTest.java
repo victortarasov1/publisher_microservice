@@ -1,10 +1,8 @@
-package executor.service.publisher.source;
+package executor.service.publisher.source.service.proxy;
 
 import executor.service.publisher.model.ProxyConfigHolder;
 import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.source.reader.FileReader;
-import executor.service.publisher.source.service.proxy.ProxySourceService;
-import executor.service.publisher.source.service.proxy.ProxySourceServiceFile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

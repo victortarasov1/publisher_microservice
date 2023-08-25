@@ -1,10 +1,8 @@
-package executor.service.publisher.source;
+package executor.service.publisher.source.service.proxy;
 
 import executor.service.publisher.model.ProxyConfigHolder;
 import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.source.okhttp.OkhttpLoader;
-import executor.service.publisher.source.service.proxy.ProxySourceService;
-import executor.service.publisher.source.service.proxy.ProxySourceServiceUrl;
 import okhttp3.Request;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
