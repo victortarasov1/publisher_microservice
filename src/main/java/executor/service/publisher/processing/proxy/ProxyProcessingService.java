@@ -2,10 +2,11 @@ package executor.service.publisher.processing.proxy;
 
 import executor.service.publisher.exception.validator.UnknownProxyTypeException;
 import executor.service.publisher.model.ProxyConfigHolderDto;
+import executor.service.publisher.processing.ProcessingService;
 
 import java.util.List;
 
-public interface ProxyProcessingService {
+public interface ProxyProcessingService extends ProcessingService<ProxyConfigHolderDto> {
     /**
      * Adds a proxy to the queue after asynchronous validation.
      *

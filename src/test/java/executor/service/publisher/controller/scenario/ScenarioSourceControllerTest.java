@@ -2,6 +2,7 @@ package executor.service.publisher.controller.scenario;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.model.*;
+import executor.service.publisher.processing.scenario.ScenarioProcessingService;
 import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +38,7 @@ class ScenarioSourceControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private ScenarioSourceQueueHandler scenarios;
+    private ScenarioProcessingService service;
     @Test
     void testAdd() throws Exception {
         ScenarioDto dto = new ScenarioDto();
@@ -60,7 +61,7 @@ class ScenarioSourceControllerTest {
     @WithMockUser
     void testPoll() throws Exception {
         ScenarioDto dto = new ScenarioDto("some name", "some site`s url", List.of());
-        when(scenarios.poll()).thenReturn(Optional.of(dto));
+        when(service.poll()).thenReturn(Optional.of(dto));
         mockMvc.perform(delete(BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value(dto.getName()))
@@ -73,7 +74,7 @@ class ScenarioSourceControllerTest {
     @WithMockUser
     void testRemoveAll() throws Exception {
         List<ScenarioDto> dtoList = List.of(new ScenarioDto(), new ScenarioDto());
-        when(scenarios.removeAll()).thenReturn(dtoList);
+        when(service.removeAll()).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -83,7 +84,7 @@ class ScenarioSourceControllerTest {
     @WithMockUser
     void testRemoveByCount() throws Exception {
         List<ScenarioDto> dtoList = List.of(new ScenarioDto(), new ScenarioDto());
-        when(scenarios.removeByCount(anyInt())).thenReturn(dtoList);
+        when(service.removeByCount(anyInt())).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/count/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
