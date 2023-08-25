@@ -4,41 +4,41 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class StepDtoTest {
+public class StepTest {
 
-    private StepDto stepDto;
+    private Step stepDto;
 
     @BeforeEach
     public void setUp(){
-        stepDto = new StepDto("Test action", "Test value");
+        stepDto = new Step("Test action", "Test value");
     }
 
     @Test
     public void testEmptyConstructor(){
-        StepDto actualStepDto = new StepDto();
-        StepDto expectedStepDto = new StepDto();
-        Assertions.assertEquals(expectedStepDto, actualStepDto);
+        Step actualStep = new Step();
+        Step expectedStepDto = new Step();
+        Assertions.assertEquals(expectedStepDto, actualStep);
     }
 
     @Test
     public void testSetters(){
         stepDto.setAction("Test action 2");
         stepDto.setValue("Test value 2");
-        StepDto expectedStepDto = new StepDto("Test action 2", "Test value 2");
-        Assertions.assertEquals(stepDto, expectedStepDto);
+        Step expectedStep = new Step("Test action 2", "Test value 2");
+        Assertions.assertEquals(stepDto, expectedStep);
     }
 
     @Test
     public void testGetters(){
-        StepDto actualStepDto = new StepDto("Test action 2", "Test value 2");
-        stepDto.setValue(actualStepDto.getValue());
-        stepDto.setAction(actualStepDto.getAction());
-        Assertions.assertEquals(actualStepDto, stepDto);
+        Step actualStep = new Step("Test action 2", "Test value 2");
+        stepDto.setValue(actualStep.getValue());
+        stepDto.setAction(actualStep.getAction());
+        Assertions.assertEquals(actualStep, stepDto);
     }
 
     @Test
     public void testEquals(){
-        StepDto stepDto2 = new StepDto("Test action 2", "Test value 2");
+        Step stepDto2 = new Step("Test action 2", "Test value 2");
         boolean result = stepDto.equals(stepDto2);
         Assertions.assertFalse(result);
         stepDto.setAction("Test action 2");

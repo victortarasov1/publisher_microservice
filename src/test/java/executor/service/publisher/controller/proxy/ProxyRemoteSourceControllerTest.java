@@ -1,7 +1,7 @@
 package executor.service.publisher.controller.proxy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.processing.proxy.ProxyRemoteProcessingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +38,7 @@ class ProxyRemoteSourceControllerTest {
 
     @Test
     void testLoadFromCustomRemoteSource() throws Exception {
-        ProxySourceDto dto = new ProxySourceDto();
+        ProxySource dto = new ProxySource();
         mockMvc.perform(post(BASE_URL + "/custom")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto)))

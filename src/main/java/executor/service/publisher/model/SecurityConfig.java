@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 @Component
-public class SecurityConfigDto {
+public class SecurityConfig {
     @Value("${jwt.secret.key}")
     private String secretKey;
 
-    public SecurityConfigDto(String secretKey) {
+    public SecurityConfig(String secretKey) {
         this.secretKey = secretKey;
     }
 
-    public SecurityConfigDto() {
+    public SecurityConfig() {
     }
 
     public String getSecretKey() {
@@ -27,8 +27,8 @@ public class SecurityConfigDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SecurityConfigDto securityConfigDto)) return false;
-        return Objects.equals(secretKey, securityConfigDto.secretKey);
+        if (!(o instanceof SecurityConfig securityConfig)) return false;
+        return Objects.equals(secretKey, securityConfig.secretKey);
     }
 
     @Override

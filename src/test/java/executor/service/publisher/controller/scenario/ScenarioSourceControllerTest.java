@@ -3,7 +3,6 @@ package executor.service.publisher.controller.scenario;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.model.*;
 import executor.service.publisher.processing.scenario.ScenarioProcessingService;
-import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,7 @@ class ScenarioSourceControllerTest {
     private ScenarioProcessingService service;
     @Test
     void testAdd() throws Exception {
-        ScenarioDto dto = new ScenarioDto();
+        Scenario dto = new Scenario();
         mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto)))
@@ -50,7 +49,7 @@ class ScenarioSourceControllerTest {
 
     @Test
     void testAddAll() throws Exception {
-        List<ScenarioDto> dtoList = List.of(new ScenarioDto());
+        List<Scenario> dtoList = List.of(new Scenario());
         mockMvc.perform(post(BASE_URL + "/all")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dtoList)))
@@ -60,7 +59,7 @@ class ScenarioSourceControllerTest {
     @Test
     @WithMockUser
     void testPoll() throws Exception {
-        ScenarioDto dto = new ScenarioDto("some name", "some site`s url", List.of());
+        Scenario dto = new Scenario("some name", "some site`s url", List.of());
         when(service.poll()).thenReturn(Optional.of(dto));
         mockMvc.perform(delete(BASE_URL))
                 .andExpect(status().isOk())
@@ -73,7 +72,7 @@ class ScenarioSourceControllerTest {
     @Test
     @WithMockUser
     void testRemoveAll() throws Exception {
-        List<ScenarioDto> dtoList = List.of(new ScenarioDto(), new ScenarioDto());
+        List<Scenario> dtoList = List.of(new Scenario(), new Scenario());
         when(service.removeAll()).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/all"))
                 .andExpect(status().isOk())
@@ -83,7 +82,7 @@ class ScenarioSourceControllerTest {
     @Test
     @WithMockUser
     void testRemoveByCount() throws Exception {
-        List<ScenarioDto> dtoList = List.of(new ScenarioDto(), new ScenarioDto());
+        List<Scenario> dtoList = List.of(new Scenario(), new Scenario());
         when(service.removeByCount(anyInt())).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/count/3"))
                 .andExpect(status().isOk())

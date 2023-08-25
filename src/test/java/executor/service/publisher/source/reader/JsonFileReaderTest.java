@@ -3,10 +3,10 @@ package executor.service.publisher.source.reader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import executor.service.publisher.exception.source.DataParsingException;
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxyCredentialsDTO;
-import executor.service.publisher.model.ProxyNetworkConfigDTO;
-import executor.service.publisher.model.ScenarioDto;
+import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxyCredentials;
+import executor.service.publisher.model.ProxyNetworkConfig;
+import executor.service.publisher.model.Scenario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,19 +28,19 @@ class JsonFileReaderTest {
     @Test
     void testReadData() {
         String path = "src/test/resources/testProxy.json";
-        List<ProxyConfigHolderDto> expected = List.of(
-                new ProxyConfigHolderDto(new ProxyNetworkConfigDTO("host_0", 0), new ProxyCredentialsDTO("user_0", "000")),
-                new ProxyConfigHolderDto(new ProxyNetworkConfigDTO("host_1", 1), new ProxyCredentialsDTO("user_1", "111")),
-                new ProxyConfigHolderDto(new ProxyNetworkConfigDTO("host_2", 2), new ProxyCredentialsDTO("user_2", "222"))
+        List<ProxyConfigHolder> expected = List.of(
+                new ProxyConfigHolder(new ProxyNetworkConfig("host_0", 0), new ProxyCredentials("user_0", "000")),
+                new ProxyConfigHolder(new ProxyNetworkConfig("host_1", 1), new ProxyCredentials("user_1", "111")),
+                new ProxyConfigHolder(new ProxyNetworkConfig("host_2", 2), new ProxyCredentials("user_2", "222"))
         );
-        List<ProxyConfigHolderDto> result = reader.readData(path, ProxyConfigHolderDto.class);
+        List<ProxyConfigHolder> result = reader.readData(path, ProxyConfigHolder.class);
         assertThat(result).isEqualTo(expected);
     }
 
     @Test
     void testReadData_whenCantMap_shouldThrowDataParsingExceptionCausedByUnrecognizedPropertyException() {
         String path = "src/test/resources/testProxy.json";
-        assertThatThrownBy(() -> reader.readData(path, ScenarioDto.class))
+        assertThatThrownBy(() -> reader.readData(path, Scenario.class))
                 .isInstanceOf(DataParsingException.class)
                 .cause().isInstanceOf(UnrecognizedPropertyException.class);
     }
@@ -48,14 +48,14 @@ class JsonFileReaderTest {
     @Test
     void testReadData_whenBadFile_shouldThrowDataParsingException() {
         String path = "src/test/resources/badProxy.json";
-        assertThatThrownBy(() -> reader.readData(path, ProxyConfigHolderDto.class))
+        assertThatThrownBy(() -> reader.readData(path, ProxyConfigHolder.class))
                 .isInstanceOf(DataParsingException.class);
     }
 
     @Test
     void testReadData_whenFileNotFound_shouldThrowDataParsingExceptionCausedByFileNotfoundException() {
         String path = "src/test/resources/abracadabra.json";
-        assertThatThrownBy(() -> reader.readData(path, ProxyConfigHolderDto.class))
+        assertThatThrownBy(() -> reader.readData(path, ProxyConfigHolder.class))
                 .isInstanceOf(DataParsingException.class)
                 .cause().isInstanceOf(FileNotFoundException.class);
     }

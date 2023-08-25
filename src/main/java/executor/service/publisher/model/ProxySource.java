@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 @Component
-public class ProxySourceDto {
+public class ProxySource {
 
     @Value("${remote.proxy.source}")
     private String source;
@@ -15,11 +15,11 @@ public class ProxySourceDto {
     @Value("${remote.proxy.type}")
     private String type;
 
-    public ProxySourceDto() {
+    public ProxySource() {
 
     }
 
-    public ProxySourceDto(String source, String storage, String type) {
+    public ProxySource(String source, String storage, String type) {
         this.source = source;
         this.storage = storage;
         this.type = type;
@@ -28,10 +28,10 @@ public class ProxySourceDto {
     @Override
     public boolean equals(Object o) {
         if(this == o) return true;
-        if(!(o instanceof ProxySourceDto proxySourceDto)) return false;
-        return Objects.equals(source, proxySourceDto.source) &&
-                Objects.equals(storage, proxySourceDto.storage) &&
-                Objects.equals(type, proxySourceDto.type);
+        if(!(o instanceof ProxySource proxySource)) return false;
+        return Objects.equals(source, proxySource.source) &&
+                Objects.equals(storage, proxySource.storage) &&
+                Objects.equals(type, proxySource.type);
     }
 
     @Override

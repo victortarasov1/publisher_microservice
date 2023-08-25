@@ -1,8 +1,8 @@
 package executor.service.publisher.validation;
 
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxyCredentialsDTO;
-import executor.service.publisher.model.ProxyNetworkConfigDTO;
+import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxyCredentials;
+import executor.service.publisher.model.ProxyNetworkConfig;
 import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,14 +21,14 @@ class HttpProxyValidatorTest {
 
     @Test
     void testIsValid_shouldReturnTrue() {
-        ProxyConfigHolderDto dto = new ProxyConfigHolderDto(new ProxyNetworkConfigDTO("20.210.113.32", 8080), new ProxyCredentialsDTO());
+        ProxyConfigHolder dto = new ProxyConfigHolder(new ProxyNetworkConfig("20.210.113.32", 8080), new ProxyCredentials());
         boolean valid = validator.isValid(dto);
         assertThat(valid).isTrue();
     }
 
     @Test
     void testIsValid_shouldReturnFalse() {
-        ProxyConfigHolderDto dto = new ProxyConfigHolderDto(new ProxyNetworkConfigDTO("20.201.114.32", 3030), new ProxyCredentialsDTO());
+        ProxyConfigHolder dto = new ProxyConfigHolder(new ProxyNetworkConfig("20.201.114.32", 3030), new ProxyCredentials());
         boolean valid = validator.isValid(dto);
         assertThat(valid).isFalse();
     }
