@@ -1,8 +1,8 @@
 package executor.service.publisher.processing.proxy;
 
 import executor.service.publisher.exception.validator.UnknownProxyTypeException;
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
 import executor.service.publisher.validation.ProxyValidator;
 import org.springframework.stereotype.Component;
@@ -20,40 +20,40 @@ public class ProxyProcessingServiceImpl implements ProxyProcessingService {
     private final Map<String, ProxyValidator> validators;
     private final ProxySourceQueueHandler queueHandler;
 
-    private final ProxySourceDto defaultSource;
+    private final ProxySource defaultSource;
 
-    public ProxyProcessingServiceImpl(List<ProxyValidator> validators, ProxySourceQueueHandler queueHandler, ProxySourceDto defaultSource) {
+    public ProxyProcessingServiceImpl(List<ProxyValidator> validators, ProxySourceQueueHandler queueHandler, ProxySource defaultSource) {
         this.validators = new ConcurrentHashMap<>(validators.stream().collect(Collectors.toMap(ProxyValidator::getType, Function.identity())));
         this.queueHandler = queueHandler;
         this.defaultSource = defaultSource;
     }
 
     @Override
-    public void add(ProxyConfigHolderDto dto) {
+    public void add(ProxyConfigHolder proxy) {
         ProxyValidator validator = Optional.ofNullable(validators.get(defaultSource.getType()))
                 .orElseThrow(() -> new UnknownProxyTypeException(defaultSource.getType()));
         CompletableFuture.runAsync(() -> {
-            if (validator.isValid(dto)) queueHandler.add(dto);
+            if (validator.isValid(proxy)) queueHandler.add(proxy);
         });
     }
 
     @Override
-    public void addAll(List<ProxyConfigHolderDto> dtoList) {
-        dtoList.forEach(this::add);
+    public void addAll(List<ProxyConfigHolder> proxies) {
+        proxies.forEach(this::add);
     }
 
     @Override
-    public List<ProxyConfigHolderDto> removeByCount(int count) {
+    public List<ProxyConfigHolder> removeByCount(int count) {
         return queueHandler.removeByCount(count);
     }
 
     @Override
-    public Optional<ProxyConfigHolderDto> poll() {
+    public Optional<ProxyConfigHolder> poll() {
         return queueHandler.poll();
     }
 
     @Override
-    public List<ProxyConfigHolderDto> removeAll() {
+    public List<ProxyConfigHolder> removeAll() {
         return queueHandler.removeAll();
     }
 }

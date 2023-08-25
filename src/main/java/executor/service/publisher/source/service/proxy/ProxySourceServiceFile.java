@@ -1,7 +1,7 @@
 package executor.service.publisher.source.service.proxy;
 
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.source.reader.FileReader;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +18,8 @@ public class ProxySourceServiceFile implements ProxySourceService {
     }
 
     @Override
-    public List<ProxyConfigHolderDto> loadData(ProxySourceDto sourceDto) {
-        return reader.readData(sourceDto.getSource(), ProxyConfigHolderDto.class);
+    public List<ProxyConfigHolder> loadData(ProxySource source) {
+        return reader.readData(source.getSource(), ProxyConfigHolder.class);
     }
 
     @Override

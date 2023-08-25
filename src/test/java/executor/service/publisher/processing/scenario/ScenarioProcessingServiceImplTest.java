@@ -1,6 +1,6 @@
 package executor.service.publisher.processing.scenario;
 
-import executor.service.publisher.model.ScenarioDto;
+import executor.service.publisher.model.Scenario;
 import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,14 +24,14 @@ class ScenarioProcessingServiceImplTest {
 
     @Test
     void testAdd() {
-        ScenarioDto scenarioDto = new ScenarioDto();
-        service.add(scenarioDto);
-        verify(queueHandler, times(1)).add(scenarioDto);
+        Scenario scenario = new Scenario();
+        service.add(scenario);
+        verify(queueHandler, times(1)).add(scenario);
     }
 
     @Test
     void testAddAll() {
-        List<ScenarioDto> scenarios = List.of(new ScenarioDto(), new ScenarioDto());
+        List<Scenario> scenarios = List.of(new Scenario(), new Scenario());
         service.addAll(scenarios);
         verify(queueHandler, times(1)).addAll(scenarios);
     }
@@ -52,9 +52,9 @@ class ScenarioProcessingServiceImplTest {
 
     @Test
     void testPoll() {
-        ScenarioDto scenario = new ScenarioDto();
+        Scenario scenario = new Scenario();
         when(queueHandler.poll()).thenReturn(Optional.of(scenario));
-        Optional<ScenarioDto> polledDto = service.poll();
+        Optional<Scenario> polledDto = service.poll();
         assertThat(polledDto).isEqualTo(Optional.of(scenario));
     }
 }

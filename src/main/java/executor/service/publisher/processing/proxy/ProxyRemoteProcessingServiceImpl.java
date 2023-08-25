@@ -2,8 +2,8 @@ package executor.service.publisher.processing.proxy;
 
 import executor.service.publisher.exception.source.UnknownSourceServiceException;
 import executor.service.publisher.exception.validator.UnknownProxyTypeException;
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
 import executor.service.publisher.source.service.proxy.ProxySourceService;
 import executor.service.publisher.validation.ProxyValidator;
@@ -22,11 +22,11 @@ import java.util.stream.Collectors;
 public class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingService {
     private final Map<String, ProxyValidator> validators;
     private final Map<String, ProxySourceService> sourceServices;
-    private final ProxySourceDto defaultSource;
+    private final ProxySource defaultSource;
     private final ProxySourceQueueHandler queueHandler;
 
 
-    public ProxyRemoteProcessingServiceImpl(List<ProxyValidator> validators, List<ProxySourceService> sourceServices, ProxySourceDto defaultSource,
+    public ProxyRemoteProcessingServiceImpl(List<ProxyValidator> validators, List<ProxySourceService> sourceServices, ProxySource defaultSource,
                                             ProxySourceQueueHandler queueHandler) {
         this.validators = new ConcurrentHashMap<>(validators.stream().collect(Collectors.toMap(ProxyValidator::getType, Function.identity())));
         this.sourceServices = new ConcurrentHashMap<>(sourceServices.stream().collect(Collectors.toMap(ProxySourceService::getType, Function.identity())));
@@ -40,14 +40,14 @@ public class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingSe
     }
 
     @Override
-    public void loadFromCustomRemoteSource(ProxySourceDto dto) {
-        ProxySourceService service = Optional.ofNullable(sourceServices.get(dto.getStorage()))
-                .orElseThrow(() -> new UnknownSourceServiceException(dto.getStorage()));
-        ProxyValidator validator = Optional.ofNullable(validators.get(dto.getType()))
-                .orElseThrow(() -> new UnknownProxyTypeException(dto.getType()));
-        Consumer<ProxyConfigHolderDto> asyncValidate = v -> CompletableFuture.runAsync(() -> {
+    public void loadFromCustomRemoteSource(ProxySource source) {
+        ProxySourceService service = Optional.ofNullable(sourceServices.get(source.getStorage()))
+                .orElseThrow(() -> new UnknownSourceServiceException(source.getStorage()));
+        ProxyValidator validator = Optional.ofNullable(validators.get(source.getType()))
+                .orElseThrow(() -> new UnknownProxyTypeException(source.getType()));
+        Consumer<ProxyConfigHolder> asyncValidate = v -> CompletableFuture.runAsync(() -> {
             if (validator.isValid(v)) queueHandler.add(v);
         });
-        CompletableFuture.supplyAsync(() -> service.loadData(dto)).thenAcceptAsync(lst -> lst.forEach(asyncValidate));
+        CompletableFuture.supplyAsync(() -> service.loadData(source)).thenAcceptAsync(lst -> lst.forEach(asyncValidate));
     }
 }

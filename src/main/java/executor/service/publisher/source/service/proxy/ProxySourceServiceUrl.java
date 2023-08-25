@@ -1,9 +1,9 @@
 package executor.service.publisher.source.service.proxy;
 
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxyCredentialsDTO;
-import executor.service.publisher.model.ProxyNetworkConfigDTO;
-import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxyCredentials;
+import executor.service.publisher.model.ProxyNetworkConfig;
+import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.source.okhttp.OkhttpLoader;
 import okhttp3.Request;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,8 @@ public class ProxySourceServiceUrl implements ProxySourceService {
 
     
     @Override
-    public List<ProxyConfigHolderDto> loadData(ProxySourceDto sourceDto) {
-        Request request = new Request.Builder().url(sourceDto.getSource()).get().build();
+    public List<ProxyConfigHolder> loadData(ProxySource source) {
+        Request request = new Request.Builder().url(source.getSource()).get().build();
         return loader.loadData(request, proxyDto.class).stream().map(proxyDto::createProxyConfigHolder).toList();
     }
 
@@ -38,8 +38,8 @@ public class ProxySourceServiceUrl implements ProxySourceService {
                 password = password.strip();
             }
         }
-        ProxyConfigHolderDto createProxyConfigHolder() {
-            return new ProxyConfigHolderDto(new ProxyNetworkConfigDTO(ip, port), new ProxyCredentialsDTO(username, password));
+        ProxyConfigHolder createProxyConfigHolder() {
+            return new ProxyConfigHolder(new ProxyNetworkConfig(ip, port), new ProxyCredentials(username, password));
         }
     }
 }

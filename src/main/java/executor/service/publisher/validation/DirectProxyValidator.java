@@ -1,13 +1,13 @@
 package executor.service.publisher.validation;
 
-import executor.service.publisher.model.ProxyConfigHolderDto;
+import executor.service.publisher.model.ProxyConfigHolder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DirectProxyValidator implements ProxyValidator {
 
     @Override
-    public boolean isValid(ProxyConfigHolderDto dto) {
+    public boolean isValid(ProxyConfigHolder proxy) {
         return false;
     }
 
