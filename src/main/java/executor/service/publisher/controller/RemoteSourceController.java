@@ -10,5 +10,5 @@ public interface RemoteSourceController<T> {
     void loadFromDefaultRemoteSource();
 
     @PostMapping("/custom")
-    void loadFromCustomRemoteSource(@RequestBody T dto);
+    void loadFromCustomRemoteSource(@RequestBody T source);
 }

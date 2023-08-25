@@ -1,11 +1,10 @@
 package executor.service.publisher.controller.proxy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxyCredentialsDTO;
-import executor.service.publisher.model.ProxyNetworkConfigDTO;
+import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxyCredentials;
+import executor.service.publisher.model.ProxyNetworkConfig;
 import executor.service.publisher.processing.proxy.ProxyProcessingService;
-import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,7 @@ class ProxySourceControllerTest {
 
     @Test
     void testAdd() throws Exception {
-        ProxyConfigHolderDto dto = new ProxyConfigHolderDto();
+        ProxyConfigHolder dto = new ProxyConfigHolder();
         mockMvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(dto)))
@@ -55,7 +54,7 @@ class ProxySourceControllerTest {
 
     @Test
     void testAddAll() throws Exception {
-        List<ProxyConfigHolderDto> dtoList = List.of(new ProxyConfigHolderDto());
+        List<ProxyConfigHolder> dtoList = List.of(new ProxyConfigHolder());
         mockMvc.perform(post(BASE_URL + "/all")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dtoList)))
@@ -65,7 +64,7 @@ class ProxySourceControllerTest {
     @Test
     @WithMockUser
     void testPoll() throws Exception {
-        ProxyConfigHolderDto dto = new ProxyConfigHolderDto(new ProxyNetworkConfigDTO("host", 1), new ProxyCredentialsDTO("username", "password"));
+        ProxyConfigHolder dto = new ProxyConfigHolder(new ProxyNetworkConfig("host", 1), new ProxyCredentials("username", "password"));
         when(service.poll()).thenReturn(Optional.of(dto));
         mockMvc.perform(delete(BASE_URL))
                 .andExpect(status().isOk())
@@ -78,7 +77,7 @@ class ProxySourceControllerTest {
     @Test
     @WithMockUser
     void testRemoveAll() throws Exception {
-        List<ProxyConfigHolderDto> dtoList = List.of(new ProxyConfigHolderDto(), new ProxyConfigHolderDto());
+        List<ProxyConfigHolder> dtoList = List.of(new ProxyConfigHolder(), new ProxyConfigHolder());
         when(service.removeAll()).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/all"))
                 .andExpect(status().isOk())
@@ -88,7 +87,7 @@ class ProxySourceControllerTest {
     @Test
     @WithMockUser
     void testRemoveByCount() throws Exception {
-        List<ProxyConfigHolderDto> dtoList = List.of(new ProxyConfigHolderDto(), new ProxyConfigHolderDto());
+        List<ProxyConfigHolder> dtoList = List.of(new ProxyConfigHolder(), new ProxyConfigHolder());
         when(service.removeByCount(anyInt())).thenReturn(dtoList);
         mockMvc.perform(delete(BASE_URL + "/count/3"))
                 .andExpect(status().isOk())

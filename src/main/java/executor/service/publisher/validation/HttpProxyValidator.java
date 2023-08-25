@@ -1,6 +1,6 @@
 package executor.service.publisher.validation;
 
-import executor.service.publisher.model.ProxyConfigHolderDto;
+import executor.service.publisher.model.ProxyConfigHolder;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -24,9 +24,9 @@ public class HttpProxyValidator implements ProxyValidator {
     }
 
     @Override
-    public boolean isValid(ProxyConfigHolderDto dto) {
-        OkHttpClient proxiedHttpClient = createProxiedHttpClient(dto);
-        Request request = getRequest(dto.getProxyCredentials().getPassword(), dto.getProxyCredentials().getUsername());
+    public boolean isValid(ProxyConfigHolder proxy) {
+        OkHttpClient proxiedHttpClient = createProxiedHttpClient(proxy);
+        Request request = getRequest(proxy.getProxyCredentials().getPassword(), proxy.getProxyCredentials().getUsername());
         return validateProxy(proxiedHttpClient, request);
     }
 
@@ -35,8 +35,8 @@ public class HttpProxyValidator implements ProxyValidator {
         return "http";
     }
 
-    private OkHttpClient createProxiedHttpClient(ProxyConfigHolderDto dto) {
-        InetSocketAddress inetSocketAddress = new InetSocketAddress(dto.getProxyNetworkConfig().getHostname(), dto.getProxyNetworkConfig().getPort());
+    private OkHttpClient createProxiedHttpClient(ProxyConfigHolder proxy) {
+        InetSocketAddress inetSocketAddress = new InetSocketAddress(proxy.getProxyNetworkConfig().getHostname(), proxy.getProxyNetworkConfig().getPort());
         return okHttpClient.newBuilder().proxy(new Proxy(Proxy.Type.HTTP, inetSocketAddress)).build();
     }
 

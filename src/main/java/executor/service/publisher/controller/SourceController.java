@@ -8,10 +8,10 @@ import java.util.Optional;
 @RestController
 public interface SourceController<T> {
     @PostMapping
-    void add(@RequestBody T dto);
+    void add(@RequestBody T element);
 
     @PostMapping( "/all")
-    void addAll(@RequestBody List<T> dtoList);
+    void addAll(@RequestBody List<T> elements);
 
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/count/{size}")

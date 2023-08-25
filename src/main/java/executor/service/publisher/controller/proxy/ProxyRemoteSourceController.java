@@ -1,14 +1,14 @@
 package executor.service.publisher.controller.proxy;
 
 import executor.service.publisher.controller.RemoteSourceController;
-import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.processing.proxy.ProxyRemoteProcessingService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Component
 @RequestMapping("/publisher/proxy/remote")
-public class ProxyRemoteSourceController implements RemoteSourceController<ProxySourceDto> {
+public class ProxyRemoteSourceController implements RemoteSourceController<ProxySource> {
     private final ProxyRemoteProcessingService service;
 
     public ProxyRemoteSourceController(ProxyRemoteProcessingService service) {
@@ -21,7 +21,7 @@ public class ProxyRemoteSourceController implements RemoteSourceController<Proxy
     }
 
     @Override
-    public void loadFromCustomRemoteSource(ProxySourceDto dto) {
-        service.loadFromCustomRemoteSource(dto);
+    public void loadFromCustomRemoteSource(ProxySource source) {
+        service.loadFromCustomRemoteSource(source);
     }
 }

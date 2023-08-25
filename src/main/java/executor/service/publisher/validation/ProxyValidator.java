@@ -1,8 +1,8 @@
 package executor.service.publisher.validation;
 
-import executor.service.publisher.model.ProxyConfigHolderDto;
+import executor.service.publisher.model.ProxyConfigHolder;
 
 public interface ProxyValidator {
-    boolean isValid(ProxyConfigHolderDto dto);
+    boolean isValid(ProxyConfigHolder proxy);
     String getType();
 }

@@ -1,6 +1,6 @@
 package executor.service.publisher.controller.handler;
 
-import executor.service.publisher.dto.ApiError;
+import executor.service.publisher.model.ApiError;
 import executor.service.publisher.exception.source.SourceException;
 import executor.service.publisher.exception.validator.ValidationException;
 import org.springframework.http.HttpStatus;

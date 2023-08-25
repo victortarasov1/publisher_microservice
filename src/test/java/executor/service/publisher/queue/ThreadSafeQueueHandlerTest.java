@@ -1,6 +1,6 @@
 package executor.service.publisher.queue;
 
-import executor.service.publisher.model.ScenarioDto;
+import executor.service.publisher.model.Scenario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ThreadSafeQueueHandlerTest {
-    private ThreadSafeQueueHandler<ScenarioDto> handler;
+    private ThreadSafeQueueHandler<Scenario> handler;
     private static final int THREAD_COUNT = 8;
     private static final int ELEMENT_COUNT = 200;
     private CountDownLatch countDownLatch;
@@ -30,7 +30,7 @@ class ThreadSafeQueueHandlerTest {
     @Test
     public void testAdd() throws InterruptedException {
         Runnable addRunnableTask = () -> {
-            handler.add(new ScenarioDto());
+            handler.add(new Scenario());
             countDownLatch.countDown();
         };
         for (int i = 0; i < THREAD_COUNT; i++) executorService.submit(addRunnableTask);
@@ -40,7 +40,7 @@ class ThreadSafeQueueHandlerTest {
 
     @Test
     public void testAddAll() throws InterruptedException {
-        List<ScenarioDto> elements = IntStream.range(0, ELEMENT_COUNT).boxed().map(v -> new ScenarioDto()).toList();
+        List<Scenario> elements = IntStream.range(0, ELEMENT_COUNT).boxed().map(v -> new Scenario()).toList();
         Runnable addAllRunnableTask = () -> {
             handler.addAll(elements);
             countDownLatch.countDown();
@@ -52,7 +52,7 @@ class ThreadSafeQueueHandlerTest {
 
     @Test
     public void testPoll() throws InterruptedException {
-        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new ScenarioDto());
+        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new Scenario());
         Runnable pollRunnableTask = () -> {
             handler.poll();
             countDownLatch.countDown();
@@ -64,7 +64,7 @@ class ThreadSafeQueueHandlerTest {
 
     @Test
     public void testRemoveAll() throws InterruptedException {
-        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new ScenarioDto());
+        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new Scenario());
         AtomicInteger resultSize = new AtomicInteger(0);
         Runnable removeAllRunnableTask = () -> {
             resultSize.addAndGet(handler.removeAll().size());
@@ -78,7 +78,7 @@ class ThreadSafeQueueHandlerTest {
 
     @Test
     public void testRemoveByCount() throws InterruptedException {
-        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new ScenarioDto());
+        for(int i = 0; i < ELEMENT_COUNT; i++) handler.add(new Scenario());
         AtomicInteger resultSize = new AtomicInteger(0);
         Runnable removeByCountTask = () -> {
             resultSize.addAndGet(handler.removeByCount(10).size());

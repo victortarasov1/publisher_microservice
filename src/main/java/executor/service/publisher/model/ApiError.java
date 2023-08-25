@@ -1,4 +1,4 @@
-package executor.service.publisher.dto;
+package executor.service.publisher.model;
 
 import java.util.List;
 

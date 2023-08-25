@@ -1,7 +1,7 @@
 package executor.service.publisher.processing.proxy;
 
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
 import executor.service.publisher.validation.ProxyValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,25 +23,25 @@ class ProxyProcessingServiceImplTest {
     void setUp() {
         queueHandler = mock(ProxySourceQueueHandler.class);
         validator = mock(ProxyValidator.class);
-        ProxySourceDto defaultDto = new ProxySourceDto("https://some/url", "url", "http");
+        ProxySource defaultDto = new ProxySource("https://some/url", "url", "http");
         when(validator.getType()).thenReturn(defaultDto.getType());
         service = new ProxyProcessingServiceImpl(List.of(validator), queueHandler, defaultDto);
     }
 
     @Test
     void testAdd() {
-        ProxyConfigHolderDto proxy = new ProxyConfigHolderDto();
-        when(validator.isValid(any(ProxyConfigHolderDto.class))).thenReturn(true);
+        ProxyConfigHolder proxy = new ProxyConfigHolder();
+        when(validator.isValid(any(ProxyConfigHolder.class))).thenReturn(true);
         service.add(proxy);
-        verify(queueHandler, timeout(2000).times(1)).add(any(ProxyConfigHolderDto.class));
+        verify(queueHandler, timeout(2000).times(1)).add(any(ProxyConfigHolder.class));
     }
 
     @Test
     void testAddAll() {
-        List<ProxyConfigHolderDto> proxies = List.of(new ProxyConfigHolderDto(), new ProxyConfigHolderDto());
-        when(validator.isValid(any(ProxyConfigHolderDto.class))).thenReturn(true);
+        List<ProxyConfigHolder> proxies = List.of(new ProxyConfigHolder(), new ProxyConfigHolder());
+        when(validator.isValid(any(ProxyConfigHolder.class))).thenReturn(true);
         service.addAll(proxies);
-        verify(queueHandler, timeout(2000).times(2)).add(any(ProxyConfigHolderDto.class));
+        verify(queueHandler, timeout(2000).times(2)).add(any(ProxyConfigHolder.class));
     }
 
     @Test
@@ -60,9 +60,9 @@ class ProxyProcessingServiceImplTest {
 
     @Test
     void testPoll() {
-        ProxyConfigHolderDto proxy = new ProxyConfigHolderDto();
+        ProxyConfigHolder proxy = new ProxyConfigHolder();
         when(queueHandler.poll()).thenReturn(Optional.of(proxy));
-        Optional<ProxyConfigHolderDto> polledDto = service.poll();
+        Optional<ProxyConfigHolder> polledDto = service.poll();
         assertThat(polledDto).isEqualTo(Optional.of(proxy));
     }
 

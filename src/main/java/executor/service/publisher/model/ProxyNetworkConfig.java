@@ -2,14 +2,14 @@ package executor.service.publisher.model;
 
 import java.util.Objects;
 
-public class ProxyNetworkConfigDTO {
+public class ProxyNetworkConfig {
     private String hostname;
     private Integer port;
 
-    public ProxyNetworkConfigDTO() {
+    public ProxyNetworkConfig() {
     }
 
-    public ProxyNetworkConfigDTO(String hostname, Integer port) {
+    public ProxyNetworkConfig(String hostname, Integer port) {
         this.hostname = hostname;
         this.port = port;
     }
@@ -36,7 +36,7 @@ public class ProxyNetworkConfigDTO {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        ProxyNetworkConfigDTO that = (ProxyNetworkConfigDTO) o;
+        ProxyNetworkConfig that = (ProxyNetworkConfig) o;
         return Objects.equals(hostname, that.hostname)
                 && Objects.equals(port, that.port);
     }

@@ -1,7 +1,7 @@
 package executor.service.publisher.source;
 
-import executor.service.publisher.model.ProxyConfigHolderDto;
-import executor.service.publisher.model.ProxySourceDto;
+import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.source.okhttp.OkhttpLoader;
 import executor.service.publisher.source.service.proxy.ProxySourceService;
 import executor.service.publisher.source.service.proxy.ProxySourceServiceUrl;
@@ -18,20 +18,20 @@ import static org.mockito.Mockito.*;
 class ProxySourceServiceUrlTest {
     private OkhttpLoader loader;
     private ProxySourceService service;
-    private ProxySourceDto dto;
+    private ProxySource dto;
 
     @BeforeEach
     void setUp() {
         loader = mock(OkhttpLoader.class);
-        dto = new ProxySourceDto("http://some/url", "url", "http");
+        dto = new ProxySource("http://some/url", "url", "http");
         service = new ProxySourceServiceUrl(loader);
     }
 
     @Test
     void testLoadData() {
-        List<ProxyConfigHolderDto> expected = List.of();
+        List<ProxyConfigHolder> expected = List.of();
         when(loader.loadData(any(Request.class), any())).thenReturn(List.of());
-        List<ProxyConfigHolderDto> result = service.loadData(dto);
+        List<ProxyConfigHolder> result = service.loadData(dto);
         assertThat(result).isEqualTo(expected);
     }
 

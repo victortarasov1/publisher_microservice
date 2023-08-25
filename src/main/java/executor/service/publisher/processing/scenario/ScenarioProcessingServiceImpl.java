@@ -1,6 +1,6 @@
 package executor.service.publisher.processing.scenario;
 
-import executor.service.publisher.model.ScenarioDto;
+import executor.service.publisher.model.Scenario;
 import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
 import org.springframework.stereotype.Component;
 
@@ -15,27 +15,27 @@ public class ScenarioProcessingServiceImpl implements ScenarioProcessingService 
     }
 
     @Override
-    public void add(ScenarioDto element) {
-        queueHandler.add(element);
+    public void add(Scenario scenario) {
+        queueHandler.add(scenario);
     }
 
     @Override
-    public void addAll(List<ScenarioDto> elements) {
-        queueHandler.addAll(elements);
+    public void addAll(List<Scenario> scenarios) {
+        queueHandler.addAll(scenarios);
     }
 
     @Override
-    public List<ScenarioDto> removeByCount(int count) {
+    public List<Scenario> removeByCount(int count) {
         return queueHandler.removeByCount(count);
     }
 
     @Override
-    public Optional<ScenarioDto> poll() {
+    public Optional<Scenario> poll() {
         return queueHandler.poll();
     }
 
     @Override
-    public List<ScenarioDto> removeAll() {
+    public List<Scenario> removeAll() {
         return queueHandler.removeAll();
     }
 }
