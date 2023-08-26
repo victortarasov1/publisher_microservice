@@ -27,8 +27,8 @@ public class ProxySource {
 
     @Override
     public boolean equals(Object o) {
-        if(this == o) return true;
-        if(!(o instanceof ProxySource proxySource)) return false;
+        if (this == o) return true;
+        if (!(o instanceof ProxySource proxySource)) return false;
         return Objects.equals(source, proxySource.source) &&
                 Objects.equals(storage, proxySource.storage) &&
                 Objects.equals(type, proxySource.type);

@@ -9,7 +9,8 @@ public class ProxyConfigHolder {
     private ProxyCredentials proxyCredentials;
 
 
-    public ProxyConfigHolder() { }
+    public ProxyConfigHolder() {
+    }
 
     public ProxyConfigHolder(ProxyNetworkConfig proxyNetworkConfig, ProxyCredentials proxyCredentials) {
         this.proxyNetworkConfig = proxyNetworkConfig;
@@ -36,19 +37,14 @@ public class ProxyConfigHolder {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ProxyConfigHolder that = (ProxyConfigHolder) o;
-
-        if (!Objects.equals(proxyNetworkConfig, that.proxyNetworkConfig)) return false;
-        return Objects.equals(proxyCredentials, that.proxyCredentials);
+        if (!(o instanceof ProxyConfigHolder holder)) return false;
+        return Objects.equals(proxyNetworkConfig, holder.proxyNetworkConfig)
+                && Objects.equals(proxyCredentials, holder.proxyCredentials);
     }
 
     @Override
     public int hashCode() {
-        int result = proxyNetworkConfig.hashCode();
-        result = 31 * result + proxyCredentials.hashCode();
-        return result;
+        return Objects.hash(proxyNetworkConfig, proxyCredentials);
     }
 
     @Override
