@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 class ProxyRemoteSourceControllerTest {
-    public static final String BASE_URL = "/publisher/proxy/remote";
+    private static final String BASE_URL = "/publisher/proxy/remote";
     @Autowired
     private MockMvc mockMvc;
 

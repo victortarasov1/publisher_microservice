@@ -33,19 +33,14 @@ public class Step {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Step stepDto = (Step) o;
-
-        if (!Objects.equals(action, stepDto.action)) return false;
-        return Objects.equals(value, stepDto.value);
+        if (!(o instanceof Step step)) return false;
+        return Objects.equals(action, step.action)
+                && Objects.equals(value, step.value);
     }
 
     @Override
     public int hashCode() {
-        int result = action != null ? action.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
+        return Objects.hash(action, value);
     }
 
     @Override

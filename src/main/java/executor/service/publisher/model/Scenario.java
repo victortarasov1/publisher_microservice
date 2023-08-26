@@ -8,7 +8,8 @@ public class Scenario {
     private String site;
     private List<Step> steps;
 
-    public Scenario() {}
+    public Scenario() {
+    }
 
     public Scenario(String name, String site, List<Step> steps) {
         this.name = name;
@@ -43,8 +44,7 @@ public class Scenario {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Scenario scenario = (Scenario) o;
+        if (!(o instanceof Scenario scenario)) return false;
         return Objects.equals(name, scenario.name) &&
                 Objects.equals(site, scenario.site) &&
                 Objects.equals(steps, scenario.steps);

@@ -1,5 +1,7 @@
 package executor.service.publisher.processing.proxy;
 
+import executor.service.publisher.exception.source.UnknownSourceServiceException;
+import executor.service.publisher.exception.validator.UnknownProxyTypeException;
 import executor.service.publisher.model.ProxyConfigHolder;
 import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class ProxyRemoteProcessingServiceImplTest {
@@ -50,5 +53,17 @@ class ProxyRemoteProcessingServiceImplTest {
         verify(validator, timeout(2000).times(3)).isValid(any(ProxyConfigHolder.class));
         verify(proxySourceService, timeout(2000).times(1)).loadData(any(ProxySource.class));
         verify(queueHandler, timeout(2000).times(3)).add(any(ProxyConfigHolder.class));
+    }
+
+    @Test
+    void testLoadFromCustomRemoteSource_shouldThrowUnknownProxyTypeException() {
+        ProxySource customSource = new ProxySource("https://some/other/url", "url", "");
+        assertThatThrownBy(() -> service.loadFromCustomRemoteSource(customSource)).isInstanceOf(UnknownProxyTypeException.class);
+    }
+
+    @Test
+    void testLoadFromCustomRemoteSource_shouldThrowUnknownServiceException() {
+        ProxySource customSource = new ProxySource("https://some/other/url", "", "http");
+        assertThatThrownBy(() -> service.loadFromCustomRemoteSource(customSource)).isInstanceOf(UnknownSourceServiceException.class);
     }
 }
