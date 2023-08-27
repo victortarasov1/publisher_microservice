@@ -1,8 +1,6 @@
 package executor.service.publisher.source.service.proxy;
 
 import executor.service.publisher.model.ProxyConfigHolder;
-import executor.service.publisher.model.ProxyCredentials;
-import executor.service.publisher.model.ProxyNetworkConfig;
 import executor.service.publisher.model.ProxySource;
 import executor.service.publisher.source.okhttp.OkhttpLoader;
 import okhttp3.Request;
@@ -22,7 +20,7 @@ public class ProxySourceServiceUrl implements ProxySourceService {
     @Override
     public List<ProxyConfigHolder> loadData(ProxySource source) {
         Request request = new Request.Builder().url(source.getSource()).get().build();
-        return loader.loadData(request, proxyDto.class).stream().map(proxyDto::createProxyConfigHolder).toList();
+        return loader.loadData(request, RemoteProxyData.class).stream().map(RemoteProxyData::createProxyConfigHolder).toList();
     }
 
     @Override
@@ -30,16 +28,4 @@ public class ProxySourceServiceUrl implements ProxySourceService {
         return "url";
     }
 
-    private record proxyDto(String username, String password, String ip, Integer port) {
-        proxyDto {
-            ip = ip.strip();
-            if(username != null && password != null) {
-                username = username.strip();
-                password = password.strip();
-            }
-        }
-        ProxyConfigHolder createProxyConfigHolder() {
-            return new ProxyConfigHolder(new ProxyNetworkConfig(ip, port), new ProxyCredentials(username, password));
-        }
-    }
 }
