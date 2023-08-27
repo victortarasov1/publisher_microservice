@@ -1,6 +1,7 @@
 package executor.service.publisher.validation;
 
 import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.publisher.model.ProxyCredentials;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,7 +27,7 @@ public class HttpProxyValidator implements ProxyValidator {
     @Override
     public boolean isValid(ProxyConfigHolder proxy) {
         OkHttpClient proxiedHttpClient = createProxiedHttpClient(proxy);
-        Request request = getRequest(proxy.getProxyCredentials().getPassword(), proxy.getProxyCredentials().getUsername());
+        Request request = getRequest(proxy.getProxyCredentials());
         return validateProxy(proxiedHttpClient, request);
     }
 
@@ -40,10 +41,10 @@ public class HttpProxyValidator implements ProxyValidator {
         return okHttpClient.newBuilder().proxy(new Proxy(Proxy.Type.HTTP, inetSocketAddress)).build();
     }
 
-    private Request getRequest(String password, String username) {
+    private Request getRequest(ProxyCredentials credentials) {
         Request.Builder builder = new Request.Builder().url(PROXY_CHECKER_URL);
-        if (username != null && password != null)
-            builder.header(PROXY_AUTHORIZATION, Credentials.basic(username, password));
+        if (credentials != null)
+            builder.header(PROXY_AUTHORIZATION, Credentials.basic(credentials.getUsername(), credentials.getPassword()));
         return builder.build();
     }
 
