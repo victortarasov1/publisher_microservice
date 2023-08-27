@@ -12,6 +12,10 @@ public class ProxyConfigHolder {
     public ProxyConfigHolder() {
     }
 
+    public ProxyConfigHolder(ProxyNetworkConfig proxyNetworkConfig) {
+        this.proxyNetworkConfig = proxyNetworkConfig;
+    }
+
     public ProxyConfigHolder(ProxyNetworkConfig proxyNetworkConfig, ProxyCredentials proxyCredentials) {
         this.proxyNetworkConfig = proxyNetworkConfig;
         this.proxyCredentials = proxyCredentials;
