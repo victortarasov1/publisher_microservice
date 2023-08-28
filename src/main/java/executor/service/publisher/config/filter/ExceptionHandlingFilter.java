@@ -22,6 +22,12 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @Component
 @Order(1)
 public class ExceptionHandlingFilter extends OncePerRequestFilter {
+    private final ObjectMapper mapper;
+
+    public ExceptionHandlingFilter(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -32,7 +38,7 @@ public class ExceptionHandlingFilter extends OncePerRequestFilter {
             List<String> debugMessages = Optional.ofNullable(ex.getCause()).map(Throwable::getMessage).stream().toList();
             ApiError error = new ApiError(ex.getMessage(), debugMessages);
             response.setContentType(APPLICATION_JSON_VALUE);
-            new ObjectMapper().writeValue(response.getOutputStream(), error);
+            mapper.writeValue(response.getOutputStream(), error);
         }
     }
 }

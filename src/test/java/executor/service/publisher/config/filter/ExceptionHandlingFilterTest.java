@@ -1,5 +1,6 @@
 package executor.service.publisher.config.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.publisher.exception.security.AuthorizationException;
 import executor.service.publisher.exception.security.SecurityAuthException;
 import jakarta.servlet.FilterChain;
@@ -23,7 +24,7 @@ class ExceptionHandlingFilterTest {
 
     @BeforeEach
     public void setup() {
-        exceptionHandlingFilter = new ExceptionHandlingFilter();
+        exceptionHandlingFilter = new ExceptionHandlingFilter(mock(ObjectMapper.class));
         request = mock(HttpServletRequest.class);
         response = new MockHttpServletResponse();
         filterChain = mock(FilterChain.class);
