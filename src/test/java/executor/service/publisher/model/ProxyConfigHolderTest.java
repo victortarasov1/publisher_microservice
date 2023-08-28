@@ -1,112 +1,118 @@
 package executor.service.publisher.model;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ProxyConfigHolderTest {
 
-    private ProxyConfigHolder proxyConfigHolderWithNullArgs;
-    private ProxyConfigHolder proxyConfigHolderWithArgs;
-    private ProxyConfigHolder proxyConfigHolderWithNoArgs;
+    private static final String TEST_HOSTNAME = "testHostname";
+    private static final Integer TEST_PORT = 8080;
+    private static final String DIFFERENT_HOSTNAME = "differentHostname";
+    private static final Integer DIFFERENT_PORT = 8888;
+    private static final String TEST_USERNAME = "username";
+    private static final String TEST_PASSWORD = "password";
+    private static final String DIFFERENT_USERNAME = "differentUsername";
+    private static final String DIFFERENT_PASSWORD = "differentPassword";
 
-    private static final ProxyNetworkConfig PROXY_NETWORK_CONFIG_MOCK = Mockito.mock(ProxyNetworkConfig.class);
-    private static final ProxyCredentials PROXY_CREDENTIALS_MOCK = Mockito.mock(ProxyCredentials.class);
+    @Test
+    public void testDefaultConstructor() {
+        ProxyNetworkConfig proxyNetworkConfig = new ProxyNetworkConfig();
+        ProxyCredentials proxyCredentials = new ProxyCredentials();
+        ProxyConfigHolder configHolder = new ProxyConfigHolder(proxyNetworkConfig, proxyCredentials);
 
-
-    @BeforeEach
-    void setUp() {
-        this.proxyConfigHolderWithArgs = new ProxyConfigHolder(PROXY_NETWORK_CONFIG_MOCK, PROXY_CREDENTIALS_MOCK);
-
-        this.proxyConfigHolderWithNoArgs = new ProxyConfigHolder();
-
-        this.proxyConfigHolderWithNullArgs = new ProxyConfigHolder(null, null);
+        assertThat(configHolder.getProxyNetworkConfig()).isEqualTo(proxyNetworkConfig);
+        assertThat(configHolder.getProxyCredentials()).isEqualTo(proxyCredentials);
     }
 
     @Test
-    void testDefaultConstructor() {
-        Assertions.assertNotNull(this.proxyConfigHolderWithNoArgs);
+    public void testParameterizedConstructor() {
+        ProxyNetworkConfig proxyNetworkConfig = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        ProxyCredentials proxyCredentials = new ProxyCredentials(TEST_USERNAME, TEST_PASSWORD);
+        ProxyConfigHolder configHolder = new ProxyConfigHolder(proxyNetworkConfig, proxyCredentials);
+
+        assertThat(configHolder.getProxyNetworkConfig()).isEqualTo(proxyNetworkConfig);
+        assertThat(configHolder.getProxyCredentials()).isEqualTo(proxyCredentials);
+    }
+    @Test
+    public void testConstructorWithNetworkConfig() {
+        ProxyNetworkConfig proxyNetworkConfig = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        ProxyConfigHolder configHolder = new ProxyConfigHolder(proxyNetworkConfig);
+        assertThat(configHolder.getProxyNetworkConfig()).isEqualTo(proxyNetworkConfig);
     }
 
     @Test
-    void testArgsConstructorWithNulls() {
-        Assertions.assertNotNull(this.proxyConfigHolderWithNullArgs);
-        Assertions.assertNull(this.proxyConfigHolderWithNullArgs.getProxyNetworkConfig());
-        Assertions.assertNull(this.proxyConfigHolderWithNullArgs.getProxyCredentials());
+    public void testProxyNetworkConfigGetterAndSetter() {
+        ProxyNetworkConfig proxyNetworkConfig1 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        ProxyConfigHolder configHolder = new ProxyConfigHolder();
+        configHolder.setProxyNetworkConfig(proxyNetworkConfig1);
+
+        assertThat(configHolder.getProxyNetworkConfig()).isEqualTo(proxyNetworkConfig1);
     }
 
     @Test
-    void testArgsConstructor() {
-        Assertions.assertNotNull(this.proxyConfigHolderWithArgs);
+    public void testProxyCredentialsGetterAndSetter() {
+        ProxyCredentials proxyCredentials1 = new ProxyCredentials(TEST_USERNAME, TEST_PASSWORD);
+        ProxyConfigHolder configHolder = new ProxyConfigHolder();
+        configHolder.setProxyCredentials(proxyCredentials1);
 
-        ProxyConfigHolder actual = new ProxyConfigHolder(PROXY_NETWORK_CONFIG_MOCK, PROXY_CREDENTIALS_MOCK);
-
-        Assertions.assertEquals(this.proxyConfigHolderWithArgs, actual);
+        assertThat(configHolder.getProxyCredentials()).isEqualTo(proxyCredentials1);
     }
 
     @Test
-    void testSetProxyNetworkConfigWithNotNullArg() {
-        this.proxyConfigHolderWithNoArgs.setProxyNetworkConfig(PROXY_NETWORK_CONFIG_MOCK);
-
-        Assertions.assertEquals(PROXY_NETWORK_CONFIG_MOCK, this.proxyConfigHolderWithNoArgs.getProxyNetworkConfig());
+    public void testEqualsWithNull() {
+        ProxyConfigHolder configHolder = new ProxyConfigHolder();
+        assertThat(configHolder).isNotEqualTo(null);
     }
 
     @Test
-    void testSetProxyNetworkConfigWithNullArg() {
-        this.proxyConfigHolderWithNoArgs.setProxyNetworkConfig(null);
-
-        Assertions.assertNull(this.proxyConfigHolderWithNoArgs.getProxyNetworkConfig());
+    public void testEqualsWithDifferentType() {
+        ProxyConfigHolder configHolder = new ProxyConfigHolder();
+        String differentType = "string";
+        assertThat(configHolder).isNotEqualTo(differentType);
     }
 
     @Test
-    void testSetProxyCredentialsWithNotNullArg() {
-        this.proxyConfigHolderWithNoArgs.setProxyCredentials(PROXY_CREDENTIALS_MOCK);
-
-        Assertions.assertEquals(PROXY_CREDENTIALS_MOCK, this.proxyConfigHolderWithNoArgs.getProxyCredentials());
+    public void testEqualsWithItself() {
+        ProxyConfigHolder configHolder = new ProxyConfigHolder();
+        assertThat(configHolder).isEqualTo(configHolder);
     }
 
     @Test
-    void testSetProxyCredentialsWithNullArg() {
-        this.proxyConfigHolderWithNoArgs.setProxyCredentials(null);
+    public void testEqualsAndHashCodeForEqualConfigHolders() {
+        ProxyNetworkConfig proxyNetworkConfig1 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        ProxyCredentials proxyCredentials1 = new ProxyCredentials(TEST_USERNAME, TEST_PASSWORD);
+        ProxyConfigHolder configHolder1 = new ProxyConfigHolder(proxyNetworkConfig1, proxyCredentials1);
 
-        Assertions.assertNull(this.proxyConfigHolderWithNoArgs.getProxyCredentials());
+        ProxyNetworkConfig proxyNetworkConfig2 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        ProxyCredentials proxyCredentials2 = new ProxyCredentials(TEST_USERNAME, TEST_PASSWORD);
+        ProxyConfigHolder configHolder2 = new ProxyConfigHolder(proxyNetworkConfig2, proxyCredentials2);
+
+        assertThat(configHolder1).isEqualTo(configHolder2);
+        assertThat(configHolder1.hashCode()).isEqualTo(configHolder2.hashCode());
     }
 
     @Test
-    void testGetProxyNetworkConfig() {
-        Assertions.assertEquals(PROXY_NETWORK_CONFIG_MOCK, this.proxyConfigHolderWithArgs.getProxyNetworkConfig());
+    public void testEqualsAndHashCodeForDifferentConfigHolders() {
+        ProxyNetworkConfig proxyNetworkConfig1 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        ProxyCredentials proxyCredentials1 = new ProxyCredentials(TEST_USERNAME, TEST_PASSWORD);
+        ProxyConfigHolder configHolder1 = new ProxyConfigHolder(proxyNetworkConfig1, proxyCredentials1);
+
+        ProxyNetworkConfig proxyNetworkConfig3 = new ProxyNetworkConfig(DIFFERENT_HOSTNAME, DIFFERENT_PORT);
+        ProxyCredentials proxyCredentials3 = new ProxyCredentials(DIFFERENT_USERNAME, DIFFERENT_PASSWORD);
+        ProxyConfigHolder configHolder3 = new ProxyConfigHolder(proxyNetworkConfig3, proxyCredentials3);
+
+        assertThat(configHolder1).isNotEqualTo(configHolder3);
+        assertThat(configHolder1.hashCode()).isNotEqualTo(configHolder3.hashCode());
     }
 
     @Test
-    void testGetProxyCredentials() {
-        Assertions.assertEquals(PROXY_CREDENTIALS_MOCK, this.proxyConfigHolderWithArgs.getProxyCredentials());
+    public void testToString() {
+        ProxyNetworkConfig proxyNetworkConfig = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        ProxyCredentials proxyCredentials = new ProxyCredentials(TEST_USERNAME, TEST_PASSWORD);
+        ProxyConfigHolder configHolder = new ProxyConfigHolder(proxyNetworkConfig, proxyCredentials);
+
+        String expectedToString = "ProxyConfigHolderDto{proxyNetworkConfig=" + proxyNetworkConfig + ", proxyCredentials=" + proxyCredentials + '}';
+        assertThat(configHolder.toString()).isEqualTo(expectedToString);
     }
-
-    @Test
-    void testEqualObjects() {
-        ProxyConfigHolder actual = new ProxyConfigHolder(PROXY_NETWORK_CONFIG_MOCK, PROXY_CREDENTIALS_MOCK);
-
-        Assertions.assertEquals(this.proxyConfigHolderWithArgs, actual);
-    }
-
-    @Test
-    void testNotEqualObjects() {
-        Assertions.assertNotEquals(this.proxyConfigHolderWithNullArgs, this.proxyConfigHolderWithArgs);
-    }
-
-    @Test
-    void testHashcode() {
-        ProxyConfigHolder actual = new ProxyConfigHolder(PROXY_NETWORK_CONFIG_MOCK, PROXY_CREDENTIALS_MOCK);
-
-        Assertions.assertEquals(this.proxyConfigHolderWithArgs.hashCode(), actual.hashCode());
-    }
-
-    @Test
-    void testToString() {
-        ProxyConfigHolder actual = new ProxyConfigHolder(PROXY_NETWORK_CONFIG_MOCK, PROXY_CREDENTIALS_MOCK);
-
-        Assertions.assertEquals(this.proxyConfigHolderWithArgs.toString(), actual.toString());
-    }
-
 }

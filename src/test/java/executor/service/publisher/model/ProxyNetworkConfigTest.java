@@ -1,89 +1,87 @@
 package executor.service.publisher.model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.assertj.core.api.Assertions.assertThat;
 public class ProxyNetworkConfigTest {
-    private static final String EXPECTED_HOSTNAME = "Test";
-    private static final Integer EXPECTED_PORT = 1234;
-    private static final String EXPECTED_TO_STRING
-            = "ProxyNetworkConfigDTO{hostname='Test', port=1234}";
-    private ProxyNetworkConfig proxyNetworkConfigWithNoArgs;
-    private ProxyNetworkConfig proxyNetworkConfigWithNullArgs;
-    private ProxyNetworkConfig proxyNetworkConfigWithArgs;
 
+    private static final String TEST_HOSTNAME = "testHostname";
+    private static final Integer TEST_PORT = 8080;
+    private static final String DIFFERENT_HOSTNAME = "differentHostname";
+    private static final Integer DIFFERENT_PORT = 8888;
 
-    @BeforeEach
-    public void setup(){
-        proxyNetworkConfigWithNoArgs = new ProxyNetworkConfig();
-        proxyNetworkConfigWithNullArgs = new ProxyNetworkConfig(null, null);
-        proxyNetworkConfigWithArgs = new ProxyNetworkConfig(EXPECTED_HOSTNAME, EXPECTED_PORT);
+    @Test
+    public void testDefaultConstructor() {
+        ProxyNetworkConfig config = new ProxyNetworkConfig();
+        assertThat(config.getHostname()).isNull();
+        assertThat(config.getPort()).isNull();
     }
 
     @Test
-    public void testDefaultConstructor(){
-        assertNotEquals(null, proxyNetworkConfigWithNoArgs);
+    public void testParameterizedConstructor() {
+        ProxyNetworkConfig config = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+
+        assertThat(config.getHostname()).isEqualTo(TEST_HOSTNAME);
+        assertThat(config.getPort()).isEqualTo(TEST_PORT);
     }
 
     @Test
-    public void testArgsConstructorWithNulls(){
-        assertNotNull(proxyNetworkConfigWithNullArgs);
-        assertNull(proxyNetworkConfigWithNullArgs.getHostname());
-        assertNull(proxyNetworkConfigWithNullArgs.getHostname());
+    public void testHostnameGetterAndSetter() {
+        ProxyNetworkConfig config = new ProxyNetworkConfig();
+        config.setHostname(TEST_HOSTNAME);
+        assertThat(config.getHostname()).isEqualTo(TEST_HOSTNAME);
     }
 
     @Test
-    public void testArgsConstructor(){
-        assertNotNull(proxyNetworkConfigWithArgs);
-        assertEquals(EXPECTED_HOSTNAME, proxyNetworkConfigWithArgs.getHostname());
-        assertEquals(EXPECTED_PORT, proxyNetworkConfigWithArgs.getPort());
+    public void testPortGetterAndSetter() {
+        ProxyNetworkConfig config = new ProxyNetworkConfig();
+        config.setPort(TEST_PORT);
+        assertThat(config.getPort()).isEqualTo(TEST_PORT);
     }
 
     @Test
-    public void testSetters(){
-        proxyNetworkConfigWithNoArgs.setHostname(EXPECTED_HOSTNAME);
-        proxyNetworkConfigWithNoArgs.setPort(EXPECTED_PORT);
-        assertEquals(EXPECTED_HOSTNAME, proxyNetworkConfigWithNoArgs.getHostname());
-        assertEquals(EXPECTED_PORT, proxyNetworkConfigWithNoArgs.getPort());
+    public void testEqualsWithNull() {
+        ProxyNetworkConfig config1 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        assertThat(config1).isNotEqualTo(null);
     }
 
     @Test
-    public void testSettersWithNull(){
-        proxyNetworkConfigWithNoArgs.setHostname(null);
-        proxyNetworkConfigWithNoArgs.setPort(null);
-        assertNull(proxyNetworkConfigWithNoArgs.getHostname());
-        assertNull(proxyNetworkConfigWithNoArgs.getPort());
+    public void testEqualsWithDifferentType() {
+        ProxyNetworkConfig config1 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        String differentType = "string";
+        assertThat(config1).isNotEqualTo(differentType);
     }
 
     @Test
-    public void testGetters(){
-        assertEquals(EXPECTED_HOSTNAME, proxyNetworkConfigWithArgs.getHostname());
-        assertEquals(EXPECTED_PORT, proxyNetworkConfigWithArgs.getPort());
+    public void testEqualsWithItself() {
+        ProxyNetworkConfig config1 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        assertThat(config1).isEqualTo(config1);
     }
 
     @Test
-    public void testEqualsSameObjects() {
-        ProxyNetworkConfig expected = new ProxyNetworkConfig
-                (proxyNetworkConfigWithArgs.getHostname(), proxyNetworkConfigWithArgs.getPort());
-        assertEquals(expected, proxyNetworkConfigWithArgs);
+    public void testEqualsAndHashCodeForEqualConfigs() {
+        ProxyNetworkConfig config1 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        ProxyNetworkConfig config2 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+
+        assertThat(config1).isEqualTo(config2);
+        assertThat(config1.hashCode()).isEqualTo(config2.hashCode());
     }
 
     @Test
-    public void testEqualsDifferentObjects() {
-        ProxyNetworkConfig expected = new ProxyNetworkConfig("hostname",0);
-        assertNotEquals(expected, proxyNetworkConfigWithArgs);
-    }
-    @Test
-    public void testHashCode() {
-        ProxyNetworkConfig expected = new ProxyNetworkConfig("hostname",0);
-        assertNotEquals(expected.hashCode(), proxyNetworkConfigWithArgs.hashCode());
+    public void testEqualsAndHashCodeForDifferentConfigs() {
+        ProxyNetworkConfig config1 = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+        ProxyNetworkConfig config3 = new ProxyNetworkConfig(DIFFERENT_HOSTNAME, DIFFERENT_PORT);
+
+        assertThat(config1).isNotEqualTo(config3);
+        assertThat(config1.hashCode()).isNotEqualTo(config3.hashCode());
     }
 
     @Test
-    public void testToString(){
-        assertEquals(proxyNetworkConfigWithArgs.toString(), EXPECTED_TO_STRING);
+    public void testToString() {
+        ProxyNetworkConfig config = new ProxyNetworkConfig(TEST_HOSTNAME, TEST_PORT);
+
+        String expectedToString = "ProxyNetworkConfigDTO{hostname='" + TEST_HOSTNAME + "', port=" + TEST_PORT + '}';
+        assertThat(config.toString()).isEqualTo(expectedToString);
     }
 
 }
