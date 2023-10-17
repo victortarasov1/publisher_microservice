@@ -10,9 +10,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "stage" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "stage" ]
 
 jobs:
   build:
@@ -26,9 +26,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
+          cache: gradle
+      - name: Install Gradle
+          run: |
+            wget https://services.gradle.org/distributions/gradle-7.3-bin.zip
+            unzip -d /opt gradle-7.3-bin.zip
+            export PATH=$PATH:/opt/gradle-7.3/bin
+            gradle -v
       - name: Build and Run Tests
-        run: mvn test --batch-mode --fail-at-end --file pom.xml
+        run: gradle test
       - name: Publish Test Report
         if: ${{ always() }} #publish report even if the tests are failing
         uses: scacap/action-surefire-report@v1
