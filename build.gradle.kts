@@ -5,16 +5,21 @@ plugins {
     id("io.freefair.lombok") version "8.4"
 }
 
-group = "com.example"
-version = "0.0.1-SNAPSHOT"
+allprojects {
+    group = "executor.service"
+    version = "0.0.1-SNAPSHOT"
+    repositories {
+        mavenCentral()
+    }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+
 }
 
-repositories {
-    mavenCentral()
-}
+
+
 
 dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -26,7 +31,23 @@ dependencies {
     implementation("com.auth0:java-jwt:4.4.0")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+
+subprojects {
+    apply(plugin = "java")
+    apply(plugin = "org.springframework.boot")
+    apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "io.freefair.lombok")
+
+    tasks.withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+    }
+
+    dependencies {
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+    }
+
+
 }
 

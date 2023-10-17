@@ -1,4 +1,4 @@
-package executor.service.publisher.logger;
+package executor.service.logger.aspect;
 
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;

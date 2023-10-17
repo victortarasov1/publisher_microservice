@@ -1,4 +1,4 @@
-package executor.service.publisher.annotation;
+package executor.service.logger.annotation;
 
 
 import java.lang.annotation.ElementType;
