@@ -2,17 +2,15 @@ package executor.service.publisher.processing.scenario;
 
 import executor.service.publisher.model.Scenario;
 import executor.service.publisher.queue.scenario.ScenarioSourceQueueHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 @Component
+@RequiredArgsConstructor
 public class ScenarioProcessingServiceImpl implements ScenarioProcessingService {
     private final ScenarioSourceQueueHandler queueHandler;
-
-    public ScenarioProcessingServiceImpl(ScenarioSourceQueueHandler queueHandler) {
-        this.queueHandler = queueHandler;
-    }
 
     @Override
     public void add(Scenario scenario) {

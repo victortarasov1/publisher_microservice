@@ -6,6 +6,7 @@ import executor.service.publisher.exception.source.DataParsingException;
 import executor.service.publisher.exception.source.okhttp.CallException;
 import executor.service.publisher.exception.source.okhttp.EmptyResponseBodyException;
 import executor.service.publisher.exception.source.okhttp.UnsuccessfulResponseException;
+import lombok.RequiredArgsConstructor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -16,14 +17,10 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class OkhttpLoaderImpl implements OkhttpLoader {
     private final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
-
-    public OkhttpLoaderImpl(OkHttpClient okHttpClient, ObjectMapper objectMapper) {
-        this.okHttpClient = okHttpClient;
-        this.objectMapper = objectMapper;
-    }
 
     @Override
     public <T> List<T> loadData(Request request, Class<T> clazz) {

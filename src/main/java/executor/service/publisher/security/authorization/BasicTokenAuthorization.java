@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import executor.service.publisher.security.TokenClaim;
 import executor.service.publisher.exception.security.AuthorizationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,13 +17,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 @Component
+@RequiredArgsConstructor
 public class BasicTokenAuthorization implements TokenBasedAuthorization {
 
     private final JWTVerifier verifier;
-
-    public BasicTokenAuthorization(JWTVerifier verifier) {
-        this.verifier = verifier;
-    }
 
     @Override
     public void authorizeIfTokenValid(String jwtToken) {

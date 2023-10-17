@@ -3,18 +3,15 @@ package executor.service.publisher.queue.scenario;
 import executor.service.publisher.annotation.Logged;
 import executor.service.publisher.model.Scenario;
 import executor.service.publisher.queue.QueueHandler;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
 @Logged
+@RequiredArgsConstructor
 public class ScenarioSourceQueueHandlerImpl implements ScenarioSourceQueueHandler {
     private final QueueHandler<Scenario> handler;
-
-    public ScenarioSourceQueueHandlerImpl(QueueHandler<Scenario> handler) {
-        this.handler = handler;
-    }
-
     @Override
     public void add(Scenario scenario) {
         handler.add(scenario);
