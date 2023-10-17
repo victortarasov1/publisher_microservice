@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import executor.service.publisher.model.SecurityConfig;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -24,13 +25,9 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
-
     private final SecurityConfig securityConfig;
-
-    public SecurityConfiguration(SecurityConfig securityConfig) {
-        this.securityConfig = securityConfig;
-    }
 
     @Bean
     public JWTVerifier verifier() {

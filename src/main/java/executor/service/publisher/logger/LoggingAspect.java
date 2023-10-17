@@ -1,5 +1,6 @@
 package executor.service.publisher.logger;
 
+import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,12 +10,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
+@RequiredArgsConstructor
 public class LoggingAspect {
     private final Logger logger;
-
-    public LoggingAspect(Logger logger) {
-        this.logger = logger;
-    }
 
     @Before("@within(executor.service.publisher.annotation.Logged)")
     public void logBefore(JoinPoint joinPoint) {
