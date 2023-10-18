@@ -5,7 +5,9 @@ plugins {
     id("io.freefair.lombok") version "8.4"
 }
 
-
+tasks.bootJar {
+    enabled = false
+}
 allprojects {
     group = "executor.service"
     version = "0.0.1-SNAPSHOT"
