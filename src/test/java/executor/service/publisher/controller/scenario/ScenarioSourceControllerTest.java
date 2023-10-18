@@ -1,7 +1,7 @@
 package executor.service.publisher.controller.scenario;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import executor.service.publisher.model.*;
+import executor.service.model.Scenario;
 import executor.service.publisher.processing.scenario.ScenarioProcessingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

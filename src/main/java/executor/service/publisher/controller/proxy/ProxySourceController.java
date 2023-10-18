@@ -1,7 +1,8 @@
 package executor.service.publisher.controller.proxy;
 
+
+import executor.service.model.ProxyConfigHolder;
 import executor.service.publisher.controller.SourceController;
-import executor.service.publisher.model.ProxyConfigHolder;
 import executor.service.publisher.processing.proxy.ProxyProcessingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package executor.service.publisher.queue.proxy;
 
-import executor.service.publisher.annotation.Logged;
-import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.logger.annotation.Logged;
+import executor.service.model.ProxyConfigHolder;
 import executor.service.publisher.queue.QueueHandler;
 import lombok.RequiredArgsConstructor;
 

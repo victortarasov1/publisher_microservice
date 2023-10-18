@@ -1,16 +1,12 @@
 package executor.service.publisher.queue.scenario;
 
-import executor.service.publisher.model.ProxyConfigHolder;
-import executor.service.publisher.model.Scenario;
+import executor.service.model.Scenario;
 import executor.service.publisher.queue.QueueHandler;
-import executor.service.publisher.queue.proxy.ProxySourceQueueHandler;
-import executor.service.publisher.queue.proxy.ProxySourceQueueHandlerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 

@@ -1,4 +1,4 @@
-package executor.service.publisher.model;
+package executor.service.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

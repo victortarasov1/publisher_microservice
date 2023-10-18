@@ -1,7 +1,7 @@
 package executor.service.publisher.controller.scenario;
 
+import executor.service.model.Scenario;
 import executor.service.publisher.controller.SourceController;
-import executor.service.publisher.model.Scenario;
 import executor.service.publisher.processing.scenario.ScenarioProcessingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

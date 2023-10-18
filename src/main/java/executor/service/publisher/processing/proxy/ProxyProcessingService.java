@@ -1,7 +1,7 @@
 package executor.service.publisher.processing.proxy;
 
 import executor.service.publisher.exception.validator.UnknownProxyTypeException;
-import executor.service.publisher.model.ProxyConfigHolder;
+import executor.service.model.ProxyConfigHolder;
 import executor.service.publisher.processing.ProcessingService;
 
 import java.util.List;
