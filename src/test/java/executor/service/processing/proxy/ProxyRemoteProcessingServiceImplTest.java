@@ -1,8 +1,8 @@
 package executor.service.processing.proxy;
 
-import executor.service.exception.source.UnknownSourceServiceException;
 import executor.service.exception.validator.UnknownProxyTypeException;
-import executor.service.model.ProxySource;
+import executor.service.source.exception.UnknownSourceServiceException;
+import executor.service.source.model.ProxySource;
 import executor.service.model.ProxyConfigHolder;
 import executor.service.collection.queue.proxy.ProxySourceQueueHandler;
 import executor.service.source.service.proxy.ProxySourceService;

@@ -1,6 +1,6 @@
 package executor.service.source.service.proxy;
 
-import executor.service.model.ProxySource;
+import executor.service.source.model.ProxySource;
 import executor.service.model.ProxyConfigHolder;
 import executor.service.source.okhttp.OkhttpLoader;
 import okhttp3.Request;

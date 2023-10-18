@@ -1,8 +1,8 @@
 package executor.service.controller.handler;
 
-import executor.service.exception.source.SourceException;
 import executor.service.exception.validator.ValidationException;
 import executor.service.model.ApiError;
+import executor.service.source.exception.SourceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

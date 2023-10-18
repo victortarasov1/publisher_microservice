@@ -1,4 +1,4 @@
-package executor.service.exception.source;
+package executor.service.source.exception;
 
 public class UnknownSourceServiceException extends SourceException {
     public UnknownSourceServiceException(String type) {

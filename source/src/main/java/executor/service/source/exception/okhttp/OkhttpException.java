@@ -1,6 +1,6 @@
-package executor.service.exception.source.okhttp;
+package executor.service.source.exception.okhttp;
 
-import executor.service.exception.source.SourceException;
+import executor.service.source.exception.SourceException;
 
 public class OkhttpException extends SourceException {
     public OkhttpException(String message, Throwable cause) {

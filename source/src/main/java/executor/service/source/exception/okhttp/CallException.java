@@ -1,4 +1,4 @@
-package executor.service.exception.source.okhttp;
+package executor.service.source.exception.okhttp;
 
 public class CallException extends OkhttpException {
     public CallException(Throwable ex) {

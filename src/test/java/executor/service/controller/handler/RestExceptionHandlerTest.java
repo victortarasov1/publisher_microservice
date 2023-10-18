@@ -1,7 +1,7 @@
 package executor.service.controller.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import executor.service.model.ProxySource;
+import executor.service.source.model.ProxySource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

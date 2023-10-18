@@ -2,7 +2,7 @@ package executor.service.controller.proxy;
 
 import executor.service.controller.RemoteSourceController;
 import executor.service.processing.proxy.ProxyRemoteProcessingService;
-import executor.service.model.ProxySource;
+import executor.service.source.model.ProxySource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,7 +1,7 @@
 package executor.service.controller.proxy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import executor.service.model.ProxySource;
+import executor.service.source.model.ProxySource;
 import executor.service.processing.proxy.ProxyRemoteProcessingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

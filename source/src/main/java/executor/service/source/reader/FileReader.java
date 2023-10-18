@@ -1,6 +1,6 @@
 package executor.service.source.reader;
 
-import executor.service.exception.source.DataParsingException;
+import executor.service.source.exception.DataParsingException;
 
 import java.util.List;
 

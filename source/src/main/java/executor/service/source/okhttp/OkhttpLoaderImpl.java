@@ -2,10 +2,10 @@ package executor.service.source.okhttp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import executor.service.exception.source.DataParsingException;
-import executor.service.exception.source.okhttp.CallException;
-import executor.service.exception.source.okhttp.EmptyResponseBodyException;
-import executor.service.exception.source.okhttp.UnsuccessfulResponseException;
+import executor.service.source.exception.DataParsingException;
+import executor.service.source.exception.okhttp.CallException;
+import executor.service.source.exception.okhttp.EmptyResponseBodyException;
+import executor.service.source.exception.okhttp.UnsuccessfulResponseException;
 import lombok.RequiredArgsConstructor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

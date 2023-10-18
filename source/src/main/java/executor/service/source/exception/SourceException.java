@@ -1,4 +1,4 @@
-package executor.service.exception.source;
+package executor.service.source.exception;
 
 public class SourceException extends RuntimeException {
     public SourceException(String message, Throwable cause) {

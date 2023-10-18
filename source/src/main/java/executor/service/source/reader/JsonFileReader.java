@@ -1,7 +1,7 @@
 package executor.service.source.reader;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import executor.service.exception.source.DataParsingException;
+import executor.service.source.exception.DataParsingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

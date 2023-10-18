@@ -1,9 +1,10 @@
-package executor.service.model;
+package executor.service.source.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@PropertySource("classpath:connection.properties")
 public class ProxySource {
 
     @Value("${remote.proxy.source}")

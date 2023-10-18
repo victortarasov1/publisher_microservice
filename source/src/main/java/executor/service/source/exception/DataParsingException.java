@@ -1,4 +1,4 @@
-package executor.service.exception.source;
+package executor.service.source.exception;
 
 public class DataParsingException extends SourceException {
     public DataParsingException(Throwable cause) {

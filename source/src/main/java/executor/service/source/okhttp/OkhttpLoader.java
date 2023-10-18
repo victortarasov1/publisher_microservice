@@ -1,9 +1,10 @@
 package executor.service.source.okhttp;
 
-import executor.service.exception.source.DataParsingException;
-import executor.service.exception.source.okhttp.CallException;
-import executor.service.exception.source.okhttp.EmptyResponseBodyException;
-import executor.service.exception.source.okhttp.UnsuccessfulResponseException;
+import executor.service.source.exception.DataParsingException;
+import executor.service.source.exception.okhttp.CallException;
+import executor.service.source.exception.okhttp.EmptyResponseBodyException;
+import executor.service.source.exception.okhttp.UnsuccessfulResponseException;
+
 import okhttp3.Request;
 
 import java.util.List;
