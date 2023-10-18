@@ -5,6 +5,13 @@ plugins {
     id("io.freefair.lombok") version "8.4"
 }
 
+
+dependencies {
+    implementation(project(":security"))
+    implementation(project(":processing"))
+}
+
+
 allprojects {
     group = "executor.service"
     version = "0.0.1-SNAPSHOT"
@@ -16,34 +23,15 @@ allprojects {
         useJUnitPlatform()
     }
 
-}
-
-
-
-
-dependencies {
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    testImplementation("org.springframework.security:spring-security-test")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation("com.auth0:java-jwt:4.4.0")
-    implementation(project(":collection"))
-    implementation(project(":model"))
-    implementation(project(":source"))
-}
-
-
-subprojects {
-    apply(plugin = "java")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "io.freefair.lombok")
-
     tasks.withType<JavaCompile> {
         sourceCompatibility = "17"
         targetCompatibility = "17"
     }
+
+    apply(plugin = "java")
+    apply(plugin = "org.springframework.boot")
+    apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "io.freefair.lombok")
 
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-web")
