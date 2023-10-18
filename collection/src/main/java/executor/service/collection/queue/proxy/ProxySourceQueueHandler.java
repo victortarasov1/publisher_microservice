@@ -1,8 +1,8 @@
-package executor.service.publisher.queue.proxy;
+package executor.service.collection.queue.proxy;
 
 
+import executor.service.collection.queue.QueueHandler;
 import executor.service.model.ProxyConfigHolder;
-import executor.service.publisher.queue.QueueHandler;
 
 public interface ProxySourceQueueHandler extends QueueHandler<ProxyConfigHolder> {
 }

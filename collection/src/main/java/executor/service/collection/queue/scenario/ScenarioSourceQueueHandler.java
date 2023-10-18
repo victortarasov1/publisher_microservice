@@ -1,7 +1,7 @@
-package executor.service.publisher.queue.scenario;
+package executor.service.collection.queue.scenario;
 
+import executor.service.collection.queue.QueueHandler;
 import executor.service.model.Scenario;
-import executor.service.publisher.queue.QueueHandler;
 
 public interface ScenarioSourceQueueHandler extends QueueHandler<Scenario> {
 }

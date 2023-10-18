@@ -1,6 +1,6 @@
-package executor.service.publisher.queue;
+package executor.service.collection.queue;
 
-import executor.service.publisher.model.Scenario;
+import executor.service.model.Scenario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

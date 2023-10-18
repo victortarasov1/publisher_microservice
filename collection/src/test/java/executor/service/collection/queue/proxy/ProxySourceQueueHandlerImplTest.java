@@ -1,7 +1,7 @@
-package executor.service.publisher.queue.proxy;
+package executor.service.collection.queue.proxy;
 
-import executor.service.publisher.model.ProxyConfigHolder;
-import executor.service.publisher.queue.QueueHandler;
+import executor.service.collection.queue.QueueHandler;
+import executor.service.model.ProxyConfigHolder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

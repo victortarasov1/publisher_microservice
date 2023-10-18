@@ -29,7 +29,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("org.aspectj:aspectjweaver:1.9.20.1")
     implementation("com.auth0:java-jwt:4.4.0")
-    implementation(project(":logger"))
+    implementation(project(":collection"))
     implementation(project(":model"))
 }
 
