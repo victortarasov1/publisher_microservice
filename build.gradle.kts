@@ -5,9 +5,7 @@ plugins {
     id("io.freefair.lombok") version "8.4"
 }
 
-tasks.bootJar {
-    enabled = false
-}
+
 allprojects {
     group = "executor.service"
     version = "0.0.1-SNAPSHOT"
@@ -33,7 +31,9 @@ allprojects {
         implementation("org.springframework.boot:spring-boot-starter-web")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
     }
-
+    tasks.bootJar {
+        enabled = false
+    }
 
 }
 
