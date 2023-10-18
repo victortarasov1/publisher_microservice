@@ -2,7 +2,6 @@ package executor.service.validation;
 
 import executor.service.model.ProxyConfigHolder;
 import executor.service.model.ProxyCredentials;
-import lombok.RequiredArgsConstructor;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,10 +16,8 @@ import java.net.Proxy;
 import static org.springframework.http.HttpHeaders.PROXY_AUTHORIZATION;
 
 @Component
-@RequiredArgsConstructor
 public class HttpProxyValidator implements ProxyValidator {
     private static final String PROXY_CHECKER_URL = "http://httpbin.org/ip";
-    private final OkHttpClient okHttpClient;
 
     @Override
     public boolean isValid(ProxyConfigHolder proxy) {
@@ -36,7 +33,7 @@ public class HttpProxyValidator implements ProxyValidator {
 
     private OkHttpClient createProxiedHttpClient(ProxyConfigHolder proxy) {
         InetSocketAddress inetSocketAddress = new InetSocketAddress(proxy.getProxyNetworkConfig().getHostname(), proxy.getProxyNetworkConfig().getPort());
-        return okHttpClient.newBuilder().proxy(new Proxy(Proxy.Type.HTTP, inetSocketAddress)).build();
+        return new OkHttpClient.Builder().proxy(new Proxy(Proxy.Type.HTTP, inetSocketAddress)).build();
     }
 
     private Request getRequest(ProxyCredentials credentials) {
