@@ -26,7 +26,7 @@ class RestExceptionHandlerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
     public void testLoadFromCustomRemoteSource_shouldHandleUnknownSourceServiceTypeException() throws Exception {

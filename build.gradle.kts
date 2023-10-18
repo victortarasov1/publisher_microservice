@@ -6,12 +6,6 @@ plugins {
 }
 
 
-dependencies {
-    implementation(project(":security"))
-    implementation(project(":processing"))
-}
-
-
 allprojects {
     group = "executor.service"
     version = "0.0.1-SNAPSHOT"
