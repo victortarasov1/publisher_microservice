@@ -8,8 +8,6 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
 }
 
-tasks.jar {
-    manifest {
-        attributes["Main-class"] = "executor.service.PublisherApplication"
-    }
+tasks.bootJar {
+    enabled = true
 }
