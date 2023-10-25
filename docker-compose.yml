@@ -1,0 +1,9 @@
+version: '3.5'
+services:
+  java-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9515:9515"
+    command: java -jar processing/build/libs/processing-0.0.1-SNAPSHOT.jar
