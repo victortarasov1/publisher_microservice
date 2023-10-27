@@ -15,12 +15,12 @@ public class ScenarioSourceQueueHandlerImpl implements ScenarioSourceQueueHandle
     private final QueueHandler<Scenario> handler;
     @Override
     public void add(Scenario scenario) {
-        setUUID(scenario);
+        scenario.setUUID(UUID.randomUUID());
         handler.add(scenario);
     }
     @Override
     public void addAll(List<Scenario> scenarios) {
-        scenarios.forEach(this::setUUID);
+        scenarios.forEach(scenario -> scenario.setUUID(UUID.randomUUID()));
         handler.addAll(scenarios);
     }
 
@@ -39,8 +39,5 @@ public class ScenarioSourceQueueHandlerImpl implements ScenarioSourceQueueHandle
         return handler.removeByCount(size);
     }
 
-    private void setUUID(Scenario scenario) {
-        scenario.setUUID(UUID.fromString(scenario.toString()));
-    }
 }
 
