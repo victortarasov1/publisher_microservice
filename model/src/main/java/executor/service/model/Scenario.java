@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ public class Scenario {
     private UUID uuid;
     private String name;
     private String site;
-    private List<Step> steps;
+    private List<Step> steps = new ArrayList<>();
 
     public void setUUID(UUID uuid) {
         this.uuid = uuid;
