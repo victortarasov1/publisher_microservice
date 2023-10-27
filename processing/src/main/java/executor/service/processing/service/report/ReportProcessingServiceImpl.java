@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ReportProcessingServiceImpl implements ProcessingService<ScenarioReport> {
+public class ReportProcessingServiceImpl implements ReportProcessingService {
 
     private final ReportQueueHandler handler;
 
