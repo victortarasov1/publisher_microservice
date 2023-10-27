@@ -3,11 +3,11 @@ package executor.service.processing.service.scenario;
 import executor.service.collection.queue.scenario.ScenarioSourceQueueHandler;
 import executor.service.model.Scenario;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-@Component
+@Service
 @RequiredArgsConstructor
 public class ScenarioProcessingServiceImpl implements ScenarioProcessingService {
     private final ScenarioSourceQueueHandler queueHandler;

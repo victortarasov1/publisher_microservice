@@ -7,7 +7,7 @@ import executor.service.source.model.ProxySource;
 import executor.service.source.service.proxy.ProxySourceService;
 import executor.service.validator.ProxyValidator;
 import executor.service.validator.exception.UnknownProxyTypeException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingService {
     private final Map<String, ProxyValidator> validators;
     private final Map<String, ProxySourceService> sourceServices;
