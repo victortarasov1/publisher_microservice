@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-@RequestMapping("/publisher/proxy")
+@RequestMapping("/publisher/report")
 public interface ReportSourceController extends SourceController<ScenarioReport> {
 
     @PreAuthorize("isAuthenticated()")
