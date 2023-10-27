@@ -17,6 +17,12 @@ public class Scenario {
     private String site;
     private List<Step> steps = new ArrayList<>();
 
+    public Scenario(String name, String site, List<Step> steps) {
+        this.name = name;
+        this.site = site;
+        this.steps = steps;
+    }
+
     public void setUUID(UUID uuid) {
         this.uuid = uuid;
         steps.forEach(st -> st.setScenarioUUID(uuid));
