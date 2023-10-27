@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Logged
 @RequiredArgsConstructor
@@ -14,11 +15,12 @@ public class ScenarioSourceQueueHandlerImpl implements ScenarioSourceQueueHandle
     private final QueueHandler<Scenario> handler;
     @Override
     public void add(Scenario scenario) {
+        scenario.setUUID(UUID.randomUUID());
         handler.add(scenario);
     }
-
     @Override
     public void addAll(List<Scenario> scenarios) {
+        scenarios.forEach(scenario -> scenario.setUUID(UUID.randomUUID()));
         handler.addAll(scenarios);
     }
 
@@ -36,4 +38,6 @@ public class ScenarioSourceQueueHandlerImpl implements ScenarioSourceQueueHandle
     public List<Scenario> removeByCount(int size) {
         return handler.removeByCount(size);
     }
+
 }
+
