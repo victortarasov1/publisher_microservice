@@ -5,7 +5,7 @@ import executor.service.source.model.ProxySource;
 import executor.service.collection.queue.proxy.ProxySourceQueueHandler;
 import executor.service.validator.ProxyValidator;
 import executor.service.validator.exception.UnknownProxyTypeException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class ProxyProcessingServiceImpl implements ProxyProcessingService {
     private final Map<String, ProxyValidator> validators;
     private final ProxySourceQueueHandler queueHandler;
