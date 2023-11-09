@@ -33,7 +33,7 @@ class ScenarioSourceControllerTest {
     private ScenarioProcessingService service;
     @Test
     void testAdd() throws Exception {
-        Scenario dto = new Scenario();
+        Scenario dto = new Scenario("some name", "some site", List.of());
         mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto)))
@@ -42,7 +42,7 @@ class ScenarioSourceControllerTest {
 
     @Test
     void testAddAll() throws Exception {
-        List<Scenario> dtoList = List.of(new Scenario());
+        List<Scenario> dtoList = List.of(new Scenario("some name", "some site", List.of()));
         mockMvc.perform(post(BASE_URL + "/all")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dtoList)))

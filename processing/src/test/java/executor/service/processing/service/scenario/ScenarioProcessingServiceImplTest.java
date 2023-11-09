@@ -24,14 +24,15 @@ class ScenarioProcessingServiceImplTest {
 
     @Test
     void testAdd() {
-        Scenario scenario = new Scenario();
+        Scenario scenario = new Scenario("some name", "some site", List.of());
         service.add(scenario);
         verify(producer, times(1)).add(List.of(scenario));
     }
 
     @Test
     void testAddAll() {
-        List<Scenario> scenarios = List.of(new Scenario(), new Scenario());
+        List<Scenario> scenarios = List.of(new Scenario("some name", "some site", List.of()),
+                new Scenario("some name", "some site", List.of()));
         service.addAll(scenarios);
         verify(producer, times(1)).add(scenarios);
     }
