@@ -10,18 +10,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -33,7 +27,7 @@ class ScenarioSourceControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @MockBean
     private ScenarioProcessingService service;
@@ -55,37 +49,5 @@ class ScenarioSourceControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    @WithMockUser
-    void testPoll() throws Exception {
-        Scenario dto = new Scenario("some name", "some site`s url", List.of());
-        when(service.poll()).thenReturn(Optional.of(dto));
-        mockMvc.perform(delete(BASE_URL))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("name").value(dto.getName()))
-                .andExpect(jsonPath("site").value(dto.getSite()))
-                .andExpect(jsonPath("steps", hasSize(0)));
 
-    }
-
-    @Test
-    @WithMockUser
-    void testRemoveAll() throws Exception {
-        List<Scenario> dtoList = List.of(new Scenario(), new Scenario());
-        when(service.removeAll()).thenReturn(dtoList);
-        mockMvc.perform(delete(BASE_URL + "/all"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)));
-    }
-
-    @Test
-    @WithMockUser
-    void testRemoveByCount() throws Exception {
-        List<Scenario> dtoList = List.of(new Scenario(), new Scenario());
-        when(service.removeByCount(anyInt())).thenReturn(dtoList);
-        mockMvc.perform(delete(BASE_URL + "/count/3"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)));
-
-    }
 }

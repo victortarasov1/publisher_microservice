@@ -26,19 +26,4 @@ public class ProxySourceController implements SourceController<ProxyConfigHolder
     public void addAll(List<ProxyConfigHolder> proxies) {
         service.addAll(proxies);
     }
-
-    @Override
-    public List<ProxyConfigHolder> removeByCount(Integer size) {
-        return service.removeByCount(size);
-    }
-
-    @Override
-    public Optional<ProxyConfigHolder> poll() {
-        return service.poll();
-    }
-
-    @Override
-    public List<ProxyConfigHolder> removeAll() {
-        return service.removeAll();
-    }
 }

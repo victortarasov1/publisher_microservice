@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -23,18 +22,4 @@ public class ReportSourceControllerImpl implements ReportSourceController {
         service.addAll(elements);
     }
 
-    @Override
-    public List<ScenarioReport> removeByCount(Integer size) {
-        return service.removeByCount(size);
-    }
-
-    @Override
-    public Optional<ScenarioReport> poll() {
-        return service.poll();
-    }
-
-    @Override
-    public List<ScenarioReport> removeAll() {
-        return service.removeAll();
-    }
 }

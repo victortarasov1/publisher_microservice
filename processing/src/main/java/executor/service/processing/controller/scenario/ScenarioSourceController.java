@@ -1,14 +1,13 @@
 package executor.service.processing.controller.scenario;
 
-import executor.service.processing.controller.SourceController;
 import executor.service.model.Scenario;
+import executor.service.processing.controller.SourceController;
 import executor.service.processing.service.scenario.ScenarioProcessingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Component
@@ -28,18 +27,4 @@ public class ScenarioSourceController implements SourceController<Scenario> {
         service.addAll(scenarios);
     }
 
-    @Override
-    public List<Scenario> removeByCount(Integer size) {
-        return service.removeByCount(size);
-    }
-
-    @Override
-    public Optional<Scenario> poll() {
-        return service.poll();
-    }
-
-    @Override
-    public List<Scenario> removeAll() {
-        return service.removeAll();
-    }
 }
