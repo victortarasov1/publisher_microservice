@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,12 +55,5 @@ class RestExceptionHandlerTest {
                         .content(mapper.writeValueAsString("")))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Malformed JSON Request"));
-    }
-
-    @Test
-    void testRemoveByCountShouldHandleMethodArgumentTypeMismatchException() throws Exception {
-        mockMvc.perform(delete(REMOVE_BY_COUNT_URL, "abracadabra"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("bad argument type"));
     }
 }

@@ -1,8 +1,8 @@
 package executor.service.processing.service.proxy;
 
 import executor.service.model.ProxyConfigHolder;
+import executor.service.queue.producer.proxy.ProxyQueueProducer;
 import executor.service.source.model.ProxySource;
-import executor.service.collection.queue.proxy.ProxySourceQueueHandler;
 import executor.service.validator.ProxyValidator;
 import executor.service.validator.exception.UnknownProxyTypeException;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 @Service
 public class ProxyProcessingServiceImpl implements ProxyProcessingService {
     private final Map<String, ProxyValidator> validators;
-    private final ProxySourceQueueHandler queueHandler;
+    private final ProxyQueueProducer producer;
 
     private final ProxySource defaultSource;
 
-    public ProxyProcessingServiceImpl(List<ProxyValidator> validators, ProxySourceQueueHandler queueHandler, ProxySource defaultSource) {
+    public ProxyProcessingServiceImpl(List<ProxyValidator> validators, ProxyQueueProducer producer, ProxySource defaultSource) {
         this.validators = new ConcurrentHashMap<>(validators.stream().collect(Collectors.toMap(ProxyValidator::getType, Function.identity())));
-        this.queueHandler = queueHandler;
+        this.producer = producer;
         this.defaultSource = defaultSource;
     }
 
@@ -33,7 +33,7 @@ public class ProxyProcessingServiceImpl implements ProxyProcessingService {
         ProxyValidator validator = Optional.ofNullable(validators.get(defaultSource.getType()))
                 .orElseThrow(() -> new UnknownProxyTypeException(defaultSource.getType()));
         CompletableFuture.runAsync(() -> {
-            if (validator.isValid(proxy)) queueHandler.add(proxy);
+            if (validator.isValid(proxy)) producer.add(proxy);
         });
     }
 
@@ -42,18 +42,4 @@ public class ProxyProcessingServiceImpl implements ProxyProcessingService {
         proxies.forEach(this::add);
     }
 
-    @Override
-    public List<ProxyConfigHolder> removeByCount(int count) {
-        return queueHandler.removeByCount(count);
-    }
-
-    @Override
-    public Optional<ProxyConfigHolder> poll() {
-        return queueHandler.poll();
-    }
-
-    @Override
-    public List<ProxyConfigHolder> removeAll() {
-        return queueHandler.removeAll();
-    }
 }
