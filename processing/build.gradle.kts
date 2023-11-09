@@ -4,6 +4,7 @@ dependencies {
     implementation(project(":source"))
     implementation(project(":validator"))
     implementation(project(":security"))
+    implementation(project(":queue"))
     implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.security:spring-security-test")
 }
