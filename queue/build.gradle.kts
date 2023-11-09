@@ -8,4 +8,5 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("redis.clients:jedis:4.4.6")
     implementation(project(":model"))
+    implementation(project(":logger"))
 }
