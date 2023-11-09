@@ -1,61 +1,38 @@
 package executor.service.processing.service.scenario;
 
 import executor.service.model.Scenario;
-import executor.service.collection.queue.scenario.ScenarioSourceQueueHandler;
+import executor.service.queue.producer.scenario.ScenarioQueueProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class ScenarioProcessingServiceImplTest {
-    private ScenarioSourceQueueHandler queueHandler;
+    private ScenarioQueueProducer producer;
 
     private ScenarioProcessingService service;
 
     @BeforeEach
     void setUp() {
-        queueHandler = Mockito.mock(ScenarioSourceQueueHandler.class);
-        service = new ScenarioProcessingServiceImpl(queueHandler);
+        producer = Mockito.mock(ScenarioQueueProducer.class);
+        service = new ScenarioProcessingServiceImpl(producer);
     }
 
     @Test
     void testAdd() {
         Scenario scenario = new Scenario();
         service.add(scenario);
-        verify(queueHandler, times(1)).add(scenario);
+        verify(producer, times(1)).add(List.of(scenario));
     }
 
     @Test
     void testAddAll() {
         List<Scenario> scenarios = List.of(new Scenario(), new Scenario());
         service.addAll(scenarios);
-        verify(queueHandler, times(1)).addAll(scenarios);
-    }
-
-    @Test
-    void testRemoveByCount() {
-        int count = 5;
-        service.removeByCount(count);
-        verify(queueHandler, times(1)).removeByCount(count);
-    }
-
-
-    @Test
-    void testRemoveAll() {
-        service.removeAll();
-        verify(queueHandler, times(1)).removeAll();
-    }
-
-    @Test
-    void testPoll() {
-        Scenario scenario = new Scenario();
-        when(queueHandler.poll()).thenReturn(Optional.of(scenario));
-        Optional<Scenario> polledDto = service.poll();
-        assertThat(polledDto).isEqualTo(Optional.of(scenario));
+        verify(producer, times(1)).add(scenarios);
     }
 }
