@@ -1,5 +1,4 @@
 dependencies {
-    implementation(project(":collection"))
     implementation(project(":model"))
     implementation(project(":source"))
     implementation(project(":validator"))
