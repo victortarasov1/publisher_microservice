@@ -17,16 +17,12 @@ class QueueConfig(private val holder: RedisConfigHolder) {
     fun jedisConnectionFactory(): JedisConnectionFactory {
         val config = RedisStandaloneConfiguration(holder.redisHost, holder.redisPort)
         val jedisClientConfiguration = JedisClientConfiguration.builder().usePooling().build()
-        val factory = JedisConnectionFactory(config, jedisClientConfiguration)
-        factory.afterPropertiesSet()
-        return factory
+        return JedisConnectionFactory(config, jedisClientConfiguration).apply { afterPropertiesSet() }
     }
 
     @Bean
-    fun redisTemplate(): RedisTemplate<String, Any> {
-        val template: RedisTemplate<String, Any> = RedisTemplate()
-        template.connectionFactory = jedisConnectionFactory()
-        template.valueSerializer = GenericJackson2JsonRedisSerializer()
-        return template
+    fun redisTemplate() = RedisTemplate<String, Any>().apply {
+        connectionFactory = jedisConnectionFactory()
+        valueSerializer = GenericJackson2JsonRedisSerializer()
     }
 }
