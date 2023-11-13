@@ -1,7 +1,7 @@
 package executor.service.processing.service.proxy;
 
-import executor.service.collection.queue.proxy.ProxySourceQueueHandler;
 import executor.service.model.ProxyConfigHolder;
+import executor.service.queue.producer.proxy.ProxyQueueProducer;
 import executor.service.source.exception.UnknownSourceServiceException;
 import executor.service.source.model.ProxySource;
 import executor.service.source.service.proxy.ProxySourceService;
@@ -23,15 +23,15 @@ public class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingSe
     private final Map<String, ProxyValidator> validators;
     private final Map<String, ProxySourceService> sourceServices;
     private final ProxySource defaultSource;
-    private final ProxySourceQueueHandler queueHandler;
+    private final ProxyQueueProducer producer;
 
 
-    public ProxyRemoteProcessingServiceImpl(List<ProxyValidator> validators, List<ProxySourceService> sourceServices, ProxySource defaultSource,
-                                            ProxySourceQueueHandler queueHandler) {
+    public ProxyRemoteProcessingServiceImpl(List<ProxyValidator> validators, List<ProxySourceService> sourceServices,
+                                            ProxySource defaultSource, ProxyQueueProducer producer) {
         this.validators = new ConcurrentHashMap<>(validators.stream().collect(Collectors.toMap(ProxyValidator::getType, Function.identity())));
         this.sourceServices = new ConcurrentHashMap<>(sourceServices.stream().collect(Collectors.toMap(ProxySourceService::getType, Function.identity())));
         this.defaultSource = defaultSource;
-        this.queueHandler = queueHandler;
+        this.producer = producer;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingSe
         ProxyValidator validator = Optional.ofNullable(validators.get(source.getType()))
                 .orElseThrow(() -> new UnknownProxyTypeException(source.getType()));
         Consumer<ProxyConfigHolder> asyncValidate = v -> CompletableFuture.runAsync(() -> {
-            if (validator.isValid(v)) queueHandler.add(v);
+            if (validator.isValid(v)) producer.add(v);
         });
         CompletableFuture.supplyAsync(() -> service.loadData(source)).thenAcceptAsync(lst -> lst.forEach(asyncValidate));
     }

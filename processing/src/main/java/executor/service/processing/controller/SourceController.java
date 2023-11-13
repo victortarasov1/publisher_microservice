@@ -13,15 +13,4 @@ public interface SourceController<T> {
     @PostMapping( "/all")
     void addAll(@RequestBody List<T> elements);
 
-    @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("/count/{size}")
-    List<T> removeByCount(@PathVariable Integer size);
-
-    @PreAuthorize("isAuthenticated()")
-    @DeleteMapping
-    Optional<T> poll();
-
-    @PreAuthorize("isAuthenticated()")
-    @DeleteMapping( "/all")
-    List<T> removeAll();
 }
