@@ -6,4 +6,17 @@ services:
       dockerfile: Dockerfile
     ports:
       - "9515:9515"
+    networks:
+      - redis_network
     command: java -jar processing/build/libs/processing-0.0.1-SNAPSHOT.jar
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - redis_network
+
+networks:
+  redis_network:
+      name: redis_network
