@@ -13,12 +13,12 @@ public class ScenarioProcessingServiceImpl implements ScenarioProcessingService 
 
     @Override
     public void add(Scenario scenario) {
-        producer.add(List.of(scenario));
+        producer.add(scenario);
     }
 
     @Override
     public void addAll(List<Scenario> scenarios) {
-        producer.add(scenarios);
+        scenarios.forEach(producer::add);
     }
 
 }

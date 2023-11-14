@@ -13,5 +13,5 @@ class ScenarioQueueProducerImpl(
 
     private val key = "scenario.queue.key"
 
-    override fun add(item: List<Scenario>) { template.opsForList().leftPush(key, item) }
+    override fun add(item: Scenario) { template.opsForList().leftPush(key, item) }
 }
