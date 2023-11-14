@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -26,7 +27,7 @@ class ScenarioProcessingServiceImplTest {
     void testAdd() {
         Scenario scenario = new Scenario("some name", "some site", List.of());
         service.add(scenario);
-        verify(producer, times(1)).add(List.of(scenario));
+        verify(producer, times(1)).add(scenario);
     }
 
     @Test
@@ -34,6 +35,6 @@ class ScenarioProcessingServiceImplTest {
         List<Scenario> scenarios = List.of(new Scenario("some name", "some site", List.of()),
                 new Scenario("some name", "some site", List.of()));
         service.addAll(scenarios);
-        verify(producer, times(1)).add(scenarios);
+        verify(producer, times(2)).add(any(Scenario.class));
     }
 }
