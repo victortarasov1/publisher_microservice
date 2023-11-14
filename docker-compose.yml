@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "9515:9515"
+      - "8080:8080"
     networks:
       - redis_network
     command: java -jar processing/build/libs/processing-0.0.1-SNAPSHOT.jar
