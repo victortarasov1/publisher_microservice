@@ -1,13 +1,14 @@
 package executor.service.queue.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import executor.service.queue.model.RedisConfigHolder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory
-import org.springframework.data.redis.core.RedisTemplate
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
+import org.springframework.data.redis.core.StringRedisTemplate
 
 
 @Configuration
@@ -21,8 +22,9 @@ class QueueConfig(private val holder: RedisConfigHolder) {
     }
 
     @Bean
-    fun redisTemplate() = RedisTemplate<String, Any>().apply {
-        connectionFactory = jedisConnectionFactory()
-        valueSerializer = GenericJackson2JsonRedisSerializer()
-    }
+    fun redisTemplate() = StringRedisTemplate().apply { connectionFactory = jedisConnectionFactory() }
+
+    @Bean
+    fun mapper() = ObjectMapper().apply { registerModule(JavaTimeModule()) }
+
 }
