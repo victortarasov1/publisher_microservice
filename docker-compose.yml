@@ -11,7 +11,7 @@ services:
     command: java -jar processing/build/libs/processing-0.0.1-SNAPSHOT.jar
 
   redis:
-    image: redis:latest
+    image: redis/redis-stack-server:latest
     ports:
       - "6379:6379"
     networks:
