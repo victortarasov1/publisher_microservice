@@ -10,8 +10,7 @@ class JsonQueueAdder(
     private val mapper: ObjectMapper
 ) : QueueAdder {
     override fun <T> add(key: String, item: T) {
-        mapper.writeValueAsString(item).run {
-            template.opsForList().leftPush(key, this)
-        }
+        val json = mapper.writeValueAsString(item)
+        template.opsForList().leftPush(key, json)
     }
 }
