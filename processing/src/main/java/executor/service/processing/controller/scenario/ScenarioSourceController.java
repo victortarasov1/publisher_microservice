@@ -5,6 +5,7 @@ import executor.service.processing.controller.SourceController;
 import executor.service.processing.service.scenario.ScenarioProcessingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Component
 @RequestMapping("/publisher/scenario")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ScenarioSourceController implements SourceController<Scenario> {
 
     private final ScenarioProcessingService service;

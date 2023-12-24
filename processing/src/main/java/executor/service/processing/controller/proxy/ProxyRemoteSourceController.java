@@ -5,11 +5,13 @@ import executor.service.processing.service.proxy.ProxyRemoteProcessingService;
 import executor.service.source.model.ProxySource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Component
 @RequestMapping("/publisher/proxy/remote")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ProxyRemoteSourceController implements RemoteSourceController<ProxySource> {
     private final ProxyRemoteProcessingService service;
 

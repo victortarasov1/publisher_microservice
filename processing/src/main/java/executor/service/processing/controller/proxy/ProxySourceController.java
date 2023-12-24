@@ -6,6 +6,7 @@ import executor.service.model.ProxyConfigHolder;
 import executor.service.processing.service.proxy.ProxyProcessingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Component
 @RequestMapping("/publisher/proxy")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ProxySourceController implements SourceController<ProxyConfigHolder> {
 
     private final ProxyProcessingService service;
