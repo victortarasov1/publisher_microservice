@@ -3,6 +3,7 @@ package executor.service.processing.controller.scenario;
 import executor.service.model.Scenario;
 import executor.service.processing.controller.SourceController;
 import executor.service.processing.service.scenario.ScenarioProcessingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,12 +21,12 @@ public class ScenarioSourceController implements SourceController<Scenario> {
     private final ScenarioProcessingService service;
 
     @Override
-    public void add(Scenario scenario) {
+    public void add(@Valid Scenario scenario) {
         service.add(scenario);
     }
 
     @Override
-    public void addAll(List<Scenario> scenarios) {
+    public void addAll(List<@Valid Scenario> scenarios) {
         service.addAll(scenarios);
     }
 

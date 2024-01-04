@@ -1,4 +1,6 @@
 package executor.service.model;
 
-public record Step(String action, String value) {
+import jakarta.validation.constraints.NotEmpty;
+
+public record Step(@NotEmpty String action, @NotEmpty String value) {
 }
