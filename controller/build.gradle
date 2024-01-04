@@ -1,0 +1,9 @@
+dependencies {
+    implementation(project(":model"))
+    implementation(project(":security"))
+    implementation(project(":processing"))
+    implementation(project(":source"))
+    implementation(project(":validator"))
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation("org.springframework.security:spring-security-test")
+}

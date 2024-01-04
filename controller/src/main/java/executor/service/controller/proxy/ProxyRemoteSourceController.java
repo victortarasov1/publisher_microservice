@@ -1,6 +1,6 @@
-package executor.service.processing.controller.proxy;
+package executor.service.controller.proxy;
 
-import executor.service.processing.controller.RemoteSourceController;
+import executor.service.controller.RemoteSourceController;
 import executor.service.processing.service.proxy.ProxyRemoteProcessingService;
 import executor.service.source.model.ProxySource;
 import lombok.RequiredArgsConstructor;

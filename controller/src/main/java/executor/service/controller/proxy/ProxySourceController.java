@@ -1,7 +1,7 @@
-package executor.service.processing.controller.proxy;
+package executor.service.controller.proxy;
 
 
-import executor.service.processing.controller.SourceController;
+import executor.service.controller.SourceController;
 import executor.service.model.ProxyConfigHolder;
 import executor.service.processing.service.proxy.ProxyProcessingService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequestMapping("/publisher/proxy")

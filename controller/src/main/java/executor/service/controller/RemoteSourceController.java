@@ -1,4 +1,4 @@
-package executor.service.processing.controller;
+package executor.service.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

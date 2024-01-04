@@ -1,7 +1,7 @@
-package executor.service.processing.controller.scenario;
+package executor.service.controller.scenario;
 
+import executor.service.controller.SourceController;
 import executor.service.model.Scenario;
-import executor.service.processing.controller.SourceController;
 import executor.service.processing.service.scenario.ScenarioProcessingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

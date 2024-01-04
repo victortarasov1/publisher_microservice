@@ -1,4 +1,4 @@
-package executor.service.processing.controller.handler;
+package executor.service.controller.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import executor.service.source.model.ProxySource;

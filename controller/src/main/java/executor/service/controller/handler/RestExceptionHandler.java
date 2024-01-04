@@ -1,4 +1,4 @@
-package executor.service.processing.controller.handler;
+package executor.service.controller.handler;
 
 
 import executor.service.model.ApiError;

@@ -1,8 +1,8 @@
-package executor.service.processing.controller.proxy;
+package executor.service.controller.scenario;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import executor.service.source.model.ProxySource;
-import executor.service.processing.service.proxy.ProxyRemoteProcessingService;
+import executor.service.model.Scenario;
+import executor.service.processing.service.scenario.ScenarioProcessingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,35 +13,41 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-class ProxyRemoteSourceControllerTest {
-    private static final String BASE_URL = "/publisher/proxy/remote";
+class ScenarioSourceControllerTest {
+
+    public static final String BASE_URL = "/publisher/scenario";
     @Autowired
     private MockMvc mockMvc;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
     @MockBean
-    private ProxyRemoteProcessingService service;
-
+    private ScenarioProcessingService service;
     @Test
-    void testLoadFromDefaultRemoteSource() throws Exception {
-        mockMvc.perform(post(BASE_URL))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void testLoadFromCustomRemoteSource() throws Exception {
-        ProxySource dto = new ProxySource();
-        mockMvc.perform(post(BASE_URL + "/custom")
+    void testAdd() throws Exception {
+        Scenario dto = new Scenario("some id", "some name", "some site", List.of());
+        mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isOk());
-
     }
+
+    @Test
+    void testAddAll() throws Exception {
+        List<Scenario> dtoList = List.of(new Scenario("some id", "some name", "some site", List.of()));
+        mockMvc.perform(post(BASE_URL + "/all")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dtoList)))
+                .andExpect(status().isOk());
+    }
+
+
 }

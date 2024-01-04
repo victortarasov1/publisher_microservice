@@ -1,4 +1,4 @@
-package executor.service.processing.controller;
+package executor.service.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
