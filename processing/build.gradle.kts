@@ -5,7 +5,3 @@ dependencies {
     implementation(project(":queue"))
 
 }
-
-tasks.bootJar {
-    enabled = true
-}
