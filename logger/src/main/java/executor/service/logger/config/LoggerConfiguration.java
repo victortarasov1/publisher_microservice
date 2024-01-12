@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class LoggerConfiguration {
+class LoggerConfiguration {
     @Bean
     public Logger logger() {
         return LoggerFactory.getLogger("QUEUE_LOGGER");

@@ -16,7 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class ProxyProcessingServiceImpl implements ProxyProcessingService {
+class ProxyProcessingServiceImpl implements ProxyProcessingService {
     private final Map<String, ProxyValidator> validators;
     private final ProxyProducer producer;
 

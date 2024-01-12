@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
-public class ScenarioProcessingServiceImpl implements ScenarioProcessingService {
+class ScenarioProcessingServiceImpl implements ScenarioProcessingService {
     private final ScenarioProducer producer;
 
     @Override

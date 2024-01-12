@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 @RequiredArgsConstructor
-public class LoggingAspect {
+class LoggingAspect {
     private final Logger logger;
 
     @Before("@within(executor.service.logger.annotation.Logged)")

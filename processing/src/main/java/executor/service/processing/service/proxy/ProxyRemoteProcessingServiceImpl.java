@@ -19,7 +19,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingService {
+class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingService {
     private final Map<String, ProxyValidator> validators;
     private final Map<String, ProxySourceService> sourceServices;
     private final ProxySource defaultSource;
