@@ -5,7 +5,7 @@ import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Component
 
 @Component
-class JsonQueueWriter(
+internal class JsonQueueWriter(
     private val template: StringRedisTemplate,
     private val mapper: ObjectMapper
 ) : QueueWriter {

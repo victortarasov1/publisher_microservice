@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.StringRedisTemplate
 
 
 @Configuration
-class QueueConfig(private val holder: RedisConfigHolder) {
+internal class QueueConfig(private val holder: RedisConfigHolder) {
 
     @Bean
     fun jedisConnectionFactory(): JedisConnectionFactory {
