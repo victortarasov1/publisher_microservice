@@ -1,7 +1,7 @@
 package executor.service.processing.service.proxy;
 
 import executor.service.model.ProxyConfigHolder;
-import executor.service.queue.producer.proxy.ProxyQueueProducer;
+import executor.service.queue.producer.proxy.ProxyProducer;
 import executor.service.source.exception.UnknownSourceServiceException;
 import executor.service.source.model.ProxySource;
 import executor.service.source.service.proxy.ProxySourceService;
@@ -17,14 +17,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class ProxyRemoteProcessingServiceImplTest {
-    private ProxyQueueProducer producer;
+    private ProxyProducer producer;
     private ProxyValidator validator;
     private ProxySourceService proxySourceService;
     private ProxyRemoteProcessingService service;
 
     @BeforeEach
     void setUp() {
-        producer = Mockito.mock(ProxyQueueProducer.class);
+        producer = Mockito.mock(ProxyProducer.class);
         proxySourceService = Mockito.mock(ProxySourceService.class);
         validator = mock(ProxyValidator.class);
         ProxySource defaultDto = new ProxySource("https://some/url", "url", "http");

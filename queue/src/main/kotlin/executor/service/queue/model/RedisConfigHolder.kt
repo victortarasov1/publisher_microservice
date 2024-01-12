@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 @PropertySource("classpath:redis.properties")
-data class RedisConfigHolder(
+internal data class RedisConfigHolder(
     @Value("\${spring.data.redis.host}")
     var redisHost: String,
 

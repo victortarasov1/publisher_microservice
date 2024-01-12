@@ -4,7 +4,7 @@ import executor.service.model.ProxyConfigHolder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DirectProxyValidator implements ProxyValidator {
+class DirectProxyValidator implements ProxyValidator {
 
     @Override
     public boolean isValid(ProxyConfigHolder proxy) {

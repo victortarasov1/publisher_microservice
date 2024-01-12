@@ -30,6 +30,8 @@ allprojects {
     dependencies {
         implementation("org.springframework.boot:spring-boot-starter-web")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        implementation("jakarta.validation:jakarta.validation-api:3.1.0-M1")
+
     }
     tasks.bootJar {
         enabled = false
