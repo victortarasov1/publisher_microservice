@@ -5,11 +5,11 @@ import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Component
 
 @Component
-class JsonQueueAdder(
+class JsonQueueWriter(
     private val template: StringRedisTemplate,
     private val mapper: ObjectMapper
-) : QueueAdder {
-    override fun <T> add(key: String, item: T) {
+) : QueueWriter {
+    override fun <T> write(key: String, item: T) {
         val json = mapper.writeValueAsString(item)
         template.opsForList().leftPush(key, json)
     }
