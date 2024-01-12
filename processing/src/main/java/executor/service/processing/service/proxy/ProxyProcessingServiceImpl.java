@@ -1,7 +1,7 @@
 package executor.service.processing.service.proxy;
 
 import executor.service.model.ProxyConfigHolder;
-import executor.service.queue.producer.proxy.ProxyQueueProducer;
+import executor.service.queue.producer.proxy.ProxyProducer;
 import executor.service.source.model.ProxySource;
 import executor.service.validator.ProxyValidator;
 import executor.service.validator.exception.UnknownProxyTypeException;
@@ -16,13 +16,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class ProxyProcessingServiceImpl implements ProxyProcessingService {
+class ProxyProcessingServiceImpl implements ProxyProcessingService {
     private final Map<String, ProxyValidator> validators;
-    private final ProxyQueueProducer producer;
+    private final ProxyProducer producer;
 
     private final ProxySource defaultSource;
 
-    public ProxyProcessingServiceImpl(List<ProxyValidator> validators, ProxyQueueProducer producer, ProxySource defaultSource) {
+    public ProxyProcessingServiceImpl(List<ProxyValidator> validators, ProxyProducer producer, ProxySource defaultSource) {
         this.validators = new ConcurrentHashMap<>(validators.stream().collect(Collectors.toMap(ProxyValidator::getType, Function.identity())));
         this.producer = producer;
         this.defaultSource = defaultSource;

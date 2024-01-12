@@ -18,7 +18,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class OkhttpLoaderImpl implements OkhttpLoader {
+class OkhttpLoaderImpl implements OkhttpLoader {
     private final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
 

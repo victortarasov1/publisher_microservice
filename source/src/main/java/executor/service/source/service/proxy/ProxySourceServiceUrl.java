@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProxySourceServiceUrl implements ProxySourceService {
+class ProxySourceServiceUrl implements ProxySourceService {
     private final OkhttpLoader loader;
 
     @Override
