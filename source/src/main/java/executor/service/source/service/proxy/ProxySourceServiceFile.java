@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProxySourceServiceFile implements ProxySourceService {
+class ProxySourceServiceFile implements ProxySourceService {
 
     private final FileReader reader;
 

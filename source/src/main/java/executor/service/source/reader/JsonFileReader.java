@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class JsonFileReader implements FileReader {
+class JsonFileReader implements FileReader {
 
     private final ObjectMapper objectMapper;
     @Override

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ConnectionConfig {
+class ConnectionConfig {
     @Bean
     public OkHttpClient okHttpClient() {
         return new OkHttpClient();

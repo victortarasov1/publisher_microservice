@@ -16,7 +16,7 @@ import java.net.Proxy;
 import static org.springframework.http.HttpHeaders.PROXY_AUTHORIZATION;
 
 @Component
-public class HttpProxyValidator implements ProxyValidator {
+class HttpProxyValidator implements ProxyValidator {
     private static final String PROXY_CHECKER_URL = "http://httpbin.org/ip";
 
     @Override
