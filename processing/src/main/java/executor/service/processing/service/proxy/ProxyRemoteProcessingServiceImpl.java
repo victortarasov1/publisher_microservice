@@ -1,7 +1,7 @@
 package executor.service.processing.service.proxy;
 
 import executor.service.model.ProxyConfigHolder;
-import executor.service.queue.producer.proxy.ProxyQueueProducer;
+import executor.service.queue.producer.proxy.ProxyProducer;
 import executor.service.source.exception.UnknownSourceServiceException;
 import executor.service.source.model.ProxySource;
 import executor.service.source.service.proxy.ProxySourceService;
@@ -23,11 +23,11 @@ public class ProxyRemoteProcessingServiceImpl implements ProxyRemoteProcessingSe
     private final Map<String, ProxyValidator> validators;
     private final Map<String, ProxySourceService> sourceServices;
     private final ProxySource defaultSource;
-    private final ProxyQueueProducer producer;
+    private final ProxyProducer producer;
 
 
     public ProxyRemoteProcessingServiceImpl(List<ProxyValidator> validators, List<ProxySourceService> sourceServices,
-                                            ProxySource defaultSource, ProxyQueueProducer producer) {
+                                            ProxySource defaultSource, ProxyProducer producer) {
         this.validators = new ConcurrentHashMap<>(validators.stream().collect(Collectors.toMap(ProxyValidator::getType, Function.identity())));
         this.sourceServices = new ConcurrentHashMap<>(sourceServices.stream().collect(Collectors.toMap(ProxySourceService::getType, Function.identity())));
         this.defaultSource = defaultSource;

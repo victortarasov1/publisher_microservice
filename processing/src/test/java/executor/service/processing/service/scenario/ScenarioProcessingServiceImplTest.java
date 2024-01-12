@@ -1,7 +1,7 @@
 package executor.service.processing.service.scenario;
 
 import executor.service.model.Scenario;
-import executor.service.queue.producer.scenario.ScenarioQueueProducer;
+import executor.service.queue.producer.scenario.ScenarioProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -13,13 +13,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 class ScenarioProcessingServiceImplTest {
-    private ScenarioQueueProducer producer;
+    private ScenarioProducer producer;
 
     private ScenarioProcessingService service;
 
     @BeforeEach
     void setUp() {
-        producer = Mockito.mock(ScenarioQueueProducer.class);
+        producer = Mockito.mock(ScenarioProducer.class);
         service = new ScenarioProcessingServiceImpl(producer);
     }
 
