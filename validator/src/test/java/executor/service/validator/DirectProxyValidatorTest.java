@@ -1,8 +1,6 @@
-package executor.service.validation;
+package executor.service.validator;
 
 import executor.service.model.ProxyConfigHolder;
-import executor.service.validator.DirectProxyValidator;
-import executor.service.validator.ProxyValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
