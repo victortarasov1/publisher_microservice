@@ -37,7 +37,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-stream-binder-rabbit")
     implementation("org.aspectj:aspectjweaver:1.9.20.1")
     runtimeOnly("com.h2database:h2")
-    runtimeOnly("com.mysql:mysql-connector-j")
+    implementation("com.mysql:mysql-connector-j:8.4.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
