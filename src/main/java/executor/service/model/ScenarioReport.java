@@ -30,6 +30,5 @@ public class ScenarioReport {
         private String name;
         private String site;
         @OneToMany(cascade = CascadeType.ALL)
-        @Column(name = "step_reports")
         private List<StepReport> stepReports;
 }
