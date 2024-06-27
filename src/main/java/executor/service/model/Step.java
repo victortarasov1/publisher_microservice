@@ -6,7 +6,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
+
+import java.time.Instant;
 
 @Entity
 @Table(name = "steps")
@@ -23,4 +26,7 @@ public class Step {
     @NotEmpty
     @Column(name = "step_value")
     private String value;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Instant createdAt;
 }

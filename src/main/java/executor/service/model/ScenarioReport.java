@@ -30,5 +30,6 @@ public class ScenarioReport {
         private String name;
         private String site;
         @OneToMany(cascade = CascadeType.ALL)
+        @OrderBy("startTime ASC")
         private List<StepReport> stepReports;
 }

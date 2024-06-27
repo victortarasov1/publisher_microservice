@@ -4,8 +4,10 @@ package executor.service.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.Instant;
 import java.util.List;
 
 
@@ -24,5 +26,9 @@ public class Scenario {
     @NotEmpty
     private String site;
     @OneToMany(cascade = CascadeType.ALL)
+    @OrderBy("createdAt ASC")
     private List<Step> steps;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Instant createdAt;
 }
