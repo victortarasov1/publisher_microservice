@@ -49,6 +49,6 @@ dependencyManagement {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
     }
 }
-jib.to.image = "victortarasov/executor-publisher-service:v5"
+jib.to.image = "victortarasov/executor-publisher-service:v6"
 
 
