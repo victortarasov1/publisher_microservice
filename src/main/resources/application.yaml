@@ -3,7 +3,8 @@ spring:
     name: publisher
   config:
     import: optional:configserver:http://localhost:8084/
-
+  profiles:
+    active: prod
 eureka:
   instance:
     prefer-ip-address: true

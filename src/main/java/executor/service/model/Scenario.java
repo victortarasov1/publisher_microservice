@@ -25,10 +25,10 @@ public class Scenario {
     private String name;
     @NotEmpty
     private String site;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("createdAt ASC")
     private List<Step> steps;
     @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, nullable = false, columnDefinition = "TIMESTAMP")
     private Instant createdAt;
 }

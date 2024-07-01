@@ -29,7 +29,7 @@ public class ScenarioReport {
         private String webDriverInfo;
         private String name;
         private String site;
-        @OneToMany(cascade = CascadeType.ALL)
+        @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
         @OrderBy("startTime ASC")
         private List<StepReport> stepReports;
 }

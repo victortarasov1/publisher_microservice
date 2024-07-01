@@ -27,6 +27,6 @@ public class Step {
     @Column(name = "step_value")
     private String value;
     @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, nullable = false, columnDefinition = "TIMESTAMP")
     private Instant createdAt;
 }
