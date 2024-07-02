@@ -38,6 +38,7 @@ dependencies {
     implementation("org.aspectj:aspectjweaver:1.9.20.1")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 }
 
 tasks.withType<Test> {
@@ -49,6 +50,6 @@ dependencyManagement {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
     }
 }
-jib.to.image = "victortarasov/executor-publisher-service:v6"
+jib.to.image = "victortarasov/executor-publisher-service:v7"
 
 
