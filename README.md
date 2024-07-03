@@ -103,7 +103,6 @@ you can run microservices using docker compose and see additional documentation 
 - Spring Actuator
 - Spring Cloud Config
 - Spring Cloud Eureka
-- Spring Cloud OpenFeign
 - Spring Cloud Circuit breaker
 - Spring Cloud Stream
 - AspectJ
