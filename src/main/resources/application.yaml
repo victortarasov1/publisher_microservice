@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: publisher
+  config:
+    import: optional:configserver:http://localhost:8084/
+
+
+
+
