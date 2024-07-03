@@ -1,6 +1,6 @@
 # publisher
 This microservice provides an API for working with a queue of reports and scenarios.
-The program makes it possible to add scenarios to a scenarios queue or reports from a reports queue.
+The program makes it possible to add scenarios to a scenarios queue or get reports from a reports queue.
 [You can also see worker microservice here, which executes scenarios and generates reports.](https://github.com/MorgothGorthaur/worker_microservice)
 
 you can run microservices using docker compose and see additional documentation  [here](https://github.com/victortarasov1/executor-service-docker-compose)
