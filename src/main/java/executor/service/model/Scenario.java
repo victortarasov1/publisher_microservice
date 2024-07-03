@@ -29,6 +29,6 @@ public class Scenario {
     @OrderBy("createdAt ASC")
     private List<Step> steps;
     @CreationTimestamp
-    @Column(name = "created_at", updatable = false, nullable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "created_at", updatable = false)
     private Instant createdAt;
 }
