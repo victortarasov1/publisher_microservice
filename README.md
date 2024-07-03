@@ -103,12 +103,12 @@ you can run microservices using docker compose and see additional documentation 
 - Spring Actuator
 - Spring Cloud Config
 - Spring Cloud Eureka
-- Spring Cloud Circuit breaker
 - Spring Cloud Stream
-- AspectJ
+- prometheus
 - AssertJ
 - Jakarta Validation
 - postgresql
+- lombok
 - Mockito
 ### Server build:
 - gradle
