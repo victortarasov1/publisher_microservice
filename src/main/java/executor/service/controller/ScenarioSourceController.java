@@ -18,8 +18,6 @@ public class ScenarioSourceController {
     @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestBody Scenario scenario) {
         processor.add(scenario);
-
-        System.out.println();
     }
 
     @DeleteMapping
